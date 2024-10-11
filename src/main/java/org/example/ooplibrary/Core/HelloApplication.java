@@ -1,4 +1,4 @@
-package org.example.ooplibrary;
+package org.example.ooplibrary.Core;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
