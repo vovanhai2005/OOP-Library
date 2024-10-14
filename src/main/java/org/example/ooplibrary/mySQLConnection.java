@@ -36,19 +36,26 @@ public class mySQLConnection {
     }
     public static void main(String[] args) {
         boolean successLogIn = false;
+        int numsLogIn = 0;
         while(!successLogIn) {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Enter username: ");
-            String userName = sc.nextLine();
-            System.out.println("Enter password: ");
-            String password = sc.nextLine();
+            if (numsLogIn >= 10) {
 
-            if (checkLogIn(userName, password)) {
-                System.out.println("Logged in");
-                successLogIn = true;
-            } else {
-                System.out.println("Wrong username or password");
             }
+            while (numsLogIn < 10) {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter username: ");
+                String userName = sc.nextLine();
+                System.out.println("Enter password: ");
+                String password = sc.nextLine();
+
+                if (checkLogIn(userName, password)) {
+                    System.out.println("Logged in");
+                    successLogIn = true;
+                } else {
+                    System.out.println("Wrong username or password");
+                }
+            }
+            numsLogIn++;
         }
     }
 }
