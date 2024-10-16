@@ -21,10 +21,6 @@ public class LogInController {
     @FXML
     private Button loginButton;
 
-    public void initialize() {
-        // You can add initialization code here
-    }
-
     public static void checkLogIn(String userName, String password) {
         String url = "jdbc:mysql://localhost:3306/admin";
         String username = "root";
@@ -52,14 +48,10 @@ public class LogInController {
     }
 
     @FXML
-    private void handleLoginAction(ActionEvent event) {
+    public void handleLoginAction(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Add login authentication logic here
-        // Example: Check if username and password are valid
         checkLogIn(username, password);
-
-        // After authentication logic, you can proceed accordingly
     }
 }

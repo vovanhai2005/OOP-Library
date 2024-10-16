@@ -13,17 +13,18 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
-            URL url = getClass().getResource("View/LogInView.fxml");
+            URL url = this.getClass().getClassLoader().getResource("org/example/ooplibrary/View/LogInView.fxml");
             if (url == null) {
-                throw new IOException("FXML file not found");
+                throw new IOException("FXML file not found. Check the path: " + "org/example/ooplibrary/View/LogInView.fxml");
             }
-
+            System.out.println("FXML Resource URL: " + url);
             Parent root = FXMLLoader.load(url);
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println("An error occurred: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
