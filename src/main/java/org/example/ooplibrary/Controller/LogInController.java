@@ -5,6 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+
+import java.sql.*;
+import java.util.Scanner;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,46 +17,57 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class LogInController {
-    @FXML
-    private TextField usernameField;
-
-    @FXML
-    private PasswordField passwordField;
 
     @FXML
     private Button loginButton;
 
-    public static void checkLogIn(String userName, String password) {
-        String url = "jdbc:mysql://localhost:3306/admin";
-        String username = "root";
-        String Password = "";
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+    @FXML
+    private PasswordField password;
 
-            Connection connection = DriverManager.getConnection(url, username, Password);
+    @FXML
+    private Text status;
 
-            Statement statement = connection.createStatement();
+    @FXML
+    private TextField userName;
 
-            ResultSet resultSet = statement.executeQuery("select password from admin where username = \"" + userName + "\"");
-
-            if (resultSet.next()) {
-                if (resultSet.getString(1).equals(password)) {
-                    System.out.println("Sucessfully Logged in");
-                } else {
-                    System.out.println("Incorrect Username or Password");
-                }
-            }
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e);
+    @FXML
+    void handleLoginAction(ActionEvent event) {
+        String username = userName.getText();
+        String pass = password.getText();
+        if (checkPassword(username, pass)) {
+            System.out.println("Success");
+        } else {
+            System.out.println("Login Failed");
         }
     }
 
     @FXML
-    public void handleLoginAction(ActionEvent event) {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+    private boolean checkPassword(String userName, String Password) {
+        String url = "jdbc:mysql://localhost:3306/admin";
+        String username = "root";
+        String password = "";
 
-        checkLogIn(username, password);
+        System.out.println("username: " + userName);
+        System.out.println("password: " + Password);
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(url , username, password);
+
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("select password from admin_info where username=\"" + userName+"\"");
+            if (resultSet.next()) {
+                if (resultSet.getString(1).equals(Password)) {
+                    return true;
+                }
+                return false;
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

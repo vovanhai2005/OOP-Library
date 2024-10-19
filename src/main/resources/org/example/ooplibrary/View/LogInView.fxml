@@ -9,31 +9,31 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="689.0" prefWidth="1224.8" stylesheets="@../../../../../java/org/example/ooplibrary/Resource/style/style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.LogInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1280.0" stylesheets="@../Style/LogInStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.LogInController">
    <children>
-      <ImageView fitHeight="689.0" fitWidth="1224.8" pickOnBounds="true">
+      <ImageView blendMode="MULTIPLY" fitHeight="760.0" fitWidth="1280.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
          <image>
-            <Image url="@../../../../../../../../../Downloads/image.jpg" />
+            <Image url="@../Image/Login_Image.jpg" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="773.0" layoutY="72.0" prefHeight="546.0" prefWidth="362.0" styleClass="inner_layer">
+      <AnchorPane layoutX="829.0" layoutY="91.0" prefHeight="579.0" prefWidth="362.0" styleClass="inner_layer">
          <children>
             <Text fill="WHITE" layoutX="82.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In" textAlignment="CENTER" wrappingWidth="198.3671875">
                <font>
                   <Font size="40.0" />
                </font>
             </Text>
-            <TextField layoutX="37.0" layoutY="137.0" prefHeight="66.0" prefWidth="289.0" promptText="Username" styleClass="user_field">
+            <TextField fx:id="userName" layoutX="37.0" layoutY="137.0" prefHeight="66.0" prefWidth="289.0" promptText="Username" styleClass="user_field">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </TextField>
-            <PasswordField layoutX="37.0" layoutY="237.0" promptText="Password" styleClass="user_field">
+            <PasswordField fx:id="password" layoutX="37.0" layoutY="237.0" promptText="Password" styleClass="user_field">
                <font>
                   <Font size="18.0" />
                </font>
             </PasswordField>
-            <Button layoutX="37.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="66.0" prefWidth="289.0" styleClass="button-custom" text="Login">
+            <Button fx:id="loginButton" layoutX="37.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleLoginAction" onMouseClicked="#handleLoginAction" prefHeight="66.0" prefWidth="289.0" styleClass="button-custom" text="Login">
                <font>
                   <Font size="18.0" />
                </font>

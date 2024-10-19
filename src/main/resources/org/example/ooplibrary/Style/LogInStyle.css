@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Montserrat-Medium';
-    src: url('../../../../../../resources/org/example/ooplibrary/View/Font/Montserrat-Medium.ttf');
+    src: url('../Font/Montserrat-Medium.ttf');
 }
 
 .inner_layer {
