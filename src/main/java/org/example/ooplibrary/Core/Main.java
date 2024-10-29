@@ -13,18 +13,19 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/LogInView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/DocumentArchive_View.fxml"));
 
             Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle("Hello!");
             stage.setScene(scene);
             stage.show();
-        } catch(Exception e){
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
         launch();
     }
+
 }

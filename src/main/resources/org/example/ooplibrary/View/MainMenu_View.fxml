@@ -16,7 +16,7 @@
    <children>
       <AnchorPane blendMode="MULTIPLY" prefHeight="720.0" prefWidth="208.0" styleClass="menu_pane">
          <children>
-            <Label alignment="CENTER" layoutY="660.0" prefHeight="53.0" prefWidth="208.0" styleClass="log_out_button" text="Log out">
+            <Label fx:id="logOutBtn" alignment="CENTER" layoutY="660.0" prefHeight="53.0" prefWidth="208.0" styleClass="log_out_button" text="Log out">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -31,7 +31,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Dashboard">
+                  <Label fx:id="dashboardBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Dashboard">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -51,7 +51,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Books List">
+                  <Label id="bookListBtn" fx:id="bookListBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Books List">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -71,7 +71,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="User List">
+                  <Label id="userListBtn" fx:id="userListBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="User List">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -91,7 +91,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Borrow ">
+                  <Label id="borrowBtn" fx:id="borrowBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Borrow ">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -111,7 +111,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Return ">
+                  <Label id="returnBtn" fx:id="returnBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Return ">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -121,15 +121,15 @@
                   </Label>
                </children>
             </HBox>
-            <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
                <image>
-                  <Image url="@../Image/Logo.png" />
+                  <Image url="@../Image/Logo_Image.png" />
                </image>
             </ImageView>
          </children></AnchorPane>
       <AnchorPane layoutX="207.0" prefHeight="274.0" prefWidth="1072.0" styleClass="header_pane">
          <children>
-            <ImageView fitHeight="295.0" fitWidth="1072.0" pickOnBounds="true">
+            <ImageView fitHeight="295.0" fitWidth="1073.0" pickOnBounds="true">
                <image>
                   <Image url="@../Image/Lib_Image.png" />
                </image>
@@ -140,7 +140,7 @@
                </font>
             </Text>
             <TextField layoutX="246.0" layoutY="137.0" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
-            <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="787.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="787.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true" styleClass="search_icon">
                <image>
                   <Image url="@../Image/search_icon.png" />
                </image>

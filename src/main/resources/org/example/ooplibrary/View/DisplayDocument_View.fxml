@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="info_page" stylesheets="@../Style/DisplayDocumentStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.DisplayDocumentController">
+   <children>
+      <AnchorPane layoutX="26.0" layoutY="23.0" prefHeight="255.0" prefWidth="923.0" styleClass="book_overview">
+         <children>
+            <Text layoutX="20.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter" wrappingWidth="400.13671875">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Text>
+            <Text layoutX="20.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter is a series of novels by British author J. K. Rowling. The novels follow Harry Potter, an 11-year-old boy who discovers he is the son of famous wizards and will attend Hogwarts School of Witchcraft and Wizardry. Harry learns of an entire society of wizards and witches.Harry Potter and the Philosopher's Stone is a fantasy novel written by the British author J. K. Rowling. It is the first novel in the Harry Potter series and was Rowling's debut novel. It follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. " wrappingWidth="871.13671875">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="26.0" layoutY="278.0" prefHeight="420.0" prefWidth="923.0" styleClass="borrow_history">
+         <children>
+            <Text layoutX="15.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrow History" wrappingWidth="278.0">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Text>
+            <TableView layoutX="15.0" layoutY="70.0" prefHeight="336.0" prefWidth="893.0">
+              <columns>
+                <TableColumn prefWidth="236.0" text="Name" />
+                <TableColumn minWidth="0.0" prefWidth="224.0" text="Issued Date" />
+                  <TableColumn minWidth="0.0" prefWidth="211.0" text="Return Date" />
+                  <TableColumn minWidth="2.0" prefWidth="220.0" text="Status" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="978.0" layoutY="23.0" prefHeight="674.0" prefWidth="278.0" styleClass="book_detail">
+         <children>
+            <Text layoutX="21.0" layoutY="431.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN: ">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="21.0" layoutY="491.0" strokeType="OUTSIDE" strokeWidth="0.0" text="YEAR OF PUBLICATION: ">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="21.0" layoutY="551.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AUTHOR: ">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="21.0" layoutY="611.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GENRE: ">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
+            <Text layoutX="21.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="107.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="330.0" fitWidth="226.0" layoutX="29.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Image/sample.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

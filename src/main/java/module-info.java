@@ -19,4 +19,5 @@ module org.example.ooplibrary {
     opens org.example.ooplibrary.Controller to javafx.fxml;
     exports org.example.ooplibrary.Core;
     opens org.example.ooplibrary.Core to javafx.fxml;
+    opens org.example.ooplibrary.Object to javafx.base;
 }
