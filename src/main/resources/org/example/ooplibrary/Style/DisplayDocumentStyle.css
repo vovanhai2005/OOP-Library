@@ -1,0 +1,18 @@
+.info_page{
+    -fx-background-color: #BAB1A0;
+}
+
+.book_overview{
+    -fx-background-color: #F0E9DD;
+    -fx-border-radius: 15px;
+}
+
+.borrow_history{
+    -fx-background-color: #F0E9DD;
+    -fx-border-color: transparent;
+}
+
+.book_detail{
+    -fx-background-color: #F0E9DD;
+}
+
