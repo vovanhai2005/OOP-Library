@@ -35,7 +35,7 @@ public class LogInController {
 
     @FXML
     void handleLoginAction(ActionEvent event) {
-        try {
+
             String username = userName.getText();
             String pass = password.getText();
 
@@ -47,18 +47,20 @@ public class LogInController {
             } else {
                 System.out.println("Login Failed");
             }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+
+
     }
 
-    private void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    private void switchToMainMenu(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
