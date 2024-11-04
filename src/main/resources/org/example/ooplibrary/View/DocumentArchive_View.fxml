@@ -127,49 +127,49 @@
                     </image>
                 </ImageView>
             </children></AnchorPane>
-      <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
-         <children>
-            <ImageView fitHeight="154.0" fitWidth="1072.0" pickOnBounds="true">
-               <image>
-                  <Image url="@../Image/Lib_Image.png" />
-               </image>
-            </ImageView>
-            <Text fill="#f0e9dd" layoutX="32.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book List" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Text>
-            <TextField layoutX="32.0" layoutY="86.0" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
-            <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" styleClass="search_icon">
-               <image>
-                  <Image url="@../Image/search_icon.png" />
-               </image>
-            </ImageView>
-            <Label alignment="CENTER" layoutX="867.0" layoutY="86.0" prefHeight="47.0" prefWidth="192.0" styleClass="addBook_btn" text="Add new book" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="37.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Image/add.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Label>
-         </children></AnchorPane>
-      <AnchorPane layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0">
-         <children>
-            <TableView fx:id="tableView" prefHeight="566.0" prefWidth="1072.0" styleClass="table_view">
-               <columns>
-                  <TableColumn fx:id="ISBNCol" prefWidth="162.0" styleClass="table_column" text="ISBN" />
-                  <TableColumn fx:id="nameCol" prefWidth="211.0" styleClass="table_column" text="Name" />
-                  <TableColumn fx:id="yearOfPublicationCol" minWidth="0.0" prefWidth="138.0" styleClass="table_column" text="Year of Publication" />
-                  <TableColumn fx:id="authorCol" minWidth="0.0" prefWidth="156.0" styleClass="table_column" text="Author" />
-                  <TableColumn fx:id="genreCol" minWidth="0.0" prefWidth="195.0" styleClass="table_column" text="Genre" />
-                  <TableColumn fx:id="featureCol" minWidth="0.0" prefWidth="209.0" sortable="false" styleClass="table_column" text="Feature" />
-               </columns></TableView>
-         </children>
-      </AnchorPane>
+        <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
+            <children>
+                <ImageView fitHeight="154.0" fitWidth="1072.0" pickOnBounds="true">
+                    <image>
+                        <Image url="@../Image/Lib_Image.png" />
+                    </image>
+                </ImageView>
+                <Text fill="#f0e9dd" layoutX="32.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book List" textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="50.0" />
+                    </font>
+                </Text>
+                <TextField layoutX="32.0" layoutY="86.0" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
+                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" styleClass="search_icon">
+                    <image>
+                        <Image url="@../Image/search_icon.png" />
+                    </image>
+                </ImageView>
+                <Label alignment="CENTER" layoutX="867.0" layoutY="86.0" prefHeight="47.0" prefWidth="192.0" styleClass="addBook_btn" text="Add new book" textAlignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                    <graphic>
+                        <ImageView fitHeight="37.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../Image/add.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Label>
+            </children></AnchorPane>
+        <AnchorPane layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0">
+            <children>
+                <TableView fx:id="tableView" prefHeight="566.0" prefWidth="1072.0" styleClass="table_view">
+                    <columns>
+                        <TableColumn fx:id="ISBNCol" prefWidth="162.0" styleClass="table_column" text="ISBN" />
+                        <TableColumn fx:id="nameCol" prefWidth="211.0" styleClass="table_column" text="Name" />
+                        <TableColumn fx:id="yearOfPublicationCol" minWidth="0.0" prefWidth="138.0" styleClass="table_column" text="Year of Publication" />
+                        <TableColumn fx:id="authorCol" minWidth="0.0" prefWidth="156.0" styleClass="table_column" text="Author" />
+                        <TableColumn fx:id="genreCol" minWidth="0.0" prefWidth="195.0" styleClass="table_column" text="Genre" />
+                        <TableColumn fx:id="featureCol" minWidth="0.0" prefWidth="209.0" sortable="false" styleClass="table_column" text="Feature" />
+                    </columns></TableView>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>

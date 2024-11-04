@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="1280.0" stylesheets="@../Style/SignUpStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.SignUpController">
+    <children>
+        <ImageView blendMode="MULTIPLY" fitHeight="760.0" fitWidth="1280.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true">
+            <image>
+                <Image url="@../Image/Login_Image.jpg" />
+            </image>
+        </ImageView>
+        <AnchorPane layoutX="829.0" layoutY="91.0" prefHeight="579.0" prefWidth="362.0" styleClass="inner_layer">
+            <children>
+                <Text fill="WHITE" layoutX="82.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up" textAlignment="CENTER" wrappingWidth="198.3671875">
+                    <font>
+                        <Font size="40.0" />
+                    </font>
+                </Text>
+                <TextField fx:id="userName" layoutX="37.0" layoutY="137.0" prefHeight="66.0" prefWidth="289.0" promptText="Username" styleClass="user_field">
+                    <font>
+                        <Font name="Calibri" size="18.0" />
+                    </font>
+                </TextField>
+                <PasswordField fx:id="password" layoutX="37.0" layoutY="237.0" promptText="Password" styleClass="user_field">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </PasswordField>
+            <PasswordField fx:id="confirmPassword" layoutX="37.0" layoutY="337.0" promptText="Re-enter password" styleClass="user_field">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </PasswordField>
+                <Button fx:id="loginButton" layoutX="37.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleSignUpAction" onMouseClicked="#handleSignUpAction" prefHeight="66.0" prefWidth="289.0" styleClass="button-custom" text="Sign Up">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+            </children></AnchorPane>
+      <AnchorPane layoutX="453.0" layoutY="91.0" prefHeight="579.0" prefWidth="362.0" styleClass="inner_layer">
+         <children>
+            <Text fill="WHITE" layoutX="53.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Info " textAlignment="CENTER" wrappingWidth="256.3671875">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <TextField fx:id="fullName" layoutX="37.0" layoutY="137.0" prefHeight="66.0" prefWidth="289.0" promptText="Full name" styleClass="user_field">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </TextField>
+            <DatePicker fx:id="dateOfBirth" layoutX="37.0" layoutY="237.0" prefHeight="66.0" prefWidth="289.0" promptText="Date of birth" style="-fx-background-radius: 15;" styleClass="DOB_field" />
+            <ComboBox fx:id="gender" editable="true" layoutX="37.0" layoutY="337.0" prefHeight="66.0" prefWidth="289.0" promptText="Gender" styleClass="gender_field" />
+            <TextField fx:id="email" layoutX="37.0" layoutY="437.0" prefHeight="66.0" prefWidth="289.0" promptText="Email" styleClass="user_field">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>

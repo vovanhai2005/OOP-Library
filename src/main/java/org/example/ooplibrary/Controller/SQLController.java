@@ -1,9 +1,6 @@
 package org.example.ooplibrary.Controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class SQLController {
 
@@ -33,8 +30,48 @@ public class SQLController {
             System.out.println(e);
         }
         return false;
+    }
 
+    static public boolean checkSignUp(String username, String password) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM account_info WHERE username = '" + username + "'");
+
+            checkResult.next();
+            int count = checkResult.getInt(1);
+
+            if (count > 0) {
+                System.out.println("Username already exists. Please choose a different username.");
+                connection.close();
+                return false;
+            }
+
+            // If username does not exist, proceed with signing up
+            String getMaxAccountIdQuery = "SELECT MAX(accountID) FROM account_info";
+            ResultSet maxIdResult = statement.executeQuery(getMaxAccountIdQuery);
+
+            int newAccountId = 1; // Default value if no accounts exist yet
+
+            if (maxIdResult.next()) {
+                newAccountId = maxIdResult.getInt(1) + 1;
+            }
+
+            String signUpQuery = "INSERT INTO account_info (accountID, username, password) VALUES (" + newAccountId + ", '" + username + "', '" + password + "')";
+            statement.executeUpdate(signUpQuery);
+
+            connection.close();
+            return true;
+
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
     }
 
     static public void initialize() {

@@ -36,21 +36,18 @@ public class LogInController {
     @FXML
     void handleLoginAction(ActionEvent event) {
 
-            String username = userName.getText();
-            String pass = password.getText();
+        String username = userName.getText();
+        String pass = password.getText();
 
-            if (SQLController.checkPassword(username, pass)) {
-                System.out.println("Success");
+        if (SQLController.checkPassword(username, pass)) {
+            System.out.println("Success");
 
-                switchToMainMenu(event);
-                System.out.println("Switched to Main Menu");
-            } else {
-                System.out.println("Login Failed");
-            }
-
-
+            switchToMainMenu(event);
+            System.out.println("Switched to Main Menu");
+        } else {
+            System.out.println("Login Failed");
+        }
     }
-
     private void switchToMainMenu(ActionEvent event) {
         try {
             root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
@@ -62,8 +59,4 @@ public class LogInController {
             e.printStackTrace();
         }
     }
-
-
-
-
 }
