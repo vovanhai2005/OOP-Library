@@ -12,12 +12,12 @@
    <children>
       <AnchorPane layoutX="26.0" layoutY="23.0" prefHeight="255.0" prefWidth="923.0" styleClass="book_overview">
          <children>
-            <Text layoutX="20.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter" wrappingWidth="400.13671875">
+            <Text layoutX="25.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter" wrappingWidth="400.13671875">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Text>
-            <Text layoutX="20.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter is a series of novels by British author J. K. Rowling. The novels follow Harry Potter, an 11-year-old boy who discovers he is the son of famous wizards and will attend Hogwarts School of Witchcraft and Wizardry. Harry learns of an entire society of wizards and witches.Harry Potter and the Philosopher's Stone is a fantasy novel written by the British author J. K. Rowling. It is the first novel in the Harry Potter series and was Rowling's debut novel. It follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. " wrappingWidth="871.13671875">
+            <Text layoutX="25.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter is a series of novels by British author J. K. Rowling. The novels follow Harry Potter, an 11-year-old boy who discovers he is the son of famous wizards and will attend Hogwarts School of Witchcraft and Wizardry. Harry learns of an entire society of wizards and witches.Harry Potter and the Philosopher's Stone is a fantasy novel written by the British author J. K. Rowling. It is the first novel in the Harry Potter series and was Rowling's debut novel. It follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. " wrappingWidth="871.13671875">
                <font>
                   <Font size="16.0" />
                </font>
@@ -26,17 +26,18 @@
       </AnchorPane>
       <AnchorPane layoutX="26.0" layoutY="278.0" prefHeight="420.0" prefWidth="923.0" styleClass="borrow_history">
          <children>
-            <Text layoutX="15.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrow History" wrappingWidth="278.0">
+            <Text layoutX="25.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrow History" wrappingWidth="278.0">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
             </Text>
-            <TableView layoutX="15.0" layoutY="70.0" prefHeight="336.0" prefWidth="893.0">
+            <TableView layoutX="25.0" layoutY="70.0" prefHeight="330.0" prefWidth="871.0">
               <columns>
-                <TableColumn prefWidth="236.0" text="Name" />
-                <TableColumn minWidth="0.0" prefWidth="224.0" text="Issued Date" />
-                  <TableColumn minWidth="0.0" prefWidth="211.0" text="Return Date" />
-                  <TableColumn minWidth="2.0" prefWidth="220.0" text="Status" />
+                <TableColumn prefWidth="167.0" text="Name" />
+                  <TableColumn prefWidth="173.0" text="Username" />
+                <TableColumn minWidth="0.0" prefWidth="128.0" text="Issued Date" />
+                  <TableColumn minWidth="0.0" prefWidth="131.0" text="Return Date" />
+                  <TableColumn minWidth="2.0" prefWidth="271.0" text="Feature" />
               </columns>
             </TableView>
          </children>

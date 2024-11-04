@@ -1,5 +1,5 @@
 package org.example.ooplibrary.Controller;
 
-public class UpdateDocumentController {
+public class DisplayUserController {
 
 }

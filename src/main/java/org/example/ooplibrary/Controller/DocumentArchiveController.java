@@ -52,7 +52,6 @@ public class DocumentArchiveController extends MainMenuController implements Ini
 
         final ObservableList<Book> data = FXCollections.observableArrayList(
                 new Book("HAHA", "VoHai", 2000, "DoYouLoveMe", "Supernatural and Horror")
-
         );
 
         tableView.setItems(data);
