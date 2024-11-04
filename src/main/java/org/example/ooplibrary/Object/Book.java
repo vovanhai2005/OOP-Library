@@ -11,6 +11,7 @@ public class Book {
     private final IntegerProperty yearOfPublication;
     private final StringProperty author;
     private final StringProperty genre;
+    private final StringProperty description;
     private final ImageView[] features;
 
     public Book(String ISBN, String name, int yearOfPublication, String author, String genre) {
@@ -19,6 +20,7 @@ public class Book {
         this.yearOfPublication = new SimpleIntegerProperty(yearOfPublication);
         this.author = new SimpleStringProperty(author);
         this.genre = new SimpleStringProperty(genre);
+        this.description = new SimpleStringProperty();
         this.features = new ImageView[3];
     }
 
@@ -98,5 +100,17 @@ public class Book {
         if (index >= 0 && index < features.length) {
             features[index] = imageView;
         }
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
     }
 }
