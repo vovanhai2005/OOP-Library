@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
@@ -25,7 +24,7 @@ public class LogInController {
     private PasswordField password;
 
     @FXML
-    private Label SignUp;
+    private Text status;
 
     @FXML
     private TextField userName;
@@ -36,46 +35,28 @@ public class LogInController {
 
     @FXML
     void handleLoginAction(ActionEvent event) {
-        try {
-            String username = userName.getText();
-            String pass = password.getText();
 
-            if (SQLController.checkPassword(username, pass)) {
-                System.out.println("Success");
+        String username = userName.getText();
+        String pass = password.getText();
 
-                switchToMainMenu(event);
-                System.out.println("Switched to Main Menu");
-            } else {
-                System.out.println("Login Failed");
-            }
-        }
-        catch (IOException e) {
-            e.printStackTrace();
+        if (SQLController.checkPassword(username, pass)) {
+            System.out.println("Success");
+
+            switchToMainMenu(event);
+            System.out.println("Switched to Main Menu");
+        } else {
+            System.out.println("Login Failed");
         }
     }
-
-    @FXML
-    void handleSignUpAction(ActionEvent event) {
-        try{
-            switchToSignUp(event);
+    private void switchToMainMenu(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void switchToSignUp(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/SignUp_View.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 }
