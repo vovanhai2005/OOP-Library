@@ -39,7 +39,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Label fx:id="SignUp" layoutX="274.0" layoutY="451.0" onMouseClicked="#handleSignUpAction" styleClass="sign_up_text" text="Sign up" underline="true">
+            <Label fx:id="SignUp" layoutX="274.0" layoutY="451.0" onMouseClicked="#handleSignUp" styleClass="sign_up_text" text="Sign up" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
