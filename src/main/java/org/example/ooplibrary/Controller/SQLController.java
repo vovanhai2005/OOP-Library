@@ -1,9 +1,12 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
+import org.example.ooplibrary.Object.Book;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class SQLController {
 
@@ -45,7 +48,6 @@ public class SQLController {
             Statement statement = connection.createStatement();
             ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM user_info WHERE username = '" + username + "'");
 
-            checkResult.next();
             int count = checkResult.getInt(1);
 
             if (count > 0) {
@@ -101,7 +103,7 @@ public class SQLController {
                     " VALUES ('admin', '1', NULL, NULL, NULL, NULL, NULL, '1');");
 
             //Create a "book_info" table if it doesn't exist
-            statement.executeUpdate("CREATE TABLE `book_info` (\n" +
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `book_info` (\n" +
                     "  `ISBN` varchar(32) NOT NULL,\n" +
                     "  `bookName` varchar(255) DEFAULT NULL,\n" +
                     "  `yearOfPublication` date DEFAULT NULL,\n" +
@@ -113,7 +115,7 @@ public class SQLController {
                     "  ADD PRIMARY KEY (`ISBN`);");
 
             //Create a "book_loans" table if it doesn't exist
-            statement.executeUpdate("CREATE TABLE `book_loans` (\n" +
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `book_loans` (\n" +
                     "  `ISBN` varchar(32) NOT NULL,\n" +
                     "  `username` varchar(32) NOT NULL,\n" +
                     "  `note` text DEFAULT NULL,\n" +
@@ -132,10 +134,10 @@ public class SQLController {
 
     static public String getDateOfBirthAsString(DatePicker dateOfBirth) {
         if (dateOfBirth.getValue() != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Định dạng ngày theo ý bạn
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             return dateOfBirth.getValue().format(formatter);
         }
-        return ""; // Trả về chuỗi rỗng nếu chưa chọn ngày
+        return "";
     }
 
     static public void addUser(String username,
@@ -164,6 +166,69 @@ public class SQLController {
             System.out.println(e);
         }
 
+    }
+
+    static public boolean addBook(String ISBN,
+                                String bookName,
+                                String yearOfPublication,
+                                String author,
+                                String genre,
+                                String description) {
+        try {
+            if (ISBN.isEmpty()) {
+                System.out.println("ISBN cannot be empty.");
+                return false;
+            }
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            //Check if ISBN already exists
+            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM book_info WHERE ISBN = '" + ISBN + "';");
+            if (checkResult.next()) {
+                if (checkResult.getInt(1) > 0) {
+                    System.out.println("Book already exists. Please choose a different ISBN.");
+                    connection.close();
+                    return false;
+                }
+            }
+            // If ISBN doesn't exist, add the new book to the database
+            statement.executeUpdate("INSERT INTO `book_info` (`ISBN`, `bookName`" +
+                    ", `yearOfPublication`, `author`, `genre`, `description`)" +
+                    " VALUES ('" + ISBN + "', ' " + bookName + " ', '" + yearOfPublication + "', '" +
+                    author + "', '" + genre + "', '" + description + "');");
+            connection.close();
+
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return true;
+
+    }
+
+    public static ArrayList<Book> getBookInfoData() {
+        ArrayList<Book> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info");
+
+            while (resultSet.next()) {
+                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6)));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
     }
 
 

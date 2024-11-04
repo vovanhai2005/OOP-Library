@@ -18,6 +18,7 @@ import org.example.ooplibrary.Object.Book;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DocumentArchiveController extends MainMenuController implements Initializable {
@@ -48,6 +49,14 @@ public class DocumentArchiveController extends MainMenuController implements Ini
     private Scene scene;
     private Parent root;
 
+    private Stage secondStage;
+    private Scene secondScene;
+    private Parent secondRoot;
+
+
+    private ObservableList<Book> data;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableView.getColumns().clear();
@@ -61,9 +70,17 @@ public class DocumentArchiveController extends MainMenuController implements Ini
 
         tableView.getColumns().addAll(ISBNCol, nameCol, yearOfPublicationCol, authorCol, genreCol, featureCol);
 
-        final ObservableList<Book> data = FXCollections.observableArrayList(
-                new Book("HAHA", "VoHai", 2000, "DoYouLoveMe", "Supernatural and Horror")
+        data = FXCollections.observableArrayList(
+
         );
+
+        ArrayList<Book> temp = SQLController.getBookInfoData();
+
+        if (temp != null)
+        for (Book book : temp) {
+            data.add(book);
+        }
+
 
         tableView.setItems(data);
     }
@@ -128,5 +145,39 @@ public class DocumentArchiveController extends MainMenuController implements Ini
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void openAddDocumentWindow(MouseEvent event) {
+        try {
+            // Tạo FXMLLoader và nạp file FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/AddDocument_View.fxml"));
+            Parent secondRoot = loader.load();
+
+            // Lấy controller từ loader và thiết lập documentArchiveController
+            AddDocumentController addDocumentController = loader.getController();
+            addDocumentController.setDocumentArchiveController(this);
+
+            // Thiết lập cửa sổ và hiển thị
+            Stage secondStage = new Stage();
+            Scene secondScene = new Scene(secondRoot);
+            secondStage.setScene(secondScene);
+            secondStage.setTitle("Thêm tài liệu");
+            secondStage.show();
+
+            // Lưu lại tham chiếu đến secondStage nếu cần thiết
+            this.secondStage = secondStage;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addBook(Book book) {
+        data.add(book);
+    }
+
+    public Stage getSecondStage() {
+        return secondStage;
     }
 }
