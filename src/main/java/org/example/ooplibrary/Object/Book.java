@@ -8,17 +8,19 @@ import javafx.scene.layout.AnchorPane;
 public class Book {
     private final StringProperty ISBN;
     private final StringProperty name;
-    private final IntegerProperty yearOfPublication;
+    private final StringProperty yearOfPublication;
     private final StringProperty author;
     private final StringProperty genre;
+    private final StringProperty description;
     private final ImageView[] features;
 
-    public Book(String ISBN, String name, int yearOfPublication, String author, String genre) {
+    public Book(String ISBN, String name, String yearOfPublication, String author, String genre, String description) {
         this.ISBN = new SimpleStringProperty(ISBN);
         this.name = new SimpleStringProperty(name);
-        this.yearOfPublication = new SimpleIntegerProperty(yearOfPublication);
+        this.yearOfPublication = new SimpleStringProperty(yearOfPublication);
         this.author = new SimpleStringProperty(author);
         this.genre = new SimpleStringProperty(genre);
+        this.description = new SimpleStringProperty(description);
         this.features = new ImageView[3];
     }
 
@@ -46,15 +48,15 @@ public class Book {
         return name;
     }
 
-    public int getYearOfPublication() {
+    public String getYearOfPublication() {
         return yearOfPublication.get();
     }
 
-    public void setYearOfPublication(int yearOfPublication) {
+    public void setYearOfPublication(String yearOfPublication) {
         this.yearOfPublication.set(yearOfPublication);
     }
 
-    public IntegerProperty yearOfPublicationProperty() {
+    public StringProperty yearOfPublicationProperty() {
         return yearOfPublication;
     }
 
@@ -98,5 +100,17 @@ public class Book {
         if (index >= 0 && index < features.length) {
             features[index] = imageView;
         }
+    }
+
+    public String getDescription() {
+        return description.get();
+    }
+
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
     }
 }

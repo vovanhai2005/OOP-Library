@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,11 +13,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../Style/DocumentArchiveStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.DocumentArchiveController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../Style/BorrowDocument.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.BorrowManagementController">
     <children>
         <AnchorPane blendMode="MULTIPLY" prefHeight="720.0" prefWidth="208.0" styleClass="menu_pane">
             <children>
-                <Label id="logOutBtn" alignment="CENTER" layoutY="660.0" onMouseClicked="#switchToLoginView" prefHeight="53.0" prefWidth="208.0" styleClass="log_out_button" text="Log out">
+                <Label alignment="CENTER" layoutY="660.0" prefHeight="53.0" prefWidth="208.0" styleClass="log_out_button" text="Log out">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -31,7 +32,7 @@
                                 <Insets left="28.0" top="13.0" />
                             </HBox.margin>
                         </ImageView>
-                        <Label id="dashboardBtn" onMouseClicked="#switchToMainMenuView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Dashboard">
+                        <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Dashboard">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -51,7 +52,7 @@
                                 <Insets left="28.0" top="13.0" />
                             </HBox.margin>
                         </ImageView>
-                        <Label id="bookListBtn" onMouseClicked="#switchToDocumentArchiveView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Books List">
+                        <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Books List">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -71,7 +72,7 @@
                                 <Insets left="28.0" top="13.0" />
                             </HBox.margin>
                         </ImageView>
-                        <Label id="userListBtn" onMouseClicked="#switchToUserManagementView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="User List">
+                        <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="User List">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -91,7 +92,7 @@
                                 <Insets left="28.0" top="13.0" />
                             </HBox.margin>
                         </ImageView>
-                        <Label id="borrowBtn" onMouseClicked="#switchToBorrowDocumentView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Borrow ">
+                        <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Borrow ">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -111,7 +112,7 @@
                                 <Insets left="28.0" top="13.0" />
                             </HBox.margin>
                         </ImageView>
-                        <Label id="returnBtn" onMouseClicked="#switchToReturnDocumentView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Return ">
+                        <Label prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Return ">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -121,55 +122,41 @@
                         </Label>
                     </children>
                 </HBox>
-                <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
+                <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Image/Logo_Image.png" />
+                        <Image url="@../Image/Logo.png" />
                     </image>
                 </ImageView>
             </children></AnchorPane>
-        <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
+        <AnchorPane layoutX="207.0" prefHeight="274.0" prefWidth="1072.0" styleClass="header_pane">
             <children>
-                <ImageView fitHeight="154.0" fitWidth="1072.0" pickOnBounds="true">
+                <ImageView fitHeight="221.0" fitWidth="1073.0" layoutY="-3.0" pickOnBounds="true">
                     <image>
-                        <Image url="@../Image/Lib_Image.png" />
+                        <Image url="@../Image/Lib_Image(cutted).jpg" />
                     </image>
                 </ImageView>
-                <Text fill="#f0e9dd" layoutX="32.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book List" textAlignment="CENTER">
+                <Text layoutX="36.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header_title" text="BORROW DATA" wrappingWidth="778.958984375">
                     <font>
-                        <Font name="System Bold" size="50.0" />
+                        <Font size="50.0" />
                     </font>
                 </Text>
-                <TextField layoutX="32.0" layoutY="86.0" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
-                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" styleClass="search_icon">
+                <TextField layoutX="37.0" layoutY="112.0" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
+                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="576.0" layoutY="120.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Image/search_icon.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="867.0" layoutY="86.0" onMouseClicked="#openAddDocumentWindow" prefHeight="47.0" prefWidth="192.0" styleClass="addBook_btn" text="Add new book" textAlignment="CENTER">
-                    <font>
-                        <Font name="System Bold" size="20.0" />
-                    </font>
-                    <graphic>
-                        <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#openAddDocumentWindow" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Image/add.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Label>
+            <Button layoutX="961.0" layoutY="93.0" mnemonicParsing="false" opacity="0.79" prefHeight="87.0" prefWidth="88.0" styleClass="quote_field" text="ADD" AnchorPane.bottomAnchor="94.19999999999999" AnchorPane.topAnchor="93.0" />
             </children></AnchorPane>
-        <AnchorPane layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0">
-            <children>
-                <TableView fx:id="tableView" prefHeight="566.0" prefWidth="1072.0" styleClass="table_view">
-                    <columns>
-                        <TableColumn fx:id="ISBNCol" prefWidth="162.0" styleClass="table_column" text="ISBN" />
-                        <TableColumn fx:id="nameCol" prefWidth="211.0" styleClass="table_column" text="Name" />
-                        <TableColumn fx:id="yearOfPublicationCol" minWidth="0.0" prefWidth="138.0" styleClass="table_column" text="Year of Publication" />
-                        <TableColumn fx:id="authorCol" minWidth="0.0" prefWidth="156.0" styleClass="table_column" text="Author" />
-                        <TableColumn fx:id="genreCol" minWidth="0.0" prefWidth="195.0" styleClass="table_column" text="Genre" />
-                        <TableColumn fx:id="featureCol" minWidth="0.0" prefWidth="209.0" sortable="false" styleClass="table_column" text="Feature" />
-                    </columns></TableView>
-            </children>
-        </AnchorPane>
+      <TreeTableView layoutX="208.0" layoutY="220.0" prefHeight="498.0" prefWidth="1072.0">
+        <columns>
+          <TreeTableColumn prefWidth="84.80001831054688" text="ID" />
+          <TreeTableColumn minWidth="0.0" prefWidth="205.60000610351562" text="Document" />
+            <TreeTableColumn minWidth="0.0" prefWidth="182.39996337890625" text="Borrower" />
+            <TreeTableColumn minWidth="0.0" prefWidth="191.20001220703125" text="Due date" />
+            <TreeTableColumn minWidth="0.0" prefWidth="255.199951171875" text="Information" />
+            <TreeTableColumn prefWidth="149.5999755859375" text="Hành động" />
+        </columns>
+      </TreeTableView>
     </children>
 </AnchorPane>

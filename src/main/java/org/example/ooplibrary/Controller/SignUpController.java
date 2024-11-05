@@ -52,23 +52,29 @@ public class SignUpController {
         gender.setItems(genderList);
     }
 
+
+
     @FXML
     void handleSignUpAction(ActionEvent event) {
         try {
             String username = userName.getText();
             String pass = password.getText();
             String confirmPass = confirmPassword.getText();
+            System.err.println(dateOfBirth.getAccessibleText());
+            if (username.isEmpty() || pass.isEmpty() || confirmPass.isEmpty()
+                    || dateOfBirth.getValue() == null || email.getText().isEmpty()
+                    || fullName.getText().isEmpty())
+                return;
 
             if (SQLController.checkSignUp(username, pass) && confirmPass.equals(pass)) {
                 System.out.println("Success");
-
+                SQLController.addUser(username, pass, fullName.getText(),SQLController.getDateOfBirthAsString(dateOfBirth) , email.getText());
                 switchToMainMenu(event);
                 System.out.println("Switched to Main Menu");
             } else {
                 System.out.println("SignUp Failed");
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
