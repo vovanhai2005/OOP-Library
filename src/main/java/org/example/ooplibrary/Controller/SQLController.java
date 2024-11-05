@@ -1,6 +1,9 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.scene.control.DatePicker;
+
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 
 public class SQLController {
 
@@ -19,7 +22,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select password from account_info where username=\"" + username + "\"");
+            ResultSet resultSet = statement.executeQuery("select password from user_info where username=\"" + username + "\"");
             if (resultSet.next()) {
                 if (resultSet.getString(1).equals(password)) {
                     return true;
@@ -40,7 +43,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM account_info WHERE username = '" + username + "'");
+            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM user_info WHERE username = '" + username + "'");
 
             checkResult.next();
             int count = checkResult.getInt(1);
@@ -51,24 +54,11 @@ public class SQLController {
                 return false;
             }
 
-            // If username does not exist, proceed with signing up
-            String getMaxAccountIdQuery = "SELECT MAX(accountID) FROM account_info";
-            ResultSet maxIdResult = statement.executeQuery(getMaxAccountIdQuery);
-
-            int newAccountId = 1; // Default value if no accounts exist yet
-
-            if (maxIdResult.next()) {
-                newAccountId = maxIdResult.getInt(1) + 1;
-            }
-
-            String signUpQuery = "INSERT INTO account_info (accountID, username, password) VALUES (" + newAccountId + ", '" + username + "', '" + password + "')";
-            statement.executeUpdate(signUpQuery);
 
             connection.close();
             return true;
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
@@ -91,58 +81,47 @@ public class SQLController {
             //Go to "librosync_db" database
             statement.executeUpdate("USE librosync_db");
 
-            //Create a "account_info" table if it doesn't exist
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `account_info` (\n" +
-                    "  `accountID` int(11) NOT NULL,\n" +
-                    "  `username` varchar(255) DEFAULT NULL,\n" +
-                    "  `password` varchar(255) DEFAULT NULL\n" +
-                    ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;");
-            statement.executeUpdate("ALTER TABLE `account_info`\n" +
-                    "  ADD PRIMARY KEY (`accountID`);");
-            //I will fix this later so that it won't drop sql syntax error exception - Duc
-            statement.executeUpdate("INSERT INTO `account_info` (`accountID`, `username`, `password`) VALUES\n" +
-                    "(1, 'admin', 'root'),\n" +
-                    "(2, 'leeminhduc2', '123456') ");
-
-            //Create a "books" table if it doesn't exist
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `books` (\n" +
-                    "  `bookID` int(11) NOT NULL,\n" +
-                    "  `bookName` int(11) DEFAULT NULL,\n" +
-                    "  `publishDate` date DEFAULT NULL,\n" +
-                    "  `author` int(11) DEFAULT NULL,\n" +
-                    "  `genre` int(11) DEFAULT NULL,\n" +
-                    "  `borrowerID` int(11) NOT NULL\n" +
-                    ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;\n");
-            statement.executeUpdate("ALTER TABLE `books`\n" +
-                    "  ADD PRIMARY KEY (`bookID`);");
-
-            //Create a "users" table if it doesn't exist
-            statement.executeUpdate("CREATE TABLE `users` (\n" +
-                    "  `userID` int(11) NOT NULL,\n" +
-                    "  `username` varchar(255) DEFAULT NULL,\n" +
+            //Create a "user_info" table if it doesn't exist
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `user_info` (\n" +
+                    "  `username` varchar(32) NOT NULL,\n" +
+                    "  `password` varchar(32) DEFAULT NULL,\n" +
+                    "  `fullName` varchar(255) DEFAULT NULL,\n" +
+                    "  `dateOfBirth` date DEFAULT NULL,\n" +
+                    "  `gender` varchar(16) DEFAULT NULL,\n" +
                     "  `email` varchar(255) DEFAULT NULL,\n" +
-                    "  `phoneNumber` varchar(11) DEFAULT NULL\n" +
+                    "  `phoneNumber` varchar(16) DEFAULT NULL,\n" +
+                    "  `isAdmin` tinyint(1) DEFAULT NULL\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;");
-            statement.executeUpdate("ALTER TABLE `users`\n" +
-                    "  ADD PRIMARY KEY (`userID`);");
+            statement.executeUpdate("ALTER TABLE `user_info` " +
+                    "ADD PRIMARY KEY (`username`);");
 
-            //Create a "borrow_event" table if it doesn't exist
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `borrow_event` (\n" +
-                    "  `bookID` int(11) NOT NULL,\n" +
-                    "  `userID` int(11) NOT NULL,\n" +
-                    "  `dueDate` date NOT NULL\n" +
+            //Add admin account
+            statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
+                    ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `isAdmin`)" +
+                    " VALUES ('admin', '1', NULL, NULL, NULL, NULL, NULL, '1');");
+
+            //Create a "book_info" table if it doesn't exist
+            statement.executeUpdate("CREATE TABLE `book_info` (\n" +
+                    "  `ISBN` varchar(32) NOT NULL,\n" +
+                    "  `bookName` varchar(255) DEFAULT NULL,\n" +
+                    "  `yearOfPublication` date DEFAULT NULL,\n" +
+                    "  `author` varchar(255) DEFAULT NULL,\n" +
+                    "  `genre` varchar(255) DEFAULT NULL,\n" +
+                    "  `description` mediumtext DEFAULT NULL\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;");
-            statement.executeUpdate("ALTER TABLE `borrow_event`\n" +
-                    "  ADD PRIMARY KEY (`bookID`,`userID`);");
+            statement.executeUpdate("ALTER TABLE `book_info`\n" +
+                    "  ADD PRIMARY KEY (`ISBN`);");
 
-            //Create a "return_event" table if it doesn't exist
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `return_event` (\n" +
-                    "  `bookID` int(11) NOT NULL,\n" +
-                    "  `userID` int(11) NOT NULL,\n" +
-                    "  `returnDate` date NOT NULL\n" +
+            //Create a "book_loans" table if it doesn't exist
+            statement.executeUpdate("CREATE TABLE `book_loans` (\n" +
+                    "  `ISBN` varchar(32) NOT NULL,\n" +
+                    "  `username` varchar(32) NOT NULL,\n" +
+                    "  `note` text DEFAULT NULL,\n" +
+                    "  `dueDate` date DEFAULT NULL,\n" +
+                    "  `returnDate` date DEFAULT NULL\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;");
-            statement.executeUpdate("ALTER TABLE `return_event`\n" +
-                    "  ADD PRIMARY KEY (`bookID`,`userID`);");
+            statement.executeUpdate("ALTER TABLE `book_loans`\n" +
+                    "  ADD PRIMARY KEY (`ISBN`,`username`);");
 
 
             connection.close();
@@ -151,33 +130,19 @@ public class SQLController {
         }
     }
 
-    /**
-     * Add a book to the database.
-     */
-    static public void addBook(String bookName, String publishDate, String author, String genre, String description) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT MAX(book_id) FROM books");
-            int bookID = 0;
-            if (resultSet.next()) {
-                bookID = resultSet.getInt(1) + 1;
-            }
-            statement.executeUpdate("INSERT INTO books (book_id, book_name, publish_date, author, genre, description) VALUES (" + bookID + ", \"" + bookName + "\", \"" + publishDate + "\", \"" + author + "\", \"" + genre + "\", \"" + description + "\")");
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e);
+    static public String getDateOfBirthAsString(DatePicker dateOfBirth) {
+        if (dateOfBirth.getValue() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Định dạng ngày theo ý bạn
+            return dateOfBirth.getValue().format(formatter);
         }
+        return ""; // Trả về chuỗi rỗng nếu chưa chọn ngày
     }
 
-    /**
-     * Remove a book from the database.
-     */
-    static public void removeBook(int bookID) {
+    static public void addUser(String username,
+                                 String password,
+                                 String fullName,
+                                 String dateOfBirth,
+                                 String email) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -185,86 +150,20 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM books WHERE book_id = " + bookID);
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
 
-    static public void changeBookDetail(int bookID, String bookName, String publishDate, String author, String genre, String description) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            // If username doesn't exist, add the new user to the database
+            statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
+                    ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `isAdmin`)" +
+                    " VALUES ('" + username + "', ' " + password + " ', '" + fullName + "', '" +
+                    dateOfBirth + "', NULL, '" + email + "', NULL, '0');");
 
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("UPDATE books SET book_name = \"" + bookName + "\", publish_date = \"" + publishDate + "\", author = \"" + author + "\", genre = \"" + genre + "\", description = \"" + description + "\" WHERE book_id = " + bookID);
             connection.close();
+
+
         } catch (Exception e) {
             System.out.println(e);
         }
 
-    }
-
-    /**
-     * Add a user to the database with an user ID.
-     */
-    static public void addUser(String username, String email, String phoneNumber) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT MAX(user_id) FROM users");
-            int userID = 0;
-            if (resultSet.next()) {
-                userID = resultSet.getInt(1) + 1;
-            }
-            statement.executeUpdate("INSERT INTO users (user_id, username, email, phone_number) VALUES (" + userID + ", \"" + username + "\", \"" + email + "\", \"" + phoneNumber + "\")");
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    /**
-     * Remove a user from the database.
-     */
-    static public void addBorrowEvent(int bookID, int userID, String dueDate) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO borrow_event (book_id, user_id, due_date) VALUES (" + bookID + ", " + userID + ", \"" + dueDate + "\")");
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    /**
-     * Add a return event to the database.
-     */
-    static public void addReturnEvent(int bookID, int userID, String returnDate, String note) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO return_event (book_id, user_id, return_date, note) VALUES (" + bookID + ", " + userID + ", \"" + returnDate + "\", \"" + note + "\")");
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
 
