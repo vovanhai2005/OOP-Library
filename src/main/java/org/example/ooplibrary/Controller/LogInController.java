@@ -7,10 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Core.Main;
@@ -26,7 +24,7 @@ public class LogInController {
     private PasswordField password;
 
     @FXML
-    private Label SignUp;
+    private Text status;
 
     @FXML
     private TextField userName;
@@ -50,27 +48,9 @@ public class LogInController {
             System.out.println("Login Failed");
         }
     }
-
-    @FXML
-    void handleSignUp(MouseEvent event) {
-        switchToSignUp(event);
-    }
-
     private void switchToMainMenu(ActionEvent event) {
         try {
             root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void switchToSignUp(MouseEvent event) {
-        try{
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/SignUp_View.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
