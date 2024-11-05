@@ -35,14 +35,14 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="bookName" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
          </children>
       </VBox>
-      <Button layoutX="511.0" layoutY="491.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Add" />
+      <Button layoutX="511.0" layoutY="491.0" mnemonicParsing="false" onMouseClicked="#handleAddBook" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Add" />
       <VBox layoutX="331.0" layoutY="217.0" prefHeight="59.0" prefWidth="235.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year of publication: " wrappingWidth="194.13671875">
@@ -50,7 +50,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="yearOfPublication" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -64,7 +64,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="author" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -78,7 +78,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="83.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="genre" alignment="TOP_LEFT" prefHeight="83.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -92,7 +92,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="ISBN" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -106,7 +106,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="83.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="description" alignment="TOP_LEFT" prefHeight="83.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
