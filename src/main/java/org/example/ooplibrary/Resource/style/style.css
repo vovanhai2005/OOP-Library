@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url('../../../../../../resources/org/example/ooplibrary/View/Font/Montserrat-Medium.ttf');
+}
+
+.inner_layer {
+    -fx-background-radius: 25px;
+    -fx-background-color: BCB09E;
+    -fx-opacity: 0.95;
+}
+
+.user_field{
+    -fx-background-radius: 15px;
+    -fx-pref-width: 289;
+    -fx-pref-height: 66;
+}
+
+.button-custom{
+    -fx-background-radius: 15px;
+    -fx-pref-width: 289;
+    -fx-pref-height: 66;
+}
+
+.button-custom:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #E8A661;
+}
