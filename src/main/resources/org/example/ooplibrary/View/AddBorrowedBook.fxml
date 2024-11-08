@@ -9,52 +9,52 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="625.0" prefWidth="500.0" stylesheets="@../Style/AddBorrowedBook.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.AddBorrowedBookController">
+<AnchorPane prefHeight="625.0" prefWidth="500.0" style="-fx-background-color: F0E9DD;" stylesheets="@../Style/AddBorrowedBook.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.AddBorrowedBookController">
    <children>
-      <ImageView fitHeight="700.0" fitWidth="500.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Image/AddBorrow(bg).jpg" />
-         </image>
-      </ImageView>
-    <Button layoutX="213.0" layoutY="551.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="73.0" text="ADD" />
-      <Text fill="#d8ffb3" layoutX="150.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK BORROW" wrappingWidth="199.73675537109375">
+    <Button layoutX="213.0" layoutY="550.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="73.0" text="ADD" />
+      <Text fill="#282828" layoutX="154.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK BORROW" wrappingWidth="199.73675537109375">
          <font>
             <Font size="27.0" />
          </font>
       </Text>
-      <AnchorPane layoutX="22.0" layoutY="97.0" prefHeight="435.0" prefWidth="455.0" style="-fx-border-color: white; -fx-background-color: rgba(0, 0, 0, 0.3);" stylesheets="@../Style/AddBorrowedBook.css">
+      <AnchorPane layoutX="26.0" layoutY="104.0" prefHeight="435.0" prefWidth="455.0" style="-fx-border-color: white; -fx-background-color: rgba(0, 0, 0, 0.3);" stylesheets="@../Style/AddBorrowedBook.css">
          <children>
-            <TextField layoutX="106.0" layoutY="17.0" opacity="0.67" prefHeight="26.0" prefWidth="273.0" />
-            <Text fill="#d8ffb3" layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Title :" wrappingWidth="91.99995574951174">
+            <TextField layoutX="111.0" layoutY="17.0" prefHeight="26.0" prefWidth="273.0" />
+            <Text fill="#272826" layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Title :" wrappingWidth="91.99995574951174">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField layoutX="106.0" layoutY="61.0" opacity="0.67" prefHeight="26.0" prefWidth="273.0" />
-            <Text fill="#d8ffb3" layoutX="14.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book ID :" wrappingWidth="91.99995574951174">
+            <TextField layoutX="111.0" layoutY="61.0" prefHeight="26.0" prefWidth="273.0" />
+            <Text fill="#292b28" layoutX="8.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book ISBN  :" wrappingWidth="103.99995384216311">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField layoutX="71.0" layoutY="345.0" opacity="0.67" prefHeight="26.0" prefWidth="273.0" promptText="Name" />
-            <Text fill="#d8ffb3" layoutX="14.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrower :" wrappingWidth="91.99995574951174">
+            <TextField layoutX="71.0" layoutY="354.0" prefHeight="26.0" prefWidth="273.0" promptText="Name" />
+            <Text fill="#2d2e2b" layoutX="14.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrower :" wrappingWidth="91.99995574951174">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fill="#d8ffb3" layoutX="14.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loan date :" wrappingWidth="91.99995574951174">
+            <Text fill="#272825" layoutX="14.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loan date :" wrappingWidth="91.99995574951174">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <DatePicker layoutX="106.0" layoutY="118.0" prefHeight="26.0" prefWidth="160.0" />
-            <Text fill="#d8ffb3" layoutX="14.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Due date :" wrappingWidth="91.99995574951174">
+            <DatePicker layoutX="106.0" layoutY="229.0" prefHeight="26.0" prefWidth="160.0" />
+            <Text fill="#1f201e" layoutX="14.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Due date :" wrappingWidth="91.99995574951174">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <DatePicker layoutX="106.0" layoutY="169.0" prefHeight="26.0" prefWidth="160.0" />
-            <TextField layoutX="71.0" layoutY="386.0" opacity="0.67" promptText="ID" />
+            <DatePicker layoutX="106.0" layoutY="280.0" prefHeight="26.0" prefWidth="160.0" />
+            <TextField layoutX="71.0" layoutY="395.0" promptText="ID" />
+            <ImageView fitHeight="24.0" fitWidth="32.0" layoutX="399.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Image/Autofill.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>
