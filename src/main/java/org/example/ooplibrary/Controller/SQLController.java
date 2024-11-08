@@ -231,5 +231,23 @@ public class SQLController {
         return data;
     }
 
+    public static boolean deleteBook(String ISBN) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM book_info WHERE ISBN = '" + ISBN + "';");
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
 
 }
