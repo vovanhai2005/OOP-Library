@@ -121,9 +121,9 @@
                         </Label>
                     </children>
                 </HBox>
-                <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../Image/Logo.png" />
+                        <Image url="@../Image/Logo_Image.png" />
                     </image>
                 </ImageView>
             </children></AnchorPane>
