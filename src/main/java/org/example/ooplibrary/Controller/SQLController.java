@@ -106,10 +106,11 @@ public class SQLController {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS `book_info` (\n" +
                     "  `ISBN` varchar(32) NOT NULL,\n" +
                     "  `bookName` varchar(255) DEFAULT NULL,\n" +
-                    "  `yearOfPublication` date DEFAULT NULL,\n" +
+                    "  `yearOfPublication` varchar(255) DEFAULT NULL,\n" +
                     "  `author` varchar(255) DEFAULT NULL,\n" +
                     "  `genre` varchar(255) DEFAULT NULL,\n" +
-                    "  `description` mediumtext DEFAULT NULL\n" +
+                    "  `description` mediumtext DEFAULT NULL,\n" +
+                    "  `bookImage` mediumblob NOT NULL\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;");
             statement.executeUpdate("ALTER TABLE `book_info`\n" +
                     "  ADD PRIMARY KEY (`ISBN`);");
@@ -173,7 +174,8 @@ public class SQLController {
                                 String yearOfPublication,
                                 String author,
                                 String genre,
-                                String description) {
+                                String description,
+                                byte[] bookImage) {
         try {
             if (ISBN.isEmpty()) {
                 System.out.println("ISBN cannot be empty.");
@@ -196,9 +198,9 @@ public class SQLController {
             }
             // If ISBN doesn't exist, add the new book to the database
             statement.executeUpdate("INSERT INTO `book_info` (`ISBN`, `bookName`" +
-                    ", `yearOfPublication`, `author`, `genre`, `description`)" +
+                    ", `yearOfPublication`, `author`, `genre`, `description`,`bookImage`)" +
                     " VALUES ('" + ISBN + "', ' " + bookName + " ', '" + yearOfPublication + "', '" +
-                    author + "', '" + genre + "', '" + description + "');");
+                    author + "', '" + genre + "', '" + description + "', '" + bookImage + "');");
             connection.close();
 
         }
@@ -221,7 +223,7 @@ public class SQLController {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info");
 
             while (resultSet.next()) {
-                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6)));
+                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), resultSet.getBytes(7)));
             }
             connection.close();
 

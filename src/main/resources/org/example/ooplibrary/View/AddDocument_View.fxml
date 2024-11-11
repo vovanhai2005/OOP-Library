@@ -21,17 +21,17 @@
       </Text>
       <AnchorPane layoutX="57.0" layoutY="63.0" prefHeight="280.0" prefWidth="195.0" styleClass="book_image">
          <children>
-            <ImageView blendMode="SOFT_LIGHT" fitHeight="40.0" fitWidth="31.0" layoutX="82.0" layoutY="125.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true" styleClass="addBook_icon">
-               <image>
-                  <Image url="@../Image/add_image.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="280.0" fitWidth="195.0" pickOnBounds="true">
+            <ImageView fx:id="bookImage" fitHeight="280.0" fitWidth="195.0" pickOnBounds="true">
                <viewport>
                   <Rectangle2D />
                </viewport>
                <image>
                   <Image url="@../Image/sample.jpg" />
+               </image>
+            </ImageView>
+            <ImageView blendMode="SOFT_LIGHT" fitHeight="40.0" fitWidth="31.0" layoutX="82.0" layoutY="125.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true" styleClass="addBook_icon">
+               <image>
+                  <Image url="@../Image/add_image.png" />
                </image>
             </ImageView>
          </children>

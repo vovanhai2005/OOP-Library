@@ -12,15 +12,17 @@ public class Book {
     private final StringProperty author;
     private final StringProperty genre;
     private final StringProperty description;
+    private final byte[] image;
     private final ImageView[] features;
 
-    public Book(String ISBN, String name, String yearOfPublication, String author, String genre, String description) {
+    public Book(String ISBN, String name, String yearOfPublication, String author, String genre, String description, byte[] image) {
         this.ISBN = new SimpleStringProperty(ISBN);
         this.name = new SimpleStringProperty(name);
         this.yearOfPublication = new SimpleStringProperty(yearOfPublication);
         this.author = new SimpleStringProperty(author);
         this.genre = new SimpleStringProperty(genre);
         this.description = new SimpleStringProperty(description);
+        this.image = image;
         this.features = new ImageView[3];
     }
 
@@ -86,6 +88,10 @@ public class Book {
 
     public ImageView[] getFeatures() {
         return features;
+    }
+
+    public byte[] getImage() {
+        return image;
     }
 
     public ImageView getFeature(int index) {
