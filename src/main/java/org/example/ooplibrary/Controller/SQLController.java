@@ -7,6 +7,7 @@ import org.example.ooplibrary.Object.Book;
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class SQLController {
 
@@ -106,10 +107,11 @@ public class SQLController {
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS `book_info` (\n" +
                     "  `ISBN` varchar(32) NOT NULL,\n" +
                     "  `bookName` varchar(255) DEFAULT NULL,\n" +
-                    "  `yearOfPublication` date DEFAULT NULL,\n" +
+                    "  `yearOfPublication` varchar(255) DEFAULT NULL,\n" +
                     "  `author` varchar(255) DEFAULT NULL,\n" +
                     "  `genre` varchar(255) DEFAULT NULL,\n" +
-                    "  `description` mediumtext DEFAULT NULL\n" +
+                    "  `description` mediumtext DEFAULT NULL,\n" +
+                    "  `bookImage` mediumblob DEFAULT NULL\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;");
             statement.executeUpdate("ALTER TABLE `book_info`\n" +
                     "  ADD PRIMARY KEY (`ISBN`);");
@@ -173,7 +175,8 @@ public class SQLController {
                                 String yearOfPublication,
                                 String author,
                                 String genre,
-                                String description) {
+                                String description,
+                                byte[] bookImage) {
         try {
             if (ISBN.isEmpty()) {
                 System.out.println("ISBN cannot be empty.");
@@ -196,9 +199,9 @@ public class SQLController {
             }
             // If ISBN doesn't exist, add the new book to the database
             statement.executeUpdate("INSERT INTO `book_info` (`ISBN`, `bookName`" +
-                    ", `yearOfPublication`, `author`, `genre`, `description`)" +
+                    ", `yearOfPublication`, `author`, `genre`, `description`,`bookImage`)" +
                     " VALUES ('" + ISBN + "', ' " + bookName + " ', '" + yearOfPublication + "', '" +
-                    author + "', '" + genre + "', '" + description + "');");
+                    author + "', '" + genre + "', '" + description + "', '" + convertByteArrayToString(bookImage) + "');");
             connection.close();
 
         }
@@ -208,6 +211,23 @@ public class SQLController {
         return true;
 
     }
+
+    public static String convertByteArrayToString(byte[] byteArray) {
+        if (byteArray == null) {
+            return null;  // Nếu byte array là null, trả về null
+        }
+        // Mã hóa mảng byte thành chuỗi Base64
+        return Base64.getEncoder().encodeToString(byteArray);
+    }
+
+    public static byte[] convertStringToByteArray(String string) {
+        if (string == null) {
+            return null;  // Nếu byte array là null, trả về null
+        }
+        // Mã hóa mảng byte thành chuỗi Base64
+        return Base64.getDecoder().decode(string);
+    }
+
 
     public static ArrayList<Book> getBookInfoData() {
         ArrayList<Book> data = new ArrayList<>();
@@ -221,7 +241,7 @@ public class SQLController {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info");
 
             while (resultSet.next()) {
-                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6)));
+                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
             }
             connection.close();
 

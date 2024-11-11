@@ -24,7 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class DocumentArchiveController extends MainMenuController implements Initializable {
+public class DocumentArchiveController extends AbstractMenuController implements Initializable {
 
     @FXML
     private TableView<Book> tableView;
@@ -48,9 +48,7 @@ public class DocumentArchiveController extends MainMenuController implements Ini
     @FXML
     private TableColumn<Book, Void> featureCol;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+
 
     private Stage secondStage;
     private Scene secondScene;
@@ -91,75 +89,7 @@ public class DocumentArchiveController extends MainMenuController implements Ini
         tableView.setItems(data);
     }
 
-    @FXML
-    void switchToBorrowDocumentView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/BorrowDocument_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @FXML
-    void switchToDocumentArchiveView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/DocumentArchive_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void switchToLoginView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void switchToReturnDocumentView(MouseEvent event) {
-
-    }
-
-    @FXML
-    void switchToUserManagementView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/UserManagement_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void switchToMainMenuView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     void openAddDocumentWindow(MouseEvent event) {
@@ -239,6 +169,25 @@ public class DocumentArchiveController extends MainMenuController implements Ini
         // Mã để hiển thị chi tiết của tài liệu
         System.out.println("Xem chi tiết của tài liệu: " + book.getName());
         // Bạn có thể mở một cửa sổ mới để hiển thị thông tin chi tiết
+        try {
+            // Tải FXML của giao diện hiển thị tài liệu
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/DisplayDocument_View.fxml"));
+            Parent root = loader.load();
+
+            // Lấy controller của cửa sổ hiển thị tài liệu
+            DisplayDocumentController displayDocumentController = loader.getController();
+
+            // Gán dữ liệu tài liệu vào controller
+            displayDocumentController.setDocumentDetails(book);
+
+            // Tạo cửa sổ mới để hiển thị thông tin chi tiết
+            Stage stage = new Stage();
+            stage.setTitle("Thông tin chi tiết tài liệu");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void editBookInfo(Book book) {
