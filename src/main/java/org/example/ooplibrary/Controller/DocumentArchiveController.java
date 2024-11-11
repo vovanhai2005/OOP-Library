@@ -169,6 +169,25 @@ public class DocumentArchiveController extends AbstractMenuController implements
         // Mã để hiển thị chi tiết của tài liệu
         System.out.println("Xem chi tiết của tài liệu: " + book.getName());
         // Bạn có thể mở một cửa sổ mới để hiển thị thông tin chi tiết
+        try {
+            // Tải FXML của giao diện hiển thị tài liệu
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/DisplayDocument_View.fxml"));
+            Parent root = loader.load();
+
+            // Lấy controller của cửa sổ hiển thị tài liệu
+            DisplayDocumentController displayDocumentController = loader.getController();
+
+            // Gán dữ liệu tài liệu vào controller
+            displayDocumentController.setDocumentDetails(book);
+
+            // Tạo cửa sổ mới để hiển thị thông tin chi tiết
+            Stage stage = new Stage();
+            stage.setTitle("Thông tin chi tiết tài liệu");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void editBookInfo(Book book) {

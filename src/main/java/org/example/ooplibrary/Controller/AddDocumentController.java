@@ -50,9 +50,10 @@ public class AddDocumentController {
 
     @FXML
     void handleAddBook(MouseEvent event) {
-        if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), convertFXImageToByteArray(bookImage.getImage())))
+        byte [] bookImage = convertImageViewToBlob(this.bookImage);
+        if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage))
             return;
-        documentArchiveController.addBook(new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), convertFXImageToByteArray(bookImage.getImage())));
+        documentArchiveController.addBook(new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage ));
         ((Node) event.getSource()).getScene().getWindow().hide();
         documentArchiveController.getSecondStage().hide();
     }
@@ -77,10 +78,21 @@ public class AddDocumentController {
         }
     }
 
-    private byte[] convertFXImageToByteArray(Image fxImage) {
-        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(fxImage, null);
+    public static byte[] convertImageViewToBlob(ImageView imageView) {
+        Image image = imageView.getImage();  // Lấy Image từ ImageView
+
+        if (image == null) {
+            return null; // Nếu không có hình ảnh thì trả về null
+        }
+
+        // Chuyển Image thành BufferedImage
+        BufferedImage bufferedImage = javafx.embed.swing.SwingFXUtils.fromFXImage(image, null);
+
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+            // Ghi ảnh dưới dạng JPEG vào ByteArrayOutputStream
+            ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);
+
+            // Trả về mảng byte của ảnh (BLOB)
             return byteArrayOutputStream.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
