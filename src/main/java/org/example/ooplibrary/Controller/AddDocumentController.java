@@ -5,9 +5,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
+
+import java.io.File;
 
 public class AddDocumentController {
     @FXML
@@ -28,7 +34,13 @@ public class AddDocumentController {
     @FXML
     private TextField yearOfPublication;
 
+    @FXML
+    private ImageView bookImage;
+
     private DocumentArchiveController documentArchiveController;
+
+    @FXML
+    private AnchorPane anchorPane;
 
 
     @FXML
@@ -43,5 +55,20 @@ public class AddDocumentController {
         this.documentArchiveController = documentArchiveController;
     }
 
+    @FXML
+    public void chooseImage(MouseEvent event) {
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+        fileChooser.getExtensionFilters().add(imageFilter);
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null) {
+            Image image = new Image(file.toURI().toString());
+            bookImage.setImage(image);
+        }
+    }
 
 }

@@ -121,7 +121,7 @@
                   </Label>
                </children>
             </HBox>
-            <ImageView fx:id="logo" fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" onMouseClicked="#switchToMainMenuView" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
+            <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
                <image>
                   <Image url="@../Image/Logo_Image.png" />
                </image>
