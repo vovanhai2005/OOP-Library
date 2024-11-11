@@ -64,7 +64,7 @@ public class DocumentArchiveController extends MainMenuController implements Ini
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableView.getColumns().clear();
 
-        //ISBNCol.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
+        ISBNCol.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         yearOfPublicationCol.setCellValueFactory(new PropertyValueFactory<>("yearOfPublication"));
         authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
@@ -93,7 +93,15 @@ public class DocumentArchiveController extends MainMenuController implements Ini
 
     @FXML
     void switchToBorrowDocumentView(MouseEvent event) {
-
+        try {
+            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/BorrowDocument_View.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

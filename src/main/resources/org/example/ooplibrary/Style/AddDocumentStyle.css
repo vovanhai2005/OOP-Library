@@ -21,3 +21,7 @@
     -fx-cursor: hand;
     -fx-background-color: #a6a6a6;
 }
+
+.addBook_image:hover{
+    -fx-cursor: hand;
+}
