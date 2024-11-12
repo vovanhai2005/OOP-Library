@@ -139,8 +139,8 @@
                         <Font name="System Bold" size="50.0" />
                     </font>
                 </Text>
-                <TextField layoutX="32.0" layoutY="86.0" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
-                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" styleClass="search_icon">
+                <TextField fx:id="searchKeyword" layoutX="32.0" layoutY="86.0" onKeyPressed="#performSearch2" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
+                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" onMouseClicked="#performSearch1" pickOnBounds="true" preserveRatio="true" styleClass="search_icon">
                     <image>
                         <Image url="@../Image/search_icon.png" />
                     </image>

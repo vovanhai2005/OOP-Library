@@ -52,8 +52,6 @@ public class SignUpController {
         gender.setItems(genderList);
     }
 
-
-
     @FXML
     void handleSignUpAction(ActionEvent event) {
         try {
@@ -68,7 +66,7 @@ public class SignUpController {
 
             if (SQLController.checkSignUp(username, pass) && confirmPass.equals(pass)) {
                 System.out.println("Success");
-                SQLController.addUser(username, pass, fullName.getText(),SQLController.getDateOfBirthAsString(dateOfBirth) , email.getText());
+                SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText());
                 switchToMainMenu(event);
                 System.out.println("Switched to Main Menu");
             } else {
