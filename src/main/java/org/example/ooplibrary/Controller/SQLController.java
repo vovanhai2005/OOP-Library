@@ -3,6 +3,7 @@ package org.example.ooplibrary.Controller;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
 import org.example.ooplibrary.Object.Book;
+import org.example.ooplibrary.Object.User;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
@@ -15,59 +16,7 @@ public class SQLController {
     final static private String USER = "root";
     final static private String PASSWORD = "";
 
-
-    static public boolean checkPassword(String username, String password) {
-        System.out.println("username: " + username);
-        System.out.println("password: " + password);
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select password from user_info where username=\"" + username + "\"");
-            if (resultSet.next()) {
-                if (resultSet.getString(1).equals(password)) {
-                    return true;
-                }
-            }
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return false;
-    }
-
-    static public boolean checkSignUp(String username, String password) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM user_info WHERE username = '" + username + "'");
-
-            int count = checkResult.getInt(1);
-
-            if (count > 0) {
-                System.out.println("Username already exists. Please choose a different username.");
-                connection.close();
-                return false;
-            }
-
-
-            connection.close();
-            return true;
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return false;
-    }
-
-    static public void initialize() {
+    public static void initialize() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -93,6 +42,7 @@ public class SQLController {
                     "  `gender` varchar(16) DEFAULT NULL,\n" +
                     "  `email` varchar(255) DEFAULT NULL,\n" +
                     "  `phoneNumber` varchar(16) DEFAULT NULL,\n" +
+                    "  `userImage` mediumblob NOT NULL,\n" +
                     "  `isAdmin` tinyint(1) DEFAULT NULL\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;");
             statement.executeUpdate("ALTER TABLE `user_info` " +
@@ -134,19 +84,9 @@ public class SQLController {
         }
     }
 
-    static public String getDateOfBirthAsString(DatePicker dateOfBirth) {
-        if (dateOfBirth.getValue() != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            return dateOfBirth.getValue().format(formatter);
-        }
-        return "";
-    }
-
-    static public void addUser(String username,
-                                 String password,
-                                 String fullName,
-                                 String dateOfBirth,
-                                 String email) {
+    public static boolean checkPassword(String username, String password) {
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -154,29 +94,62 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select password from user_info where username=\"" + username + "\"");
+            if (resultSet.next()) {
+                if (resultSet.getString(1).equals(password)) {
+                    return true;
+                }
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 
-            // If username doesn't exist, add the new user to the database
-            statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
-                    ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `isAdmin`)" +
-                    " VALUES ('" + username + "', ' " + password + " ', '" + fullName + "', '" +
-                    dateOfBirth + "', NULL, '" + email + "', NULL, '0');");
+    public static boolean checkSignUp(String username, String password) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM user_info WHERE username = '" + username + "'");
+
+            int count = checkResult.getInt(1);
+
+            if (count > 0) {
+                System.out.println("Username already exists. Please choose a different username.");
+                connection.close();
+                return false;
+            }
+
 
             connection.close();
-
+            return true;
 
         } catch (Exception e) {
             System.out.println(e);
         }
-
+        return false;
     }
 
-    static public boolean addBook(String ISBN,
-                                String bookName,
-                                String yearOfPublication,
-                                String author,
-                                String genre,
-                                String description,
-                                byte[] bookImage) {
+    public static String getDateOfBirthAsString(DatePicker dateOfBirth) {
+        if (dateOfBirth.getValue() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            return dateOfBirth.getValue().format(formatter);
+        }
+        return "";
+    }
+
+    public static boolean addBook(String ISBN,
+                                  String bookName,
+                                  String yearOfPublication,
+                                  String author,
+                                  String genre,
+                                  String description,
+                                  byte[] bookImage) {
         try {
             if (ISBN.isEmpty()) {
                 System.out.println("ISBN cannot be empty.");
@@ -204,8 +177,7 @@ public class SQLController {
                     author + "', '" + genre + "', '" + description + "', '" + convertByteArrayToString(bookImage) + "');");
             connection.close();
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return true;
@@ -251,6 +223,29 @@ public class SQLController {
         return data;
     }
 
+    public static ArrayList<Book> getBookInfoDataWithKeyword(String keyword) {
+        ArrayList<Book> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info WHERE bookName LIKE '%" + keyword + "%' OR author LIKE '%" + keyword + "%' OR genre LIKE '%" + keyword + "%' OR yearOfPublication LIKE '%" + keyword + "%' OR ISBN LIKE '%" + keyword + "%';");
+
+
+            while (resultSet.next()) {
+                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
     public static boolean deleteBook(String ISBN) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -269,5 +264,74 @@ public class SQLController {
         return true;
     }
 
+    public static void addUser(String username,
+                               String password,
+                               String fullName,
+                               String dateOfBirth,
+                               String email) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            // If username doesn't exist, add the new user to the database
+            statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
+                    ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `userImage`, `isAdmin`)" +
+                    " VALUES ('" + username + "', ' " + password + " ', '" + fullName + "', '" +
+                    dateOfBirth + "', NULL, '" + email + "', NULL, NULL,  '0');");
+
+            connection.close();
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public static ArrayList<User> getUserInfoData() {
+        ArrayList<User> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE isAdmin = 0");
+
+            while (resultSet.next()) {
+                data.add(new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8))));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public static ArrayList<User> getUserInfoDataWithKeyword(String keyword) {
+        ArrayList<User> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE username LIKE '%" + keyword + "%' OR fullName LIKE '%" + keyword + "%' OR gender LIKE '%" + keyword + "%' OR email LIKE '%" + keyword + "%' OR phoneNumber LIKE '%" + keyword + "%';");
+
+            while (resultSet.next()) {
+                data.add(new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8))));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
 }

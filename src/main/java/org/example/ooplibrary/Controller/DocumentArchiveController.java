@@ -8,13 +8,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
@@ -48,11 +46,8 @@ public class DocumentArchiveController extends AbstractMenuController implements
     @FXML
     private TableColumn<Book, Void> featureCol;
 
-
-
-    private Stage secondStage;
-    private Scene secondScene;
-    private Parent secondRoot;
+    @FXML
+    private TextField searchKeyword;
 
 
     private ObservableList<Book> data;
@@ -81,14 +76,13 @@ public class DocumentArchiveController extends AbstractMenuController implements
         ArrayList<Book> temp = SQLController.getBookInfoData();
 
         if (temp != null)
-        for (Book book : temp) {
-            data.add(book);
-        }
+            for (Book book : temp) {
+                data.add(book);
+            }
 
 
         tableView.setItems(data);
     }
-
 
 
     @FXML
@@ -109,11 +103,37 @@ public class DocumentArchiveController extends AbstractMenuController implements
             secondStage.setTitle("Thêm tài liệu");
             secondStage.show();
 
-            // Lưu lại tham chiếu đến secondStage nếu cần thiết
-            this.secondStage = secondStage;
-
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void performSearch1(MouseEvent event) {
+        data.clear();
+        ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
+
+        if (temp != null)
+            for (Book book : temp) {
+                data.add(book);
+            }
+
+        tableView.setItems(data);
+    }
+
+    @FXML
+    void performSearch2(KeyEvent event) {
+        //Check if KeyEvent is Enter
+        if (event.getCode().toString().equals("ENTER")) {
+            data.clear();
+            ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
+
+            if (temp != null)
+                for (Book book : temp) {
+                    data.add(book);
+                }
+
+            tableView.setItems(data);
         }
     }
 
@@ -121,9 +141,6 @@ public class DocumentArchiveController extends AbstractMenuController implements
         data.add(book);
     }
 
-    public Stage getSecondStage() {
-        return secondStage;
-    }
 
     private void addFeatureButtonsToTable() {
         featureCol.setCellFactory(param -> new TableCell<Book, Void>() {
