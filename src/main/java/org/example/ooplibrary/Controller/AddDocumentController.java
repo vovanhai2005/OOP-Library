@@ -50,12 +50,11 @@ public class AddDocumentController {
 
     @FXML
     void handleAddBook(MouseEvent event) {
-        byte [] bookImage = convertImageViewToBlob(this.bookImage);
+        byte[] bookImage = convertImageViewToBlob(this.bookImage);
         if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage))
             return;
-        documentArchiveController.addBook(new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage ));
+        documentArchiveController.addBook(new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage));
         ((Node) event.getSource()).getScene().getWindow().hide();
-        documentArchiveController.getSecondStage().hide();
     }
 
     public void setDocumentArchiveController(DocumentArchiveController documentArchiveController) {

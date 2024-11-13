@@ -49,17 +49,6 @@ public class LogInController {
             System.out.println("Login Failed");
         }
     }
-    private void switchToMainMenu(ActionEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     void handleSignUpAction(MouseEvent event) {
@@ -73,4 +62,18 @@ public class LogInController {
             e.printStackTrace();
         }
     }
+
+    private void switchToMainMenu(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
