@@ -129,7 +129,7 @@
             </children></AnchorPane>
         <AnchorPane layoutX="207.0" prefHeight="274.0" prefWidth="1072.0" styleClass="header_pane">
             <children>
-                <ImageView fitHeight="169.0" fitWidth="1141.0" layoutY="-3.0" pickOnBounds="true">
+                <ImageView fitHeight="169.0" fitWidth="1142.0" layoutY="-3.0" pickOnBounds="true">
                     <image>
                         <Image url="@../Image/Lib_Image(cutted).jpg" />
                     </image>
@@ -139,12 +139,24 @@
                         <Font name="System Bold" size="50.0" />
                     </font>
                 </Text>
-                <TextField layoutX="37.0" layoutY="96.0" prefHeight="41.0" prefWidth="634.0" styleClass="search_btn" />
-                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="624.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+                <TextField layoutX="37.0" layoutY="96.0" prefHeight="47.0" prefWidth="580.0" style="-fx-background-color: F0E9DD;" styleClass="search_btn" />
+                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="571.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Image/search_icon.png" />
                     </image>
                 </ImageView>
+            <Label alignment="CENTER" layoutX="1011.0" layoutY="113.0" prefHeight="31.0" prefWidth="80.0" style="-fx-background-color: bab1a0; -fx-background-radius: 5px; -fx-opacity: 0.9; -fx-border-color: transparent;" text="Add" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/add.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
             </children></AnchorPane>
       <TreeTableView layoutX="208.0" layoutY="165.0" prefHeight="554.0" prefWidth="1141.0" style="-fx-background-color: F0E9DD;">
         <columns>
@@ -153,7 +165,7 @@
             <TreeTableColumn minWidth="0.0" prefWidth="182.39996337890625" text="Borrower" />
             <TreeTableColumn minWidth="0.0" prefWidth="191.20001220703125" text="Due date" />
             <TreeTableColumn minWidth="0.0" prefWidth="255.199951171875" text="Information" />
-            <TreeTableColumn prefWidth="149.5999755859375" text="Hành động" />
+            <TreeTableColumn prefWidth="219.1999755859374" text="Action" />
         </columns>
       </TreeTableView>
     </children>
