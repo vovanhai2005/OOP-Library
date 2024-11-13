@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: url('../Font/Montserrat-Medium.ttf');
+}
+
+.inner_layer {
+    -fx-background-radius: 25px;
+    -fx-background-color: BCB09E;
+}
+
+.user_field{
+    -fx-background-radius: 15px;
+    -fx-pref-width: 289;
+    -fx-pref-height: 66;
+}
+
+.DOB_field {
+    -fx-font-size: 18px;
+    -fx-font-family: Calibri;
+}
+
+
+.gender_field{
+    -fx-font-size: 18px;
+    -fx-font-family: Calibri;
+}
+
+.button-custom{
+    -fx-background-radius: 15px;
+    -fx-pref-width: 289;
+    -fx-pref-height: 66;
+}
+
+.button-custom:hover {
+    -fx-cursor: hand;
+    -fx-background-color: #a6a6a6;
+}
+
+.sign_up_text:hover{
+    -fx-cursor: hand;
+}

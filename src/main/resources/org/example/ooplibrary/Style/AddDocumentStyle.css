@@ -1,0 +1,27 @@
+.book_image{
+    -fx-background-color: #d9d9d9;
+    -fx-border-style: dashed;
+    -fx-border-color: #ABA8A6;
+    -fx-border-width: 2px;
+}
+
+.addBook_icon:hover{
+    -fx-cursor: hand;
+}
+
+.autofill_icon:hover{
+    -fx-cursor: hand;
+}
+
+.info_field{
+    -fx-border-radius: 5px;
+}
+
+.addBook_btn:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #a6a6a6;
+}
+
+.addBook_image:hover{
+    -fx-cursor: hand;
+}
