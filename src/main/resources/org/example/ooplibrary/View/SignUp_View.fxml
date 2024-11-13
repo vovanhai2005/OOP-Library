@@ -35,7 +35,7 @@
                         <Font size="18.0" />
                     </font>
                 </PasswordField>
-            <PasswordField fx:id="confirmPassword" layoutX="37.0" layoutY="337.0" promptText="Re-enter password" styleClass="user_field">
+            <PasswordField fx:id="confirmPassword" layoutX="37.0" layoutY="337.0" styleClass="user_field">
                <font>
                   <Font size="18.0" />
                </font>
