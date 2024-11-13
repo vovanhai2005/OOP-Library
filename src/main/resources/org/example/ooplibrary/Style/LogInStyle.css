@@ -6,7 +6,6 @@
 .inner_layer {
     -fx-background-radius: 25px;
     -fx-background-color: BCB09E;
-    -fx-opacity: 0.95;
 }
 
 .user_field{
@@ -23,5 +22,9 @@
 
 .button-custom:hover {
     -fx-cursor: hand;
-    -fx-background-color: #E8A661;
+    -fx-background-color: #a6a6a6;
+}
+
+.sign_up_text:hover{
+    -fx-cursor: hand;
 }

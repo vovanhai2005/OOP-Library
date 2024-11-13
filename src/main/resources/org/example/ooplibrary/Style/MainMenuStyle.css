@@ -1,3 +1,7 @@
+.app_logo:hover{
+    -fx-cursor: hand;
+}
+
 .menu_pane{
     -fx-background-color: #BCB09E;
 }
@@ -20,10 +24,14 @@
     -fx-border-color: transparent;
 }
 
+.search_icon:hover{
+    -fx-cursor: hand;
+}
+
 .header_title{
     -fx-fill: #FFF5CD;
 }
 
 .quote_field{
-    -fx-background-color: #F2E9DD;
+    -fx-background-color: #F0E9DD;
 }
