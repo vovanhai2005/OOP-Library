@@ -160,12 +160,13 @@
             </children></AnchorPane>
       <TreeTableView layoutX="208.0" layoutY="165.0" prefHeight="554.0" prefWidth="1141.0" style="-fx-background-color: F0E9DD;">
         <columns>
-          <TreeTableColumn prefWidth="84.80001831054688" text="ID" />
-          <TreeTableColumn minWidth="0.0" prefWidth="205.60000610351562" text="Document" />
-            <TreeTableColumn minWidth="0.0" prefWidth="182.39996337890625" text="Borrower" />
-            <TreeTableColumn minWidth="0.0" prefWidth="191.20001220703125" text="Due date" />
-            <TreeTableColumn minWidth="0.0" prefWidth="255.199951171875" text="Information" />
-            <TreeTableColumn prefWidth="219.1999755859374" text="Action" />
+          <TreeTableColumn prefWidth="84.80001831054688" text="ISBN" />
+          <TreeTableColumn minWidth="0.0" prefWidth="205.60000610351562" text="Book_title" />
+            <TreeTableColumn minWidth="0.0" prefWidth="195.99996948242188" text="User_name" />
+            <TreeTableColumn minWidth="0.0" prefWidth="136.0" text="Due date" />
+            <TreeTableColumn minWidth="0.0" prefWidth="145.60009765625" text="Return_date" />
+            <TreeTableColumn prefWidth="240.80010986328125" text="Note" />
+            <TreeTableColumn prefWidth="127.199951171875" text="Feature" />
         </columns>
       </TreeTableView>
     </children>
