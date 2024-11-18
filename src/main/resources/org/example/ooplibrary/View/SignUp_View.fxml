@@ -25,26 +25,26 @@
                         <Font size="40.0" />
                     </font>
                 </Text>
-                <TextField fx:id="userName" layoutX="37.0" layoutY="137.0" prefHeight="66.0" prefWidth="289.0" promptText="Username" styleClass="user_field">
+                <TextField fx:id="userName" layoutX="37.0" layoutY="237.0" prefHeight="66.0" prefWidth="289.0" promptText="Username" styleClass="user_field">
                     <font>
                         <Font name="Calibri" size="18.0" />
                     </font>
                 </TextField>
-                <PasswordField fx:id="password" layoutX="37.0" layoutY="237.0" promptText="Password" styleClass="user_field">
+                <PasswordField fx:id="password" layoutX="37.0" layoutY="337.0" promptText="Password" styleClass="user_field">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </PasswordField>
-            <PasswordField fx:id="confirmPassword" layoutX="37.0" layoutY="337.0" promptText="Re-enter password" styleClass="user_field">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </PasswordField>
                 <Button fx:id="loginButton" layoutX="37.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleSignUpAction" onMouseClicked="#handleSignUpAction" prefHeight="66.0" prefWidth="289.0" styleClass="button-custom" text="Sign Up">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Button>
+            <TextField fx:id="fullName" layoutX="37.0" layoutY="137.0" prefHeight="66.0" prefWidth="289.0" promptText="Full name" styleClass="user_field">
+               <font>
+                  <Font name="Calibri" size="18.0" />
+               </font>
+            </TextField>
             </children></AnchorPane>
       <AnchorPane layoutX="453.0" layoutY="91.0" prefHeight="579.0" prefWidth="362.0" styleClass="inner_layer">
          <children>
@@ -53,14 +53,14 @@
                   <Font size="40.0" />
                </font>
             </Text>
-            <TextField fx:id="fullName" layoutX="37.0" layoutY="137.0" prefHeight="66.0" prefWidth="289.0" promptText="Full name" styleClass="user_field">
+            <DatePicker fx:id="dateOfBirth" layoutX="37.0" layoutY="137.0" prefHeight="66.0" prefWidth="289.0" promptText="Date of birth" style="-fx-background-radius: 15;" styleClass="DOB_field" />
+            <ComboBox fx:id="gender" editable="true" layoutX="37.0" layoutY="237.0" prefHeight="66.0" prefWidth="289.0" promptText="Gender" styleClass="gender_field" />
+            <TextField fx:id="email" layoutX="37.0" layoutY="337.0" prefHeight="66.0" prefWidth="289.0" promptText="Email" styleClass="user_field">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </TextField>
-            <DatePicker fx:id="dateOfBirth" layoutX="37.0" layoutY="237.0" prefHeight="66.0" prefWidth="289.0" promptText="Date of birth" style="-fx-background-radius: 15;" styleClass="DOB_field" />
-            <ComboBox fx:id="gender" editable="true" layoutX="37.0" layoutY="337.0" prefHeight="66.0" prefWidth="289.0" promptText="Gender" styleClass="gender_field" />
-            <TextField fx:id="email" layoutX="37.0" layoutY="437.0" prefHeight="66.0" prefWidth="289.0" promptText="Email" styleClass="user_field">
+            <TextField fx:id="email1" layoutX="37.0" layoutY="437.0" prefHeight="66.0" prefWidth="289.0" promptText="Phone no." styleClass="user_field">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>

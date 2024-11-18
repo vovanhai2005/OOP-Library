@@ -100,7 +100,7 @@
             </HBox>
             <HBox layoutX="35.0" layoutY="28.0" prefHeight="47.0" prefWidth="239.0">
                <children>
-                  <Label prefHeight="51.0" prefWidth="98.0" text="ID: ">
+                  <Label prefHeight="51.0" prefWidth="98.0" text="Phone:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
