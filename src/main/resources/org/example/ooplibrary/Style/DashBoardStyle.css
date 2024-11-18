@@ -1,3 +1,7 @@
+.app_logo:hover{
+    -fx-cursor: hand;
+}
+
 .menu_pane{
     -fx-background-color: #BCB09E;
 }
@@ -14,21 +18,13 @@
 }
 
 .search_btn{
-    -fx-background-color: #F0E9DD;
+    -fx-background-color: #F5F7F8;
     -fx-background-radius: 20px;
     -fx-opacity: 0.9;
     -fx-border-color: transparent;
 }
 
-.borrowBook_btn{
-    -fx-background-color: #bab1a0;
-    -fx-background-radius: 5px;
-    -fx-opacity: 0.9;
-    -fx-border-color: transparent;
-}
-
-.borrowBook_btn:hover{
-    -fx-background-color: #DCE0E2;
+.search_icon:hover{
     -fx-cursor: hand;
 }
 
@@ -37,10 +33,5 @@
 }
 
 .quote_field{
-    -fx-background-color: #F2E9DD;
-}
-
-.table_view{
-    -fx-background-color: #E6DDD4;
-    -fx-cell-size: 200px;
+    -fx-background-color: #F0E9DD;
 }
