@@ -8,6 +8,13 @@
     -fx-background-color: BCB09E;
 }
 
+.ava_image{
+    -fx-background-color: #d9d9d9;
+    -fx-border-style: dashed;
+    -fx-border-color: #ABA8A6;
+    -fx-border-width: 2px;
+}
+
 .user_field{
     -fx-background-radius: 15px;
     -fx-pref-width: 289;

@@ -45,6 +45,9 @@ public class AddDocumentController {
     private DocumentArchiveController documentArchiveController;
 
     @FXML
+    private ImageView addImageButton;
+
+    @FXML
     private AnchorPane anchorPane;
 
 
