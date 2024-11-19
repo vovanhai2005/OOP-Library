@@ -2,9 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -134,8 +134,8 @@
                         <Image url="@../Image/Lib_Image.png" />
                     </image>
                 </ImageView>
-                <TextField layoutX="32.0" layoutY="86.0" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
-                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true">
+                <TextField fx:id="searchKeyword" layoutX="32.0" layoutY="86.0" onKeyPressed="#performSearch2" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
+                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" onMouseClicked="#performSearch1" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Image/search_icon.png" />
                     </image>
@@ -145,12 +145,12 @@
                   <Font name="System Bold" size="50.0" />
                </font>
             </Text>
-            <Label alignment="CENTER" layoutX="840.0" layoutY="86.0" onMouseClicked="#openAddDocumentWindow" prefHeight="47.0" prefWidth="219.0" styleClass="borrowBook_btn" text="Add new request" textAlignment="CENTER">
+            <Label alignment="CENTER" layoutX="840.0" layoutY="86.0" onMouseClicked="#openRequestBorrowWindow" prefHeight="47.0" prefWidth="219.0" styleClass="borrowBook_btn" text="Add new request" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#openAddDocumentWindow" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#openRequestBorrowWindow" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Image/add.png" />
                      </image>
@@ -158,15 +158,15 @@
                </graphic>
             </Label>
             </children></AnchorPane>
-      <TreeTableView layoutX="208.0" layoutY="151.0" prefHeight="566.0" prefWidth="1072.0" styleClass="table_view">
+      <TableView fx:id="tableView" layoutX="207.0" layoutY="150.0" prefHeight="570.0" prefWidth="1073.0" styleClass="table_view">
         <columns>
-          <TreeTableColumn prefWidth="75.0" text="ID" />
-          <TreeTableColumn minWidth="0.0" prefWidth="216.0" text="Book Name" />
-            <TreeTableColumn minWidth="0.0" prefWidth="182.39996337890625" text="Borrower Name" />
-            <TreeTableColumn minWidth="0.0" prefWidth="191.20001220703125" text="Due date" />
-            <TreeTableColumn minWidth="0.0" prefWidth="255.199951171875" text="Information" />
-            <TreeTableColumn prefWidth="149.5999755859375" text="Feature" />
+          <TableColumn fx:id="IDCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="bookNameCol" minWidth="0.0" prefWidth="258.0" text="Book Name" />
+            <TableColumn fx:id="borrowerNameCol" prefWidth="234.0" text="Borrower" />
+            <TableColumn fx:id="dueDateCol" prefWidth="122.0" text="Due Date" />
+            <TableColumn fx:id="informationCol" prefWidth="192.0" text="Note" />
+            <TableColumn fx:id="featureCol" prefWidth="191.0" text="Feature" />
         </columns>
-      </TreeTableView>
+      </TableView>
     </children>
 </AnchorPane>

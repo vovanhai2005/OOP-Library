@@ -3,6 +3,7 @@ package org.example.ooplibrary.Controller;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
 import org.example.ooplibrary.Object.Book;
+import org.example.ooplibrary.Object.BookLoan;
 import org.example.ooplibrary.Object.User;
 
 import java.sql.*;
@@ -68,6 +69,7 @@ public class SQLController {
 
             //Create a "book_loans" table if it doesn't exist
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS `book_loans` (\n" +
+                    "  `bookLoanID` int(11) NOT NULL,\n" +
                     "  `ISBN` varchar(32) NOT NULL,\n" +
                     "  `username` varchar(32) NOT NULL,\n" +
                     "  `note` text DEFAULT NULL,\n" +
@@ -75,7 +77,7 @@ public class SQLController {
                     "  `returnDate` date DEFAULT NULL\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;");
             statement.executeUpdate("ALTER TABLE `book_loans`\n" +
-                    "  ADD PRIMARY KEY (`ISBN`,`username`);");
+                    "  ADD PRIMARY KEY (`bookLoanID`,`ISBN`,`username`);");
 
 
             connection.close();
@@ -268,7 +270,8 @@ public class SQLController {
                                String password,
                                String fullName,
                                String dateOfBirth,
-                               String email) {
+                               String email,
+                               String phoneNumber){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -281,7 +284,7 @@ public class SQLController {
             statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
                     ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `userImage`, `isAdmin`)" +
                     " VALUES ('" + username + "', ' " + password + " ', '" + fullName + "', '" +
-                    dateOfBirth + "', NULL, '" + email + "', NULL, NULL,  '0');");
+                    dateOfBirth + "', NULL, '" + email + "', '" + phoneNumber +  "', NULL,  '0');");
 
             connection.close();
 
@@ -328,6 +331,89 @@ public class SQLController {
             while (resultSet.next()) {
                 data.add(new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8))));
             }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public static boolean deleteBookLoan(String bookLoanID) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM book_loans WHERE bookLoanID = '" + bookLoanID + "';");
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
+    public static ArrayList<BookLoan> getBookLoansData() {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username;");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                      resultSet.getString(2),
+                                      resultSet.getString(3),
+                                      resultSet.getString(4),
+                                      resultSet.getString(5),
+                                      resultSet.getString(6)
+                                     )
+                        );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public static ArrayList<BookLoan> getBookLoansDataWithKeyword(String keyword) {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username\n" +
+                    "WHERE b.bookName LIKE '%" + keyword + "%' OR u.fullName LIKE '%" + keyword + "%' OR bl.dueDate LIKE '%" + keyword + "%' OR bl.returnDate LIKE '%" + keyword + "%' OR bl.note LIKE '%" + keyword + "%';");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                      resultSet.getString(2),
+                                      resultSet.getString(3),
+                                      resultSet.getString(4),
+                                      resultSet.getString(5),
+                                      resultSet.getString(6)
+                                     )
+                        );
+            }
+            connection.close();
 
         } catch (Exception e) {
             System.out.println(e);

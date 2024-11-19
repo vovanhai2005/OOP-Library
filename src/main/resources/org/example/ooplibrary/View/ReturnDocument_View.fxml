@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../Style/DocumentArchiveStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.DocumentArchiveController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../Style/DocumentArchiveStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.ReturnDocumentController">
     <children>
         <AnchorPane blendMode="MULTIPLY" prefHeight="720.0" prefWidth="208.0" styleClass="menu_pane">
             <children>
@@ -145,12 +145,12 @@
                         <Image url="@../Image/search_icon.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="840.0" layoutY="86.0" onMouseClicked="#openAddDocumentWindow" prefHeight="47.0" prefWidth="219.0" styleClass="addBook_btn" text="Add new request" textAlignment="CENTER">
+                <Label alignment="CENTER" layoutX="840.0" layoutY="86.0" onMouseClicked="#openAddRequestView" prefHeight="47.0" prefWidth="219.0" styleClass="addBook_btn" text="Add new request" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                     <graphic>
-                        <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#openAddDocumentWindow" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#openAddRequestView" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Image/add.png" />
                             </image>
@@ -162,11 +162,11 @@
             <children>
                 <TableView fx:id="tableView" prefHeight="566.0" prefWidth="1072.0" styleClass="table_view">
                     <columns>
-                        <TableColumn fx:id="ISBNCol" prefWidth="102.5" styleClass="table_column" text="ID" />
-                        <TableColumn fx:id="nameCol" prefWidth="207.5" styleClass="table_column" text="Book Name" />
-                        <TableColumn fx:id="yearOfPublicationCol" minWidth="0.0" prefWidth="201.0" styleClass="table_column" text="Borrower Name" />
-                        <TableColumn fx:id="authorCol" minWidth="0.0" prefWidth="156.0" styleClass="table_column" text="Due date" />
-                        <TableColumn fx:id="genreCol" minWidth="0.0" prefWidth="195.0" styleClass="table_column" text="Returning date" />
+                        <TableColumn fx:id="IDCol" prefWidth="102.5" styleClass="table_column" text="ID" />
+                        <TableColumn fx:id="bookNameCol" prefWidth="207.5" styleClass="table_column" text="Book Name" />
+                        <TableColumn fx:id="borrowerNameCol" minWidth="0.0" prefWidth="201.0" styleClass="table_column" text="Borrower Name" />
+                        <TableColumn fx:id="dueDateCol" minWidth="0.0" prefWidth="156.0" styleClass="table_column" text="Due date" />
+                        <TableColumn fx:id="returnDateCol" minWidth="0.0" prefWidth="195.0" styleClass="table_column" text="Return date" />
                         <TableColumn fx:id="featureCol" minWidth="0.0" prefWidth="209.0" sortable="false" styleClass="table_column" text="Feature" />
                     </columns></TableView>
             </children>

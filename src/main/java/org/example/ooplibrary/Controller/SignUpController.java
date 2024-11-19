@@ -50,6 +50,9 @@ public class SignUpController {
     private TextField email;
 
     @FXML
+    private TextField phoneNumber;
+    
+    @FXML
     private ImageView addImageButton;
 
     @FXML
@@ -57,6 +60,7 @@ public class SignUpController {
 
     @FXML
     private AnchorPane anchorPane;
+
 
     private Stage stage;
     private Scene scene;
@@ -76,12 +80,12 @@ public class SignUpController {
             System.err.println(dateOfBirth.getAccessibleText());
             if (username.isEmpty() || pass.isEmpty() || confirmPass.isEmpty()
                     || dateOfBirth.getValue() == null || email.getText().isEmpty()
-                    || fullName.getText().isEmpty())
+                    || fullName.getText().isEmpty() || phoneNumber.getText().isEmpty())
                 return;
 
             if (SQLController.checkSignUp(username, pass) && confirmPass.equals(pass)) {
                 System.out.println("Success");
-                SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText());
+                SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText(), phoneNumber.getText());
                 switchToMainMenu(event);
                 System.out.println("Switched to Main Menu");
             } else {
