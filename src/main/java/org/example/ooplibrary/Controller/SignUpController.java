@@ -9,10 +9,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Core.Main;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,6 +51,16 @@ public class SignUpController {
 
     @FXML
     private TextField phoneNumber;
+    
+    @FXML
+    private ImageView addImageButton;
+
+    @FXML
+    private ImageView avatarImage;
+
+    @FXML
+    private AnchorPane anchorPane;
+
 
     private Stage stage;
     private Scene scene;
@@ -77,6 +93,22 @@ public class SignUpController {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void chooseImage(MouseEvent event) {
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+        fileChooser.getExtensionFilters().add(imageFilter);
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null) {
+            Image image = new Image(file.toURI().toString());
+            avatarImage.setImage(image);
         }
     }
 

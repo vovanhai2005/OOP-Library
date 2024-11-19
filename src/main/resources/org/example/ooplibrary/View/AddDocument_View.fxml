@@ -18,16 +18,8 @@
             <Font name="System Bold" size="25.0" />
          </font>
       </Text>
-      <AnchorPane layoutX="57.0" layoutY="63.0" onMouseClicked="#chooseImage" prefHeight="280.0" prefWidth="195.0" styleClass="book_image">
-         <children>
-            <ImageView blendMode="SOFT_LIGHT" fitHeight="40.0" fitWidth="31.0" layoutX="82.0" layoutY="125.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true" styleClass="addBook_icon">
-               <image>
-                  <Image url="@../Image/add_image.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="bookImage" fitHeight="277.0" fitWidth="194.0" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </AnchorPane>
+      <AnchorPane layoutX="50.0" layoutY="63.0" onMouseClicked="#chooseImage" prefHeight="280.0" prefWidth="195.0" styleClass="book_image" />
+      <ImageView fx:id="bookImage" fitHeight="291.0" fitWidth="207.0" layoutX="51.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" />
       <Line endX="236.5" endY="499.0" layoutX="63.0" layoutY="7.0" startX="236.49998474121094" startY="56.29289245605469" />
       <VBox layoutX="331.0" layoutY="83.0" prefHeight="56.0" prefWidth="235.0">
          <children>
@@ -100,7 +92,7 @@
             </TextField>
          </children>
       </VBox>
-      <VBox layoutX="37.0" layoutY="357.0" prefHeight="115.0" prefWidth="235.0">
+      <VBox layoutX="38.0" layoutY="357.0" prefHeight="115.0" prefWidth="235.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" wrappingWidth="116.13671875">
                <font>
@@ -117,6 +109,11 @@
       <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="580.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
          <image>
             <Image url="@../Image/autofill.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="addImageButton" fitHeight="27.0" fitWidth="31.0" layoutX="256.0" layoutY="314.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="addImage_btn">
+         <image>
+            <Image url="@../Image/addImage.png" />
          </image>
       </ImageView>
    </children>
