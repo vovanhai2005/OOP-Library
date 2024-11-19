@@ -60,7 +60,7 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="email1" layoutX="37.0" layoutY="437.0" prefHeight="66.0" prefWidth="289.0" promptText="Phone no." styleClass="user_field">
+            <TextField fx:id="phoneNumber" layoutX="37.0" layoutY="437.0" prefHeight="66.0" prefWidth="289.0" promptText="Phone no." styleClass="user_field">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
