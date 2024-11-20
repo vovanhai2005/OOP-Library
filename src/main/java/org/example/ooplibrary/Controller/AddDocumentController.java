@@ -53,7 +53,7 @@ public class AddDocumentController {
 
     @FXML
     void handleAddBook(MouseEvent event) {
-        byte[] bookImage = convertImageViewToBlob(this.bookImage);
+        byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
         if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage))
             return;
         documentArchiveController.addBook(new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage));
@@ -80,26 +80,6 @@ public class AddDocumentController {
         }
     }
 
-    public static byte[] convertImageViewToBlob(ImageView imageView) {
-        Image image = imageView.getImage();  // Lấy Image từ ImageView
 
-        if (image == null) {
-            return null; // Nếu không có hình ảnh thì trả về null
-        }
-
-        // Chuyển Image thành BufferedImage
-        BufferedImage bufferedImage = javafx.embed.swing.SwingFXUtils.fromFXImage(image, null);
-
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-            // Ghi ảnh dưới dạng JPEG vào ByteArrayOutputStream
-            ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);
-
-            // Trả về mảng byte của ảnh (BLOB)
-            return byteArrayOutputStream.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
 }

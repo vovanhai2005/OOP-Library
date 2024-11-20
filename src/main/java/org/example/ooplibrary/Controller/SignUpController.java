@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SignUpController {
+public class SignUpController implements Initializable {
 
     @FXML
     private Button loginButton;
@@ -32,10 +33,7 @@ public class SignUpController {
     private PasswordField password;
 
     @FXML
-    private PasswordField confirmPassword;
-
-    @FXML
-    private static ComboBox<String> gender;
+    private ComboBox<String> gender;
 
     @FXML
     private DatePicker dateOfBirth;
@@ -51,7 +49,7 @@ public class SignUpController {
 
     @FXML
     private TextField phoneNumber;
-    
+
     @FXML
     private ImageView addImageButton;
 
@@ -61,13 +59,41 @@ public class SignUpController {
     @FXML
     private AnchorPane anchorPane;
 
+    @FXML
+    private Label signInButton;
+
+    @FXML
+    private Button signUpButton;
+
+    @FXML
+    private Text dobAlert;
+
+    @FXML
+    private Text emailAlert;
+
+    @FXML
+    private Text fullNameAlert;
+
+    @FXML
+    private Text genderAlert;
+
+    @FXML
+    private Text phoneNoAlert;
+
+    @FXML
+    private Text usernameAlert;
+
+    @FXML
+    private Text passwordAlert;
+
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        final ObservableList<String> genderList = FXCollections.observableArrayList("Male", "Female");
+
+        ObservableList<String> genderList = FXCollections.observableArrayList("Male", "Female");
         gender.setItems(genderList);
     }
 
@@ -76,21 +102,70 @@ public class SignUpController {
         try {
             String username = userName.getText();
             String pass = password.getText();
-            String confirmPass = confirmPassword.getText();
             System.err.println(dateOfBirth.getAccessibleText());
-            if (username.isEmpty() || pass.isEmpty() || confirmPass.isEmpty()
-                    || dateOfBirth.getValue() == null || email.getText().isEmpty()
-                    || fullName.getText().isEmpty() || phoneNumber.getText().isEmpty())
-                return;
-
-            if (SQLController.checkSignUp(username, pass) && confirmPass.equals(pass)) {
-                System.out.println("Success");
-                SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText(), phoneNumber.getText());
-                switchToMainMenu(event);
-                System.out.println("Switched to Main Menu");
-            } else {
-                System.out.println("SignUp Failed");
+            usernameAlert.setText("");
+            passwordAlert.setText("");
+            dobAlert.setText("");
+            emailAlert.setText("");
+            fullNameAlert.setText("");
+            genderAlert.setText("");
+            phoneNoAlert.setText("");
+            boolean invalidInput = false;
+            if (username.isEmpty()) {
+                usernameAlert.setText("Username cannot be empty!");
+                invalidInput = true;
+            } else if (!SQLController.checkSignUp(username)) {
+                usernameAlert.setText("Username already exists!");
+                invalidInput = true;
             }
+            if (pass.isEmpty()) {
+                passwordAlert.setText("Password cannot be empty!");
+                invalidInput = true;
+            }
+            if (dateOfBirth.getValue() == null) {
+                dobAlert.setText("Date of Birth cannot be empty!");
+                invalidInput = true;
+            }
+            if (email.getText().isEmpty()) {
+                emailAlert.setText("Email cannot be empty!");
+                invalidInput = true;
+            }
+            if (fullName.getText().isEmpty()) {
+                fullNameAlert.setText("Full Name cannot be empty!");
+                invalidInput = true;
+            }
+            if (phoneNumber.getText().isEmpty()) {
+                phoneNoAlert.setText("Phone Number cannot be empty!");
+                invalidInput = true;
+            }
+            if (gender.getValue() == null) {
+                genderAlert.setText("Gender cannot be empty!");
+                invalidInput = true;
+            }
+
+            if (invalidInput) {
+                return;
+            }
+
+
+            System.out.println("Success");
+            SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText(), phoneNumber.getText(), SQLController.convertImageViewToBlob(avatarImage));
+            switchToMainMenu(event);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void switchToSignInView(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
