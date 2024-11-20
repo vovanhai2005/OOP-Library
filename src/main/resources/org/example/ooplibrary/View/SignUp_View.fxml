@@ -36,7 +36,7 @@
                         <Font size="18.0" />
                     </font>
                 </PasswordField>
-                <Button fx:id="loginButton" layoutX="37.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleSignUpAction" onMouseClicked="#handleSignUpAction" prefHeight="66.0" prefWidth="289.0" styleClass="button-custom" text="Sign Up">
+                <Button fx:id="signUpButton" layoutX="37.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleSignUpAction" onMouseClicked="#handleSignUpAction" prefHeight="66.0" prefWidth="289.0" styleClass="button-custom" text="Sign Up">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -46,22 +46,22 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </TextField>
-            <Text layoutX="37.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Full name" wrappingWidth="289.0">
+            <Text fx:id="fullNameAlert" layoutX="37.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="37.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="289.0">
+            <Text fx:id="usernameAlert" layoutX="37.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="37.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Full name" wrappingWidth="289.0">
+            <Text fx:id="passwordAlert" layoutX="37.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Label fx:id="SignUp" layoutX="280.0" layoutY="529.0" onMouseClicked="#handleSignUpAction" styleClass="sign_up_text" text="Sign in" underline="true">
+            <Label fx:id="signInButton" layoutX="280.0" layoutY="529.0" onMouseClicked="#switchToSignInView" styleClass="sign_up_text" text="Sign in" underline="true">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -81,27 +81,27 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </TextField>
-            <TextField fx:id="email1" layoutX="264.0" layoutY="438.0" prefHeight="66.0" prefWidth="289.0" promptText="Phone no." styleClass="user_field">
+            <TextField fx:id="phoneNumber" layoutX="264.0" layoutY="438.0" prefHeight="66.0" prefWidth="289.0" promptText="Phone no." styleClass="user_field">
                <font>
                   <Font name="Calibri" size="18.0" />
                </font>
             </TextField>
-            <Text layoutX="264.0" layoutY="528.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone no." wrappingWidth="289.0">
+            <Text fx:id="phoneNoAlert" layoutX="264.0" layoutY="528.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="264.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="289.0">
+            <Text fx:id="emailAlert" layoutX="264.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="264.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" wrappingWidth="289.0">
+            <Text fx:id="genderAlert" layoutX="264.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text layoutX="264.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DOB" wrappingWidth="289.0">
+            <Text fx:id="dobAlert" layoutX="264.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
