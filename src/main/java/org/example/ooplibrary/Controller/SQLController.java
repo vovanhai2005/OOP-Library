@@ -2,9 +2,16 @@ package org.example.ooplibrary.Controller;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.example.ooplibrary.Object.Book;
+import org.example.ooplibrary.Object.BookLoan;
 import org.example.ooplibrary.Object.User;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -68,6 +75,7 @@ public class SQLController {
 
             //Create a "book_loans" table if it doesn't exist
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS `book_loans` (\n" +
+                    "  `bookLoanID` int(11) NOT NULL,\n" +
                     "  `ISBN` varchar(32) NOT NULL,\n" +
                     "  `username` varchar(32) NOT NULL,\n" +
                     "  `note` text DEFAULT NULL,\n" +
@@ -75,7 +83,7 @@ public class SQLController {
                     "  `returnDate` date DEFAULT NULL\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;");
             statement.executeUpdate("ALTER TABLE `book_loans`\n" +
-                    "  ADD PRIMARY KEY (`ISBN`,`username`);");
+                    "  ADD PRIMARY KEY (`bookLoanID`,`ISBN`,`username`);");
 
 
             connection.close();
@@ -94,8 +102,10 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select password from user_info where username=\"" + username + "\"");
+            ResultSet resultSet = statement.executeQuery("select password from user_info where username= '" + username + "'");
+
             if (resultSet.next()) {
+                System.out.println("password: " + resultSet.getString(1));
                 if (resultSet.getString(1).equals(password)) {
                     return true;
                 }
@@ -107,7 +117,7 @@ public class SQLController {
         return false;
     }
 
-    public static boolean checkSignUp(String username, String password) {
+    public static boolean checkSignUp(String username) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -117,12 +127,14 @@ public class SQLController {
             Statement statement = connection.createStatement();
             ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM user_info WHERE username = '" + username + "'");
 
-            int count = checkResult.getInt(1);
+            if (checkResult.next()) {
+                int count = checkResult.getInt(1);
 
-            if (count > 0) {
-                System.out.println("Username already exists. Please choose a different username.");
-                connection.close();
-                return false;
+                if (count > 0) {
+                    System.out.println("Username already exists. Please choose a different username.");
+                    connection.close();
+                    return false;
+                }
             }
 
 
@@ -268,7 +280,9 @@ public class SQLController {
                                String password,
                                String fullName,
                                String dateOfBirth,
-                               String email) {
+                               String email,
+                               String phoneNumber,
+                               byte[] userImage){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -280,9 +294,8 @@ public class SQLController {
             // If username doesn't exist, add the new user to the database
             statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
                     ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `userImage`, `isAdmin`)" +
-                    " VALUES ('" + username + "', ' " + password + " ', '" + fullName + "', '" +
-                    dateOfBirth + "', NULL, '" + email + "', NULL, NULL,  '0');");
-
+                    " VALUES ('" + username + "', '" + password + "', '" + fullName + "', '" +
+                    dateOfBirth + "', NULL, '" + email + "', '" + phoneNumber +  "','" + convertByteArrayToString(userImage) +"',  '0');");
             connection.close();
 
 
@@ -323,7 +336,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE username LIKE '%" + keyword + "%' OR fullName LIKE '%" + keyword + "%' OR gender LIKE '%" + keyword + "%' OR email LIKE '%" + keyword + "%' OR phoneNumber LIKE '%" + keyword + "%';");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE isAdmin = 0 AND ( username LIKE '%" + keyword + "%' OR fullName LIKE '%" + keyword + "%' OR gender LIKE '%" + keyword + "%' OR email LIKE '%" + keyword + "%' OR phoneNumber LIKE '%" + keyword + "%');");
 
             while (resultSet.next()) {
                 data.add(new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8))));
@@ -333,5 +346,110 @@ public class SQLController {
             System.out.println(e);
         }
         return data;
+    }
+
+    public static boolean deleteBookLoan(String bookLoanID) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM book_loans WHERE bookLoanID = '" + bookLoanID + "';");
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
+    public static ArrayList<BookLoan> getBookLoansData() {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username;");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                      resultSet.getString(2),
+                                      resultSet.getString(3),
+                                      resultSet.getString(4),
+                                      resultSet.getString(5),
+                                      resultSet.getString(6)
+                                     )
+                        );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public static ArrayList<BookLoan> getBookLoansDataWithKeyword(String keyword) {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username\n" +
+                    "WHERE b.bookName LIKE '%" + keyword + "%' OR u.fullName LIKE '%" + keyword + "%' OR bl.dueDate LIKE '%" + keyword + "%' OR bl.returnDate LIKE '%" + keyword + "%' OR bl.note LIKE '%" + keyword + "%';");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                      resultSet.getString(2),
+                                      resultSet.getString(3),
+                                      resultSet.getString(4),
+                                      resultSet.getString(5),
+                                      resultSet.getString(6)
+                                     )
+                        );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public static byte[] convertImageViewToBlob(ImageView imageView) {
+        Image image = imageView.getImage();  // Lấy Image từ ImageView
+
+        if (image == null) {
+            return null; // Nếu không có hình ảnh thì trả về null
+        }
+
+        // Chuyển Image thành BufferedImage
+        BufferedImage bufferedImage = javafx.embed.swing.SwingFXUtils.fromFXImage(image, null);
+
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+            // Ghi ảnh dưới dạng JPEG vào ByteArrayOutputStream
+            ImageIO.write(bufferedImage, "jpg", byteArrayOutputStream);
+
+            // Trả về mảng byte của ảnh (BLOB)
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
