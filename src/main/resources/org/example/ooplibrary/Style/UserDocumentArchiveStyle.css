@@ -1,7 +1,3 @@
-.app_logo:hover{
-    -fx-cursor: hand;
-}
-
 .menu_pane{
     -fx-background-color: #BCB09E;
 }
@@ -32,18 +28,6 @@
     -fx-cursor: hand;
 }
 
-.addBook_btn{
-    -fx-background-color: #bab1a0;
-    -fx-background-radius: 5px;
-    -fx-opacity: 0.9;
-    -fx-border-color: transparent;
-}
-
-.addBook_btn:hover{
-    -fx-background-color: #DCE0E2;
-    -fx-cursor: hand;
-}
-
-.table_view{
+.book_field{
     -fx-background-color: #E6DDD4;
 }
