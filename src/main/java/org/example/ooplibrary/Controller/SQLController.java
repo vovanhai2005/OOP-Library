@@ -452,4 +452,40 @@ public class SQLController {
             return null;
         }
     }
+
+    public static ArrayList<BookLoan> getBookLoansDataWithUser(String username) {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "WHERE bl.username = '" + username + "';");
+            System.out.println("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "WHERE bl.username = '" + username + "';");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                      resultSet.getString(2),
+                                      null,
+                                      resultSet.getString(3),
+                                      resultSet.getString(4),
+                                      resultSet.getString(5)
+                                     )
+                        );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
 }

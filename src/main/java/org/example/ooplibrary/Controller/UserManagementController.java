@@ -159,6 +159,33 @@ public class UserManagementController extends AbstractMenuController implements 
 
     private void viewUserDetails(User user) {
         System.out.println("Xem thông tin của người dùng ");
+        try {
+            // Tạo FXMLLoader và nạp file FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/DisplayUser_View.fxml"));
+            Parent root = loader.load();
+
+
+            DisplayUserController displayUserController = loader.getController();
+            displayUserController.setUserManagementController(this);
+            displayUserController.setEmail(user.getEmail());
+            displayUserController.setFullName(user.getFulLName());
+            displayUserController.setDateofBirth(user.getDob());
+            displayUserController.setGender(user.getGender());
+            displayUserController.setPhoneNumber(user.getPhoneNumber());
+            displayUserController.setUsername(user.getUsername());
+            displayUserController.setImage(user.getImage());
+            displayUserController.setTableView();
+
+
+            // Tạo cửa sổ mới để hiển thị thông tin chi tiết
+            Stage stage = new Stage();
+            stage.setTitle("Thông tin chi tiết người dùng");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void editUserInfo(User user) {
