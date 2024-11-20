@@ -19,7 +19,7 @@
          </font>
       </Text>
       <AnchorPane layoutX="50.0" layoutY="63.0" onMouseClicked="#chooseImage" prefHeight="280.0" prefWidth="195.0" styleClass="book_image" />
-      <ImageView fx:id="bookImage" fitHeight="291.0" fitWidth="207.0" layoutX="51.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="bookImage" fitHeight="280.0" fitWidth="195.0" layoutX="50.0" layoutY="63.0" pickOnBounds="true" />
       <Line endX="236.5" endY="499.0" layoutX="63.0" layoutY="7.0" startX="236.49998474121094" startY="56.29289245605469" />
       <VBox layoutX="331.0" layoutY="83.0" prefHeight="56.0" prefWidth="235.0">
          <children>

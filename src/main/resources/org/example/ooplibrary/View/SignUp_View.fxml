@@ -46,17 +46,17 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </TextField>
-            <Text fx:id="fullNameAlert" layoutX="37.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
+            <Text fx:id="fullNameAlert" fill="#de401f" layoutX="37.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fx:id="usernameAlert" layoutX="37.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
+            <Text fx:id="usernameAlert" fill="#de401f" layoutX="37.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fx:id="passwordAlert" layoutX="37.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
+            <Text fx:id="passwordAlert" fill="#de401f" layoutX="37.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -86,28 +86,28 @@
                   <Font name="Calibri" size="18.0" />
                </font>
             </TextField>
-            <Text fx:id="phoneNoAlert" layoutX="264.0" layoutY="528.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
+            <Text fx:id="phoneNoAlert" fill="#de401f" layoutX="264.0" layoutY="528.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fx:id="emailAlert" layoutX="264.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
+            <Text fx:id="emailAlert" fill="#de401f" layoutX="264.0" layoutY="414.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fx:id="genderAlert" layoutX="264.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
+            <Text fx:id="genderAlert" fill="#de401f" layoutX="264.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fx:id="dobAlert" layoutX="264.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
+            <Text fx:id="dobAlert" fill="#de401f" layoutX="264.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="289.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
             <AnchorPane layoutX="24.0" layoutY="95.0" onMouseClicked="#chooseImage" prefHeight="230.0" prefWidth="195.0" styleClass="ava_image" />
-            <ImageView fx:id="avatarImage" fitHeight="240.0" fitWidth="211.0" layoutX="23.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="avatarImage" fitHeight="230.0" fitWidth="195.0" layoutX="24.0" layoutY="95.0" pickOnBounds="true" />
             <Text layoutX="24.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions:" wrappingWidth="125.13671875">
                <font>
                   <Font name="System Bold" size="20.0" />
