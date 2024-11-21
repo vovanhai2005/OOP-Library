@@ -150,10 +150,10 @@ public class SignUpController implements Initializable {
 
             System.out.println("Success");
             SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText(), phoneNumber.getText(), SQLController.convertImageViewToBlob(avatarImage));
-            switchToMainMenu(event);
+            switchToUserMainMenu(event);
 
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -187,12 +187,19 @@ public class SignUpController implements Initializable {
         }
     }
 
-    private void switchToMainMenu(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    private void switchToUserMainMenu(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UserMainMenu_View.fxml"));
+            root = loader.load();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            UserMainMenuController userMainMenuController = loader.getController();
+            userMainMenuController.setUsername(userName.getText());
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

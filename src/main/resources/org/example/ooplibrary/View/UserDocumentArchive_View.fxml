@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,7 +14,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" styleClass="book_field" stylesheets="@../Style/UserDocumentArchiveStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.UserDocumentArchiveController">
    <children>
       <AnchorPane blendMode="MULTIPLY" prefHeight="725.0" prefWidth="208.0" styleClass="menu_pane">
@@ -23,7 +23,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <HBox layoutY="232.0" onMouseClicked="#switchToMainMenuView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+            <HBox layoutY="232.0" onMouseClicked="#switchToUserMainMenuView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -43,7 +43,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="306.0" onMouseClicked="#switchToDocumentArchiveView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+            <HBox layoutY="306.0" onMouseClicked="#switchToUserDocumentArchiveView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -63,7 +63,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="380.0" onMouseClicked="#switchToUserManagementView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+            <HBox layoutY="380.0" onMouseClicked="#openDisplayUserWindow" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -83,7 +83,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="454.0" onMouseClicked="#switchToBorrowDocumentView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+            <HBox layoutY="454.0" onMouseClicked="#openSettingsWindow" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -103,7 +103,7 @@
                   </Label>
                </children>
             </HBox>
-            <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" onMouseClicked="#switchToMainMenuView" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
+            <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" onMouseClicked="#switchToUserMainMenuView" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
                <image>
                   <Image url="@../Image/Logo_Image.png" />
                </image>
@@ -130,30 +130,18 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <GridPane layoutX="234.0" layoutY="181.0" prefHeight="544.0" prefWidth="1046.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <ImageView fitHeight="191.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fitHeight="184.0" fitWidth="132.0" pickOnBounds="true" GridPane.hgrow="SOMETIMES">
-               <image>
-                  <Image url="@../Image/sample.jpg" />
-               </image>
-            </ImageView>
-         </children>
-      </GridPane>
+      <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" layoutX="208.0" layoutY="154.0" prefHeight="571.0" prefWidth="1072.0" vbarPolicy="ALWAYS">
+         <content>
+            <GridPane fx:id="gridPane" prefWidth="1046.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+               </columnConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
