@@ -160,12 +160,12 @@
             </children></AnchorPane>
       <TableView fx:id="tableView" layoutX="207.0" layoutY="150.0" prefHeight="570.0" prefWidth="1073.0" styleClass="table_view">
         <columns>
-          <TableColumn fx:id="IDCol" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="bookNameCol" minWidth="0.0" prefWidth="258.0" text="Book Name" />
-            <TableColumn fx:id="borrowerNameCol" prefWidth="234.0" text="Borrower" />
-            <TableColumn fx:id="dueDateCol" prefWidth="122.0" text="Due Date" />
-            <TableColumn fx:id="informationCol" prefWidth="192.0" text="Note" />
-            <TableColumn fx:id="featureCol" prefWidth="191.0" text="Feature" />
+          <TableColumn fx:id="IDCol" prefWidth="121.0" text="ISBN" />
+          <TableColumn fx:id="bookNameCol" minWidth="0.0" prefWidth="190.0" text="Book Name" />
+            <TableColumn fx:id="borrowerNameCol" prefWidth="221.0" text="Borrower's username" />
+            <TableColumn fx:id="dueDateCol" prefWidth="164.0" text="Due Date" />
+            <TableColumn fx:id="informationCol" prefWidth="147.0" text="Note" />
+            <TableColumn fx:id="featureCol" prefWidth="229.0" text="Feature" />
         </columns>
       </TableView>
     </children>
