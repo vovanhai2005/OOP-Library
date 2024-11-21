@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -14,16 +13,8 @@
    <children>
       <AnchorPane layoutX="25.0" layoutY="23.0" prefHeight="265.0" prefWidth="512.0" styleClass="user_overview">
          <children>
-            <ImageView fitHeight="188.0" fitWidth="168.0" layoutX="35.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
-            <AnchorPane layoutX="35.0" layoutY="34.0" prefHeight="188.0" prefWidth="141.0" styleClass="user_image">
-               <children>
-                  <ImageView blendMode="SOFT_LIGHT" fitHeight="40.0" fitWidth="31.0" layoutX="55.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" styleClass="addBook_icon">
-                     <image>
-                        <Image url="@../Image/add_image.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </AnchorPane>
+            <AnchorPane layoutX="35.0" layoutY="34.0" prefHeight="188.0" prefWidth="141.0" styleClass="user_image" />
+            <ImageView fx:id="imageView" fitHeight="188.0" fitWidth="168.0" layoutX="35.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
             <HBox layoutX="203.0" layoutY="34.0" prefHeight="47.0" prefWidth="278.0">
                <children>
                   <Label prefHeight="51.0" prefWidth="98.0" text="Full name:">
@@ -31,7 +22,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="182.0" text="Võ Văn Hải">
+                  <Label fx:id="fullName" alignment="CENTER" prefHeight="47.0" prefWidth="182.0" text="Võ Văn Hải">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -45,7 +36,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="182.0" text="vohai1011">
+                  <Label fx:id="username" alignment="CENTER" prefHeight="47.0" prefWidth="182.0" text="vohai1011">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -63,7 +54,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="102.0" text="Male">
+                  <Label fx:id="gender" alignment="CENTER" prefHeight="47.0" prefWidth="102.0" text="Male">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -77,7 +68,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="141.0" text="10/11/2005">
+                  <Label fx:id="dateofBirth" alignment="CENTER" prefHeight="47.0" prefWidth="141.0" text="10/11/2005">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -91,7 +82,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="212.0" text="23020059@gmail.com">
+                  <Label fx:id="email" alignment="CENTER" prefHeight="47.0" prefWidth="212.0" text="23020059@gmail.com">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -105,7 +96,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" prefHeight="47.0" prefWidth="141.0" text="23020059">
+                  <Label fx:id="phoneNumber" alignment="CENTER" prefHeight="47.0" prefWidth="141.0" text="23020059">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -123,12 +114,11 @@
             </Text>
             <TableView fx:id="tableView" layoutX="36.0" layoutY="63.0" prefHeight="300.0" prefWidth="1162.0" styleClass="table_view">
                <columns>
-                  <TableColumn fx:id="ISBNCol" prefWidth="162.0" styleClass="table_column" text="ISBN" />
-                  <TableColumn fx:id="nameCol" prefWidth="211.0" styleClass="table_column" text="Name" />
-                  <TableColumn fx:id="yearOfPublicationCol" minWidth="0.0" prefWidth="172.0" styleClass="table_column" text="Year of Publication" />
-                  <TableColumn fx:id="authorCol" minWidth="0.0" prefWidth="163.0" styleClass="table_column" text="Author" />
-                  <TableColumn fx:id="genreCol" minWidth="0.0" prefWidth="275.0" styleClass="table_column" text="Genre" />
-                  <TableColumn fx:id="featureCol" minWidth="0.0" prefWidth="178.0" sortable="false" styleClass="table_column" text="Status" />
+                  <TableColumn fx:id="IDCol" prefWidth="99.0" styleClass="table_column" text="ID" />
+                  <TableColumn fx:id="bookNameCol" prefWidth="322.0" styleClass="table_column" text="Book Name" />
+                  <TableColumn fx:id="dueDateCol" minWidth="0.0" prefWidth="235.0" styleClass="table_column" text="Due Date" />
+                  <TableColumn fx:id="returnDateCol" minWidth="0.0" prefWidth="236.0" styleClass="table_column" text="Return Date" />
+                  <TableColumn fx:id="informationCol" minWidth="0.0" prefWidth="269.0" sortable="false" styleClass="table_column" text="Note" />
                </columns>
             </TableView>
          </children></AnchorPane>
