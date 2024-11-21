@@ -89,20 +89,50 @@ public class UserMainMenuController extends AbstractMenuController {
 
     @FXML
     void performSearch1(MouseEvent event) {
-        System.out.println("Search 1");
-
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UserDocumentArchive_View.fxml"));
+            root = loader.load();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            UserDocumentArchiveController userDocumentArchiveController = loader.getController();
+            userDocumentArchiveController.setUsername(username);
+            userDocumentArchiveController.setSearchKeyword(searchKeyword.getText());
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void performSearch2(KeyEvent event) {
-        System.out.println("Search 2");
+        if (event.getCode().toString().equals("ENTER")) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UserDocumentArchive_View.fxml"));
+                root = loader.load();
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                UserDocumentArchiveController userDocumentArchiveController = loader.getController();
+                userDocumentArchiveController.setUsername(username);
+                userDocumentArchiveController.setSearchKeyword(searchKeyword.getText());
+                scene = new Scene(root);
+                userDocumentArchiveController.performSearch2(event);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @FXML
     void switchToUserDocumentArchiveView(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/UserDocumentArchive_View.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UserDocumentArchive_View.fxml"));
+            root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            UserDocumentArchiveController userDocumentArchiveController = loader.getController();
+            userDocumentArchiveController.setUsername(username);
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
