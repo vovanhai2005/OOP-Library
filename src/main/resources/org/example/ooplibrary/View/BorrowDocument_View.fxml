@@ -2,9 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -157,17 +157,17 @@
                   </ImageView>
                </graphic>
             </Label>
+            <TableView layoutY="166.0" prefHeight="554.0" prefWidth="1142.0">
+              <columns>
+                <TableColumn prefWidth="94.39997863769531" text="ISBN" />
+                <TableColumn prefWidth="255.20001220703125" text="Book_title" />
+                  <TableColumn minWidth="2.39996337890625" prefWidth="157.5999755859375" text="User_name" />
+                  <TableColumn minWidth="0.800048828125" prefWidth="132.80001831054688" text="Due_date" />
+                  <TableColumn minWidth="0.0" prefWidth="130.4000244140625" text="Return_date" />
+                  <TableColumn prefWidth="255.20001220703125" text="Note" />
+                  <TableColumn prefWidth="122.39996337890625" text="Feature" />
+              </columns>
+            </TableView>
             </children></AnchorPane>
-      <TreeTableView layoutX="208.0" layoutY="165.0" prefHeight="554.0" prefWidth="1141.0" style="-fx-background-color: F0E9DD;">
-        <columns>
-          <TreeTableColumn prefWidth="84.80001831054688" text="ISBN" />
-          <TreeTableColumn minWidth="0.0" prefWidth="205.60000610351562" text="Book_title" />
-            <TreeTableColumn minWidth="0.0" prefWidth="195.99996948242188" text="User_name" />
-            <TreeTableColumn minWidth="0.0" prefWidth="136.0" text="Due date" />
-            <TreeTableColumn minWidth="0.0" prefWidth="145.60009765625" text="Return_date" />
-            <TreeTableColumn prefWidth="240.80010986328125" text="Note" />
-            <TreeTableColumn prefWidth="127.199951171875" text="Feature" />
-        </columns>
-      </TreeTableView>
     </children>
 </AnchorPane>

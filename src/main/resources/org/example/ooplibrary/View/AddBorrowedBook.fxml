@@ -3,77 +3,45 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="504.0" prefWidth="639.0" styleClass="anchor-pane" stylesheets="@../Style/AddBorrowedBook.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.AddBorrowedBookController">
+<AnchorPane prefHeight="306.0" prefWidth="639.0" styleClass="anchor-pane" stylesheets="@../Style/AddBorrowedBook.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.AddBorrowedBookController">
    <children>
-    <Button layoutX="526.0" layoutY="454.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="73.0" text="ADD" />
-      <Text fill="#282828" layoutX="266.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK BORROW" wrappingWidth="214.936767578125">
+    <Button layoutX="230.0" layoutY="252.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="73.0" text="ADD" />
+      <Text fill="#282828" layoutX="203.5" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOK BORROW" wrappingWidth="214.936767578125">
          <font>
             <Font name="System Bold" size="27.0" />
          </font>
       </Text>
-      <TextField layoutX="324.0" layoutY="99.0" prefHeight="26.0" prefWidth="273.0" />
-      <Text fill="#272826" layoutX="329.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Title :" wrappingWidth="103.99995384216322">
+      <TextField layoutX="324.0" layoutY="92.0" prefHeight="26.0" prefWidth="273.0" />
+      <Text fill="#292b28" layoutX="325.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book ISBN  :" wrappingWidth="110.39991722106936">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <TextField layoutX="324.0" layoutY="158.0" prefHeight="26.0" prefWidth="273.0" />
-      <Text fill="#292b28" layoutX="325.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book ISBN  :" wrappingWidth="110.39991722106936">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="24.0" fitWidth="32.0" layoutX="610.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Image/Autofill.png" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="14.0" layoutY="68.0" prefHeight="249.0" prefWidth="290.0" styleClass="user">
+      <AnchorPane layoutX="14.0" layoutY="68.0" prefHeight="134.0" prefWidth="290.0" styleClass="user">
          <children>
-            <TextField layoutX="12.0" layoutY="45.0" prefHeight="26.0" prefWidth="273.0" promptText="Name" />
+            <TextField layoutX="12.0" layoutY="45.0" prefHeight="26.0" prefWidth="273.0" promptText="Username" />
             <Text fill="#2d2e2b" layoutX="12.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrower :" wrappingWidth="91.99995574951174">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <Text fill="#272825" layoutX="10.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loan date :" wrappingWidth="103.99995384216322">
+            <Text fill="#1f201e" layoutX="12.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Due date :" wrappingWidth="91.99995574951174">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <DatePicker layoutX="112.0" layoutY="144.0" prefHeight="26.0" prefWidth="160.0" />
-            <Text fill="#1f201e" layoutX="12.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Due date :" wrappingWidth="91.99995574951174">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Text>
-            <DatePicker layoutX="112.0" layoutY="195.0" prefHeight="26.0" prefWidth="160.0" />
-            <TextField layoutX="12.0" layoutY="86.0" promptText="ID" />
+            <DatePicker layoutX="112.0" layoutY="90.0" prefHeight="26.0" prefWidth="160.0" />
          </children>
       </AnchorPane>
-      <TextField layoutX="326.0" layoutY="217.0" prefHeight="26.0" prefWidth="274.0" />
-      <Text fill="#292b28" layoutX="326.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Year of publication :" wrappingWidth="223.9999538421631">
+      <Text fill="#292b28" layoutX="325.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note :" wrappingWidth="110.39991722106936">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <TextField layoutX="326.0" layoutY="274.0" prefHeight="26.0" prefWidth="274.0" />
-      <Text fill="#292b28" layoutX="326.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author :" wrappingWidth="103.99995384216311">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Text>
-      <TextField layoutX="326.0" layoutY="325.0" prefHeight="105.0" prefWidth="274.0" />
-      <Text fill="#292b28" layoutX="326.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre : " wrappingWidth="273.6">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Text>
+      <TextField layoutX="324.0" layoutY="166.0" prefHeight="114.0" prefWidth="274.0" />
    </children>
 </AnchorPane>
