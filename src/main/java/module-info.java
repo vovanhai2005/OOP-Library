@@ -10,13 +10,12 @@ module org.example.ooplibrary {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
-    requires java.desktop;
     requires java.sql;
+    requires javafx.swing;
 
-    opens org.example.ooplibrary to javafx.fxml;
-    exports org.example.ooplibrary;
     exports org.example.ooplibrary.Controller;
     opens org.example.ooplibrary.Controller to javafx.fxml;
     exports org.example.ooplibrary.Core;
     opens org.example.ooplibrary.Core to javafx.fxml;
+    opens org.example.ooplibrary.Object to javafx.base;
 }

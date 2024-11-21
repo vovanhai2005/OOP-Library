@@ -28,6 +28,9 @@ public class LogInController {
     private Text status;
 
     @FXML
+    private Text signInAlert;
+
+    @FXML
     private TextField userName;
 
     private Stage stage;
@@ -39,6 +42,10 @@ public class LogInController {
 
         String username = userName.getText();
         String pass = password.getText();
+        if (username.isEmpty() || pass.isEmpty()) {
+            signInAlert.setText("Username or Password cannot be empty");
+            return;
+        }
 
         if (SQLController.checkPassword(username, pass)) {
             System.out.println("Success");
@@ -46,18 +53,8 @@ public class LogInController {
             switchToMainMenu(event);
             System.out.println("Switched to Main Menu");
         } else {
+            signInAlert.setText("Incorrect password or username");
             System.out.println("Login Failed");
-        }
-    }
-    private void switchToMainMenu(ActionEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -73,4 +70,18 @@ public class LogInController {
             e.printStackTrace();
         }
     }
+
+    private void switchToMainMenu(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

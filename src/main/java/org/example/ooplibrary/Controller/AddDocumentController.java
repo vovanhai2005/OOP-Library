@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,7 +14,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 public class AddDocumentController {
     @FXML
@@ -40,15 +45,19 @@ public class AddDocumentController {
     private DocumentArchiveController documentArchiveController;
 
     @FXML
+    private ImageView addImageButton;
+
+    @FXML
     private AnchorPane anchorPane;
 
 
     @FXML
     void handleAddBook(MouseEvent event) {
-        if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText()))
+        byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
+        if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage))
             return;
-        documentArchiveController.addBook(new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText()));
-        documentArchiveController.getSecondStage().hide();
+        documentArchiveController.addBook(new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage));
+        ((Node) event.getSource()).getScene().getWindow().hide();
     }
 
     public void setDocumentArchiveController(DocumentArchiveController documentArchiveController) {
@@ -70,5 +79,7 @@ public class AddDocumentController {
             bookImage.setImage(image);
         }
     }
+
+
 
 }

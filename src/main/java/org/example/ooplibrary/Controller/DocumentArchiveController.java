@@ -8,13 +8,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
@@ -24,7 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class DocumentArchiveController extends MainMenuController implements Initializable {
+public class DocumentArchiveController extends AbstractMenuController implements Initializable {
 
     @FXML
     private TableView<Book> tableView;
@@ -48,13 +46,8 @@ public class DocumentArchiveController extends MainMenuController implements Ini
     @FXML
     private TableColumn<Book, Void> featureCol;
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
-
-    private Stage secondStage;
-    private Scene secondScene;
-    private Parent secondRoot;
+    @FXML
+    private TextField searchKeyword;
 
 
     private ObservableList<Book> data;
@@ -83,83 +76,14 @@ public class DocumentArchiveController extends MainMenuController implements Ini
         ArrayList<Book> temp = SQLController.getBookInfoData();
 
         if (temp != null)
-        for (Book book : temp) {
-            data.add(book);
-        }
+            for (Book book : temp) {
+                data.add(book);
+            }
 
 
         tableView.setItems(data);
     }
 
-    @FXML
-    void switchToBorrowDocumentView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/BorrowDocument_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void switchToDocumentArchiveView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/DocumentArchive_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void switchToLoginView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void switchToReturnDocumentView(MouseEvent event) {
-
-    }
-
-    @FXML
-    void switchToUserManagementView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/UserManagement_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void switchToMainMenuView(MouseEvent event) {
-        try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     void openAddDocumentWindow(MouseEvent event) {
@@ -179,11 +103,37 @@ public class DocumentArchiveController extends MainMenuController implements Ini
             secondStage.setTitle("Thêm tài liệu");
             secondStage.show();
 
-            // Lưu lại tham chiếu đến secondStage nếu cần thiết
-            this.secondStage = secondStage;
-
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void performSearch1(MouseEvent event) {
+        data.clear();
+        ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
+
+        if (temp != null)
+            for (Book book : temp) {
+                data.add(book);
+            }
+
+        tableView.setItems(data);
+    }
+
+    @FXML
+    void performSearch2(KeyEvent event) {
+        //Check if KeyEvent is Enter
+        if (event.getCode().toString().equals("ENTER")) {
+            data.clear();
+            ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
+
+            if (temp != null)
+                for (Book book : temp) {
+                    data.add(book);
+                }
+
+            tableView.setItems(data);
         }
     }
 
@@ -191,9 +141,6 @@ public class DocumentArchiveController extends MainMenuController implements Ini
         data.add(book);
     }
 
-    public Stage getSecondStage() {
-        return secondStage;
-    }
 
     private void addFeatureButtonsToTable() {
         featureCol.setCellFactory(param -> new TableCell<Book, Void>() {
@@ -239,6 +186,25 @@ public class DocumentArchiveController extends MainMenuController implements Ini
         // Mã để hiển thị chi tiết của tài liệu
         System.out.println("Xem chi tiết của tài liệu: " + book.getName());
         // Bạn có thể mở một cửa sổ mới để hiển thị thông tin chi tiết
+        try {
+            // Tải FXML của giao diện hiển thị tài liệu
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/DisplayDocument_View.fxml"));
+            Parent root = loader.load();
+
+            // Lấy controller của cửa sổ hiển thị tài liệu
+            DisplayDocumentController displayDocumentController = loader.getController();
+
+            // Gán dữ liệu tài liệu vào controller
+            displayDocumentController.setDocumentDetails(book);
+
+            // Tạo cửa sổ mới để hiển thị thông tin chi tiết
+            Stage stage = new Stage();
+            stage.setTitle("Thông tin chi tiết tài liệu");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void editBookInfo(Book book) {

@@ -21,7 +21,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <HBox layoutY="192.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+            <HBox layoutY="192.0" onMouseClicked="#switchToMainMenuView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -31,7 +31,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label id="dashboardBtn" onMouseClicked="#switchToMainMenuView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Dashboard">
+                  <Label id="dashboardBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Dashboard">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -41,7 +41,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="266.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+            <HBox layoutY="266.0" onMouseClicked="#switchToDocumentArchiveView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -51,7 +51,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label id="bookListBtn" onMouseClicked="#switchToDocumentArchiveView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Books List">
+                  <Label id="bookListBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Books List">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -61,7 +61,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="340.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+            <HBox layoutY="340.0" onMouseClicked="#switchToUserManagementView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -71,7 +71,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label id="userListBtn" onMouseClicked="#switchToUserManagementView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="User List">
+                  <Label id="userListBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="User List">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -81,7 +81,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="414.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+            <HBox layoutY="414.0" onMouseClicked="#switchToBorrowDocumentView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -91,7 +91,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label id="borrowBtn" onMouseClicked="#switchToBorrowDocumentView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Borrow ">
+                  <Label id="borrowBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Borrow ">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -101,7 +101,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox layoutY="488.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+            <HBox layoutY="488.0" onMouseClicked="#switchToReturnDocumentView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -111,7 +111,7 @@
                         <Insets left="28.0" top="13.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label id="returnBtn" onMouseClicked="#switchToReturnDocumentView" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Return ">
+                  <Label id="returnBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Return ">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -121,7 +121,7 @@
                   </Label>
                </children>
             </HBox>
-            <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
+            <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" onMouseClicked="#switchToMainMenuView" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
                <image>
                   <Image url="@../Image/Logo_Image.png" />
                </image>
@@ -130,11 +130,11 @@
       </AnchorPane>
       <TableView fx:id="tableView" layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0" styleClass="table_view">
          <columns>
-            <TableColumn fx:id="ISBNCol" prefWidth="89.0" styleClass="table_column" text="ID" />
-            <TableColumn fx:id="nameCol" prefWidth="215.0" styleClass="table_column" text="Name" />
-            <TableColumn fx:id="yearOfPublicationCol" minWidth="0.0" prefWidth="117.0" styleClass="table_column" text="Gender" />
-            <TableColumn fx:id="authorCol" minWidth="0.0" prefWidth="145.0" styleClass="table_column" text="DOB" />
-            <TableColumn fx:id="genreCol" minWidth="0.0" prefWidth="336.0" styleClass="table_column" text="Email" />
+            <TableColumn fx:id="usernameCol" prefWidth="159.0" styleClass="table_column" text="Username" />
+            <TableColumn fx:id="nameCol" prefWidth="176.0" styleClass="table_column" text="Name" />
+            <TableColumn fx:id="genderCol" minWidth="0.0" prefWidth="93.0" styleClass="table_column" text="Gender" />
+            <TableColumn fx:id="dobCol" minWidth="0.0" prefWidth="174.0" styleClass="table_column" text="DOB" />
+            <TableColumn fx:id="emailCol" minWidth="0.0" prefWidth="300.0" styleClass="table_column" text="Email" />
             <TableColumn fx:id="featureCol" minWidth="0.0" prefWidth="169.0" sortable="false" styleClass="table_column" text="Feature" />
          </columns>
       </TableView>
@@ -150,13 +150,13 @@
                   <Font name="System Bold" size="50.0" />
                </font>
             </Text>
-            <TextField layoutX="32.0" layoutY="86.0" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
-            <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" styleClass="search_icon">
+            <TextField fx:id="searchKeyword" layoutX="32.0" layoutY="86.0" onKeyPressed="#performSearch2" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
+            <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" onMouseClicked="#performSearch1" pickOnBounds="true" preserveRatio="true" styleClass="search_icon">
                <image>
                   <Image url="@../Image/search_icon.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="867.0" layoutY="86.0" prefHeight="47.0" prefWidth="192.0" styleClass="addBook_btn" text="Add new user" textAlignment="CENTER">
+            <Label alignment="CENTER" layoutX="867.0" layoutY="86.0" onMouseClicked="#openAddUserWindow" prefHeight="47.0" prefWidth="192.0" styleClass="addBook_btn" text="Add new user" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
