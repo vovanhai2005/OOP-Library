@@ -121,8 +121,6 @@ public class BorrowManagementController extends AbstractMenuController implement
     private void addFeatureButtonsToTable() {
         featureCol.setCellFactory(param -> new TableCell<BookLoan, Void>() {
             private final Button viewButton = new Button("Xem");
-            private final Button editButton = new Button("Chỉnh sửa");
-            private final Button deleteButton = new Button("Xóa");
 
             {
                 // Xử lý sự kiện khi nhấn vào nút "Xem"
@@ -131,17 +129,7 @@ public class BorrowManagementController extends AbstractMenuController implement
                     viewBookLoanDetails(bookLoan);
                 });
 
-                // Xử lý sự kiện khi nhấn vào nút "Chỉnh sửa"
-                editButton.setOnAction(event -> {
-                    BookLoan bookLoan = getTableView().getItems().get(getIndex());
-                    editBookLoanInfo(bookLoan);
-                });
 
-                // Xử lý sự kiện khi nhấn vào nút "Xóa"
-                deleteButton.setOnAction(event -> {
-                    BookLoan bookLoan = getTableView().getItems().get(getIndex());
-                    deleteBookLoan(bookLoan);
-                });
             }
 
             @Override
@@ -151,7 +139,7 @@ public class BorrowManagementController extends AbstractMenuController implement
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    HBox buttonsBox = new HBox(5, viewButton, editButton, deleteButton);
+                    HBox buttonsBox = new HBox(5, viewButton);
                     setGraphic(buttonsBox);
                 }
             }
@@ -162,20 +150,6 @@ public class BorrowManagementController extends AbstractMenuController implement
 
         System.out.println("Xem thông tin của phiếu mượn: " + bookLoan.getBookLoanID());
         // Thực hiện logic xem thông tin phiếu mượn ở đây
-    }
-
-    private void editBookLoanInfo(BookLoan bookLoan) {
-        System.out.println("Chỉnh sửa thông tin của phiếu mượn: " + bookLoan.getBookLoanID());
-        // Thực hiện logic chỉnh sửa thông tin phiếu mượn ở đây
-    }
-
-    private void deleteBookLoan(BookLoan bookLoan) {
-        // Mã để xóa tài liệu
-        System.out.println("Xóa phiếu mượn: " + bookLoan.getBookLoanID());
-        if (SQLController.deleteBookLoan(bookLoan.getBookLoanID())) {
-            data.remove(bookLoan); // Xóa sách khỏi danh sách
-            tableView.refresh(); // Làm mới bảng
-        }
     }
 
 

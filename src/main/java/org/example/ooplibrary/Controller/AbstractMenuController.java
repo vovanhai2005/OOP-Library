@@ -12,9 +12,9 @@ import java.io.IOException;
 
 abstract class AbstractMenuController {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    protected Stage stage;
+    protected Scene scene;
+    protected Parent root;
 
     @FXML
     void switchToBorrowDocumentView(MouseEvent event) {
