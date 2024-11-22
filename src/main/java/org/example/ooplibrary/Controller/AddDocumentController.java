@@ -13,9 +13,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
+import org.example.ooplibrary.Utils.GoogleBookAPIUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +52,11 @@ public class AddDocumentController {
     @FXML
     private AnchorPane anchorPane;
 
+    @FXML
+    private ImageView autofillBtn;
+
+
+
 
     @FXML
     void handleAddBook(MouseEvent event) {
@@ -78,6 +85,24 @@ public class AddDocumentController {
             Image image = new Image(file.toURI().toString());
             bookImage.setImage(image);
         }
+    }
+
+    @FXML
+    public void autofill(MouseEvent event) {
+        Book book = GoogleBookAPIUtil.fetchBookDetailsByISBN(ISBN.getText());
+        if (book == null) {
+            return;
+        }
+        bookName.setText(book.getName());
+        author.setText(book.getAuthor());
+        genre.setText(book.getGenre());
+        yearOfPublication.setText(book.getYearOfPublication());
+        description.setText(book.getDescription());
+        if (book.getImage() != null) {
+            Image image = new Image(new ByteArrayInputStream(book.getImage()));
+            bookImage.setImage(image);
+        }
+
     }
 
 

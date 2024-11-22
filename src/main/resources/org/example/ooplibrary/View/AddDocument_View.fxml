@@ -106,7 +106,7 @@
             </TextField>
          </children>
       </VBox>
-      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="580.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
+      <ImageView fx:id="autofillBtn" fitHeight="24.0" fitWidth="22.0" layoutX="580.0" layoutY="113.0" onMouseClicked="#autofill" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
          <image>
             <Image url="@../Image/autofill.png" />
          </image>
