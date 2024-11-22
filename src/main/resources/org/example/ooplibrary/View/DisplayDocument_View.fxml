@@ -129,7 +129,7 @@
                   </Text>
                </children>
             </VBox>
-            <ImageView fx:id="bookImage" fitHeight="330.0" fitWidth="226.0" layoutX="29.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="bookImage" fitHeight="330.0" fitWidth="226.0" layoutX="29.0" layoutY="40.0" pickOnBounds="true">
                <image>
                   <Image url="@../Image/sample.jpg" />
                </image>

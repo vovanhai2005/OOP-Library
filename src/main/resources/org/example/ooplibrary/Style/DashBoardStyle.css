@@ -32,6 +32,11 @@
     -fx-fill: #FFF5CD;
 }
 
-.quote_field{
+.dashboard_field{
     -fx-background-color: #F0E9DD;
+}
+
+.chart_field{
+    -fx-background-color: #BAB1A0;
+    -fx-background-radius: 20px;
 }
