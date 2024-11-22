@@ -13,6 +13,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -325,6 +327,105 @@ public class SQLController {
             System.out.println(e);
         }
         return data;
+    }
+
+    public static int[] estimateUserAge() {
+        int[] ageGroups = new int[3];
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT dateOfBirth FROM user_info WHERE dateOfBirth IS NOT NULL");
+
+            LocalDate currentDate = LocalDate.now();
+
+            while (resultSet.next()) {
+                String dateOfBirthString = resultSet.getString("dateOfBirth");
+                LocalDate dateOfBirth = LocalDate.parse(dateOfBirthString);
+
+                int age = Period.between(dateOfBirth, currentDate).getYears();
+
+                if (age < 18) {
+                    ageGroups[0]++;
+                } else if (age <= 25) {
+                    ageGroups[1]++;
+                } else {
+                    ageGroups[2]++;
+                }
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error estimating user age groups: " + e.getMessage());
+        }
+
+        return ageGroups;
+    }
+
+    public static int[][] estimateTransactions() {
+        int[][] transactions = null; // Mảng lưu số lượng giao dịch mượn và trả trong từng khoảng thời gian
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            // Xác định ngày bắt đầu và ngày kết thúc (ngày 1 đến ngày 30 của tháng trước)
+            LocalDate now = LocalDate.now();
+            LocalDate startDate = now.minusMonths(1).withDayOfMonth(1); // Ngày 1 của tháng trước
+            LocalDate endDate = now.minusMonths(1).withDayOfMonth(30); // Ngày 30 của tháng trước
+
+            // Chia khoảng thời gian thành các đoạn 5 ngày
+            int timeRanges = (int) (java.time.Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays() / 5) + 1;
+
+            transactions = new int[timeRanges][2]; // Cập nhật kích thước cho mảng dựa trên số khoảng
+
+            // Truy vấn số lượng sách mượn và trả trong từng khoảng thời gian 5 ngày
+            for (int i = 0; i < timeRanges; i++) {
+                LocalDate rangeStart = startDate.plusDays(i * 5); // Ngày bắt đầu của khoảng
+                LocalDate rangeEnd = rangeStart.plusDays(4); // Ngày kết thúc của khoảng
+
+                // Giới hạn ngày kết thúc không vượt quá ngày 30 của tháng trước
+                if (rangeEnd.isAfter(endDate)) {
+                    rangeEnd = endDate;
+                }
+
+                // Truy vấn số lượng sách mượn trong khoảng thời gian này
+                ResultSet borrowResultSet = statement.executeQuery(
+                        "SELECT COUNT(*) as borrowCount " +
+                                "FROM book_loans " +
+                                "WHERE dueDate >= '" + rangeStart + "' AND dueDate <= '" + rangeEnd + "';"
+                );
+
+                if (borrowResultSet.next()) {
+                    transactions[i][0] = borrowResultSet.getInt("borrowCount"); // Số lượng mượn
+                }
+
+                // Truy vấn số lượng sách trả trong khoảng thời gian này
+                ResultSet returnResultSet = statement.executeQuery(
+                        "SELECT COUNT(*) as returnCount " +
+                                "FROM book_loans " +
+                                "WHERE returnDate >= '" + rangeStart + "' AND returnDate <= '" + rangeEnd + "';"
+                );
+
+                if (returnResultSet.next()) {
+                    transactions[i][1] = returnResultSet.getInt("returnCount"); // Số lượng trả
+                }
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error estimating borrow and return transactions: " + e.getMessage());
+        }
+
+        return transactions;
     }
 
     public static ArrayList<User> getUserInfoDataWithKeyword(String keyword) {
