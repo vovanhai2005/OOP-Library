@@ -1,0 +1,33 @@
+.menu_pane{
+    -fx-background-color: #BCB09E;
+}
+
+.menu_button:hover{
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+}
+
+.log_out_button:hover {
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}
+
+.header_pane{
+    -fx-background-color: #E6DDD4;
+}
+
+.search_btn{
+    -fx-background-color: #F0E9DD;
+    -fx-background-radius: 20px;
+    -fx-opacity: 0.9;
+    -fx-border-color: transparent;
+}
+
+.search_icon:hover{
+    -fx-cursor: hand;
+}
+
+.book_field{
+    -fx-background-color: #E6DDD4;
+}

@@ -1,0 +1,37 @@
+.app_logo:hover{
+    -fx-cursor: hand;
+}
+
+.menu_pane{
+    -fx-background-color: #BCB09E;
+}
+
+.menu_button:hover{
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+}
+
+.log_out_button:hover {
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}
+
+.search_btn{
+    -fx-background-color: #F5F7F8;
+    -fx-background-radius: 20px;
+    -fx-opacity: 0.9;
+    -fx-border-color: transparent;
+}
+
+.search_icon:hover{
+    -fx-cursor: hand;
+}
+
+.header_title{
+    -fx-fill: #FFF5CD;
+}
+
+.quote_field{
+    -fx-background-color: #F0E9DD;
+}
