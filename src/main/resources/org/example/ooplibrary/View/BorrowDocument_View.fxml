@@ -129,13 +129,12 @@
             </children></AnchorPane>
       <TableView layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0" styleClass="quote_field">
         <columns>
-          <TableColumn prefWidth="94.39997863769531" text="ISBN" />
-          <TableColumn prefWidth="185.60003662109375" text="Book_title" />
-            <TableColumn minWidth="2.39996337890625" prefWidth="149.60000610351562" text="User_name" />
-            <TableColumn minWidth="0.800048828125" prefWidth="124.79998779296875" text="Due_date" />
-            <TableColumn minWidth="0.0" prefWidth="127.99993896484375" text="Return_date" />
-            <TableColumn minWidth="0.0" prefWidth="268.00006103515625" text="Note" />
-            <TableColumn prefWidth="122.4000244140625" text="Feature" />
+          <TableColumn prefWidth="104.00001525878906" text="ISBN" />
+          <TableColumn prefWidth="188.80001831054688" text="Book_title" />
+            <TableColumn minWidth="2.39996337890625" prefWidth="148.0" text="User_name" />
+            <TableColumn minWidth="0.800048828125" prefWidth="168.0" text="Due_date" />
+            <TableColumn minWidth="0.0" prefWidth="244.79998779296875" text="Note" />
+            <TableColumn prefWidth="222.4000244140625" text="Feature" />
         </columns>
       </TableView>
         <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
@@ -156,12 +155,12 @@
                         <Image url="@../Image/search_icon.png" />
                     </image>
                 </ImageView>
-            <Label alignment="CENTER" layoutX="867.0" layoutY="86.0" prefHeight="31.0" prefWidth="80.0" style="-fx-background-color: bab1a0; -fx-background-radius: 5px; -fx-opacity: 0.9; -fx-border-color: transparent;" text="Add" textAlignment="CENTER">
+            <Label alignment="CENTER" layoutX="833.0" layoutY="84.0" prefHeight="31.0" prefWidth="223.0" style="-fx-background-color: bab1a0; -fx-background-radius: 5px; -fx-opacity: 0.9; -fx-border-color: transparent;" text="Add borrow request" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Image/add.png" />
                      </image>
