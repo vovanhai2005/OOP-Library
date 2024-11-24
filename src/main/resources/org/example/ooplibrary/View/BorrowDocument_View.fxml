@@ -127,11 +127,22 @@
                     </image>
                 </ImageView>
             </children></AnchorPane>
-        <AnchorPane layoutX="207.0" prefHeight="274.0" prefWidth="1072.0" styleClass="header_pane">
+      <TableView layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0" styleClass="quote_field">
+        <columns>
+          <TableColumn prefWidth="94.39997863769531" text="ISBN" />
+          <TableColumn prefWidth="185.60003662109375" text="Book_title" />
+            <TableColumn minWidth="2.39996337890625" prefWidth="149.60000610351562" text="User_name" />
+            <TableColumn minWidth="0.800048828125" prefWidth="124.79998779296875" text="Due_date" />
+            <TableColumn minWidth="0.0" prefWidth="127.99993896484375" text="Return_date" />
+            <TableColumn minWidth="0.0" prefWidth="268.00006103515625" text="Note" />
+            <TableColumn prefWidth="122.4000244140625" text="Feature" />
+        </columns>
+      </TableView>
+        <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
             <children>
-                <ImageView fitHeight="169.0" fitWidth="1142.0" layoutY="-3.0" pickOnBounds="true">
+                <ImageView fitHeight="154.0" fitWidth="1072.0" pickOnBounds="true">
                     <image>
-                        <Image url="@../Image/Lib_Image(cutted).jpg" />
+                        <Image url="@../Image/Lib_Image.png" />
                     </image>
                 </ImageView>
                 <Text layoutX="37.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header_title" text="BORROW DATA" wrappingWidth="382.15899658203125">
@@ -139,13 +150,13 @@
                         <Font name="System Bold" size="50.0" />
                     </font>
                 </Text>
-                <TextField layoutX="37.0" layoutY="96.0" prefHeight="47.0" prefWidth="580.0" style="-fx-background-color: F0E9DD;" styleClass="search_btn" />
-                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="571.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+                <TextField layoutX="32.0" layoutY="86.0" prefHeight="47.0" prefWidth="580.0" style="-fx-background-color: F0E9DD;" styleClass="search_btn" />
+                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="571.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Image/search_icon.png" />
                     </image>
                 </ImageView>
-            <Label alignment="CENTER" layoutX="1011.0" layoutY="113.0" prefHeight="31.0" prefWidth="80.0" style="-fx-background-color: bab1a0; -fx-background-radius: 5px; -fx-opacity: 0.9; -fx-border-color: transparent;" text="Add" textAlignment="CENTER">
+            <Label alignment="CENTER" layoutX="867.0" layoutY="86.0" prefHeight="31.0" prefWidth="80.0" style="-fx-background-color: bab1a0; -fx-background-radius: 5px; -fx-opacity: 0.9; -fx-border-color: transparent;" text="Add" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -157,17 +168,6 @@
                   </ImageView>
                </graphic>
             </Label>
-            <TableView layoutY="166.0" prefHeight="554.0" prefWidth="1142.0">
-              <columns>
-                <TableColumn prefWidth="94.39997863769531" text="ISBN" />
-                <TableColumn prefWidth="255.20001220703125" text="Book_title" />
-                  <TableColumn minWidth="2.39996337890625" prefWidth="157.5999755859375" text="User_name" />
-                  <TableColumn minWidth="0.800048828125" prefWidth="132.80001831054688" text="Due_date" />
-                  <TableColumn minWidth="0.0" prefWidth="130.4000244140625" text="Return_date" />
-                  <TableColumn prefWidth="255.20001220703125" text="Note" />
-                  <TableColumn prefWidth="122.39996337890625" text="Feature" />
-              </columns>
-            </TableView>
             </children></AnchorPane>
     </children>
 </AnchorPane>
