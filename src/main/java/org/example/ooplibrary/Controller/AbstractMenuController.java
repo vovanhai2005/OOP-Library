@@ -12,9 +12,22 @@ import java.io.IOException;
 
 abstract class AbstractMenuController {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    protected Stage stage;
+    protected Scene scene;
+    protected Parent root;
+
+    @FXML
+    void switchToDashBoardView(MouseEvent event) {
+        try {
+            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/DashBoard_View.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void switchToBorrowDocumentView(MouseEvent event) {
@@ -71,7 +84,7 @@ abstract class AbstractMenuController {
     @FXML
     void switchToUserManagementView(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/UserManagement_View.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/AdminUserManagement_View.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

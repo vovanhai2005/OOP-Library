@@ -20,10 +20,27 @@
     -fx-border-color: transparent;
 }
 
+.borrowBook_btn{
+    -fx-background-color: #bab1a0;
+    -fx-background-radius: 5px;
+    -fx-opacity: 0.9;
+    -fx-border-color: transparent;
+}
+
+.borrowBook_btn:hover{
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+}
+
 .header_title{
     -fx-fill: #FFF5CD;
 }
 
 .quote_field{
     -fx-background-color: #F2E9DD;
+}
+
+.table_view{
+    -fx-background-color: #E6DDD4;
+    -fx-cell-size: 200px;
 }

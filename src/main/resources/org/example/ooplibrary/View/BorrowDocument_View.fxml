@@ -16,12 +16,12 @@
     <children>
         <AnchorPane blendMode="MULTIPLY" prefHeight="720.0" prefWidth="208.0" styleClass="menu_pane">
             <children>
-                <Label alignment="CENTER" layoutY="660.0" prefHeight="53.0" prefWidth="208.0" styleClass="log_out_button" text="Log out">
+                <Label alignment="CENTER" layoutY="660.0" onMouseClicked="#switchToLoginView" prefHeight="53.0" prefWidth="208.0" styleClass="log_out_button" text="Log out">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
-                <HBox layoutY="192.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+                <HBox layoutY="192.0" onMouseClicked="#switchToDashBoardView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                     <children>
                         <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -41,7 +41,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutY="266.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+                <HBox layoutY="266.0" onMouseClicked="#switchToDocumentArchiveView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                     <children>
                         <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -61,7 +61,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutY="340.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+                <HBox layoutY="340.0" onMouseClicked="#switchToUserManagementView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                     <children>
                         <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -81,7 +81,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutY="414.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+                <HBox layoutY="414.0" onMouseClicked="#switchToBorrowDocumentView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                     <children>
                         <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -101,7 +101,7 @@
                         </Label>
                     </children>
                 </HBox>
-                <HBox layoutY="488.0" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+                <HBox layoutY="488.0" onMouseClicked="#switchToReturnDocumentView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
                     <children>
                         <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -121,46 +121,36 @@
                         </Label>
                     </children>
                 </HBox>
-                <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" onMouseClicked="#switchToMainMenuView" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Image/Logo_Image.png" />
                     </image>
                 </ImageView>
             </children></AnchorPane>
-      <TableView layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0" styleClass="quote_field">
-        <columns>
-          <TableColumn prefWidth="104.00001525878906" text="ISBN" />
-          <TableColumn prefWidth="188.80001831054688" text="Book_title" />
-            <TableColumn minWidth="2.39996337890625" prefWidth="148.0" text="User_name" />
-            <TableColumn minWidth="0.800048828125" prefWidth="168.0" text="Due_date" />
-            <TableColumn minWidth="0.0" prefWidth="244.79998779296875" text="Note" />
-            <TableColumn prefWidth="222.4000244140625" text="Feature" />
-        </columns>
-      </TableView>
-        <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
+        <AnchorPane layoutX="207.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
             <children>
-                <ImageView fitHeight="154.0" fitWidth="1072.0" pickOnBounds="true">
+                <ImageView fitHeight="154.0" fitWidth="1073.0" layoutY="-3.0" pickOnBounds="true">
                     <image>
                         <Image url="@../Image/Lib_Image.png" />
                     </image>
                 </ImageView>
-                <Text layoutX="37.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="header_title" text="BORROW DATA" wrappingWidth="382.15899658203125">
-                    <font>
-                        <Font name="System Bold" size="50.0" />
-                    </font>
-                </Text>
-                <TextField layoutX="32.0" layoutY="86.0" prefHeight="47.0" prefWidth="580.0" style="-fx-background-color: F0E9DD;" styleClass="search_btn" />
-                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="571.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+                <TextField fx:id="searchKeyword" layoutX="32.0" layoutY="86.0" onKeyPressed="#performSearch2" prefHeight="47.0" prefWidth="580.0" styleClass="search_btn" />
+                <ImageView fitHeight="31.0" fitWidth="35.0" layoutX="573.0" layoutY="96.0" onMouseClicked="#performSearch1" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../Image/search_icon.png" />
                     </image>
                 </ImageView>
-            <Label alignment="CENTER" layoutX="833.0" layoutY="84.0" prefHeight="31.0" prefWidth="223.0" style="-fx-background-color: bab1a0; -fx-background-radius: 5px; -fx-opacity: 0.9; -fx-border-color: transparent;" text="Add borrow request" textAlignment="CENTER">
+            <Text fill="#f0e9dd" layoutX="32.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrow List" textAlignment="CENTER">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="50.0" />
+               </font>
+            </Text>
+            <Label alignment="CENTER" layoutX="840.0" layoutY="86.0" onMouseClicked="#openRequestBorrowWindow" prefHeight="47.0" prefWidth="219.0" styleClass="borrowBook_btn" text="Add new request" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="20.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#openRequestBorrowWindow" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Image/add.png" />
                      </image>
@@ -168,5 +158,15 @@
                </graphic>
             </Label>
             </children></AnchorPane>
+      <TableView fx:id="tableView" layoutX="207.0" layoutY="150.0" prefHeight="570.0" prefWidth="1073.0" styleClass="table_view">
+        <columns>
+          <TableColumn fx:id="IDCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="bookNameCol" minWidth="0.0" prefWidth="282.0" text="Book Name" />
+            <TableColumn fx:id="borrowerNameCol" prefWidth="211.0" text="Borrower Name" />
+            <TableColumn fx:id="dueDateCol" prefWidth="144.0" text="Due Date" />
+            <TableColumn fx:id="informationCol" prefWidth="278.0" text="Note" />
+            <TableColumn fx:id="featureCol" prefWidth="82.0" text="Feature" />
+        </columns>
+      </TableView>
     </children>
 </AnchorPane>
