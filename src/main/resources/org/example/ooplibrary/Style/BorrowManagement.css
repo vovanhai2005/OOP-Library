@@ -21,7 +21,19 @@
 }
 
 .header_title{
-    -fx-fill: #FFF5CD;
+    -fx-fill: #f0e9dd;
+}
+
+.addRequest_btn{
+    -fx-background-color: #bab1a0;
+    -fx-background-radius: 5px;
+    -fx-opacity: 0.9;
+    -fx-border-color: transparent;
+}
+
+.addRequest_btn:hover{
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
 }
 
 .quote_field{

@@ -85,11 +85,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="genre" alignment="TOP_LEFT" prefHeight="83.0" prefWidth="235.0" styleClass="info_field">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </TextField>
+            <TextField fx:id="genre" alignment="TOP_LEFT" prefHeight="97.0" prefWidth="235.0" />
          </children>
       </VBox>
       <VBox layoutX="38.0" layoutY="357.0" prefHeight="115.0" prefWidth="235.0">

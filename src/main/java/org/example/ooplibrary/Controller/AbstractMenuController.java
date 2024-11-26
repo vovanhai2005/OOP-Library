@@ -32,7 +32,7 @@ abstract class AbstractMenuController {
     @FXML
     void switchToBorrowDocumentView(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/BorrowDocument_View.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/BorrowManagement_View.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

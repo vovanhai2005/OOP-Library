@@ -110,15 +110,15 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
     @FXML
     void performSearch1(MouseEvent event) {
-        data.clear();
         ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
 
-        if (temp != null)
+        if (temp != null) {
+            data.clear();
             for (Book book : temp) {
                 data.add(book);
             }
-
-        tableView.setItems(data);
+            tableView.setItems(data);
+        }
     }
 
     @FXML

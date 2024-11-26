@@ -145,12 +145,12 @@
                         <Image url="@../Image/search_icon.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="840.0" layoutY="86.0" onMouseClicked="#openAddRequestView" prefHeight="47.0" prefWidth="219.0" styleClass="addBook_btn" text="Add new request" textAlignment="CENTER">
+                <Label alignment="CENTER" layoutX="840.0" layoutY="86.0" onMouseClicked="#openAddReturnRequestView" prefHeight="47.0" prefWidth="219.0" styleClass="addBook_btn" text="Add new request" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                     <graphic>
-                        <ImageView fitHeight="37.0" fitWidth="38.0" onMouseClicked="#openAddRequestView" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="37.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../Image/add.png" />
                             </image>
@@ -163,7 +163,7 @@
                 <TableView fx:id="tableView" prefHeight="566.0" prefWidth="1072.0" styleClass="table_view">
                     <columns>
                         <TableColumn fx:id="IDCol" prefWidth="102.5" styleClass="table_column" text="ISBN" />
-                        <TableColumn fx:id="bookNameCol" prefWidth="207.5" styleClass="table_column" text="Book Title" />
+                        <TableColumn fx:id="bookNameCol" prefWidth="207.5" styleClass="table_column" text="Book Name" />
                         <TableColumn fx:id="borrowerNameCol" minWidth="0.0" prefWidth="201.0" styleClass="table_column" text="Borrower Name" />
                         <TableColumn fx:id="returnDateCol" minWidth="0.0" prefWidth="169.60003662109375" styleClass="table_column" text="Return date" />
                         <TableColumn fx:id="dueDateCol" minWidth="0.0" prefWidth="203.2000732421875" styleClass="table_column" text="Note" />

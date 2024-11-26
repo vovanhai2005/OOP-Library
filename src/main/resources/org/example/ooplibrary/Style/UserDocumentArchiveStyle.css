@@ -31,3 +31,7 @@
 .book_field{
     -fx-background-color: #E6DDD4;
 }
+
+.scroll_pane{
+    -fx-background-color: #F0E9DD;
+}

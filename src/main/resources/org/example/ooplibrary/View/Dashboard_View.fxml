@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -128,7 +129,7 @@
                     </image>
                 </ImageView>
             </children></AnchorPane>
-      <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
+      <AnchorPane layoutX="208.0" prefHeight="99.0" prefWidth="1072.0" styleClass="header_pane">
          <children>
             <ImageView fitHeight="105.0" fitWidth="1072.0" pickOnBounds="true">
                <image>
@@ -144,14 +145,14 @@
       </AnchorPane>
       <AnchorPane layoutX="208.0" layoutY="104.0" prefHeight="616.0" prefWidth="1072.0" styleClass="dashboard_field">
          <children>
-            <AnchorPane fx:id="pieChart_pane" layoutX="31.0" layoutY="25.0" prefHeight="274.0" prefWidth="469.0" styleClass="chart_field">
+            <AnchorPane fx:id="pieChart_pane" layoutX="31.0" layoutY="25.0" prefHeight="260.0" prefWidth="430.0" styleClass="chart_field">
                <children>
-                  <PieChart fx:id="pieChart" labelLineLength="15.0" labelsVisible="false" legendSide="RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="274.0" prefWidth="469.0" />
+                  <PieChart fx:id="pieChart" labelLineLength="5.0" legendSide="RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="260.0" prefWidth="430.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="31.0" layoutY="315.0" prefHeight="274.0" prefWidth="469.0" styleClass="chart_field">
+            <AnchorPane layoutX="31.0" layoutY="315.0" prefHeight="284.0" prefWidth="430.0" styleClass="chart_field">
                <children>
-                  <LineChart fx:id="lineChart" layoutX="-11.0" layoutY="3.0" prefHeight="258.0" prefWidth="469.0">
+                  <LineChart fx:id="lineChart" layoutX="-11.0" layoutY="15.0" prefHeight="260.0" prefWidth="430.0">
                     <xAxis>
                       <CategoryAxis label="Periods" prefHeight="34.0" prefWidth="398.0" side="BOTTOM" />
                     </xAxis>
@@ -160,7 +161,17 @@
                     </yAxis>
                   </LineChart>
                </children></AnchorPane>
-            <AnchorPane layoutX="536.0" layoutY="24.0" prefHeight="567.0" prefWidth="511.0" styleClass="chart_field" />
+            <AnchorPane layoutX="480.0" layoutY="24.0" prefHeight="577.0" prefWidth="567.0" styleClass="chart_field">
+               <children>
+                  <BarChart prefHeight="577.0" prefWidth="543.0" title="fsdfsdf">
+                    <xAxis>
+                      <CategoryAxis label="fsdfd" side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis label="fsfsd" side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+               </children></AnchorPane>
          </children>
       </AnchorPane>
     </children>

@@ -1,10 +1,14 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,11 +20,14 @@ import org.example.ooplibrary.Object.Book;
 import org.example.ooplibrary.Utils.GoogleBookAPIUtil;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class AddDocumentController {
     @FXML
@@ -56,14 +63,15 @@ public class AddDocumentController {
     private ImageView autofillBtn;
 
 
-
-
     @FXML
     void handleAddBook(MouseEvent event) {
         byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
         if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage))
             return;
-        documentArchiveController.addBook(new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage));
+        Book addedBook = new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage);
+
+        documentArchiveController.addBook(addedBook);
+
         ((Node) event.getSource()).getScene().getWindow().hide();
     }
 

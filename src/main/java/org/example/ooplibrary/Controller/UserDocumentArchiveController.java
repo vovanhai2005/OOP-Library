@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -44,7 +45,7 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
     private Label logOutBtn;
 
     @FXML
-    private ScrollPane scrollPane;
+    private FlowPane flowPane;
 
     @FXML
     private TextField searchKeyword;
@@ -114,16 +115,11 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         } else {
             bookList = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
         }
-        gridPane.getChildren().clear();
+        flowPane.getChildren().clear();
         for (int i = 0; i < bookList.size(); i++) {
             VBox bookBox = createBookBox(bookList.get(i));
 
-            // Tính toán vị trí cột và hàng
-            int column = i % 5; // 5 cột
-            int row = i / 5;
-
-            // Thêm vào GridPane
-            gridPane.add(bookBox, column, row);
+            flowPane.getChildren().add(bookBox);
         }
     }
 
@@ -137,16 +133,11 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             } else {
                 bookList = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
             }
-            gridPane.getChildren().clear();
+            flowPane.getChildren().clear();
             for (int i = 0; i < bookList.size(); i++) {
                 VBox bookBox = createBookBox(bookList.get(i));
 
-                // Tính toán vị trí cột và hàng
-                int column = i % 6; // 6 cột
-                int row = i / 6;
-
-                // Thêm vào GridPane
-                gridPane.add(bookBox, column, row);
+                flowPane.getChildren().add(bookBox);
             }
         }
     }
@@ -196,12 +187,7 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         for (int i = 0; i < bookList.size(); i++) {
             VBox bookBox = createBookBox(bookList.get(i));
 
-            // Tính toán vị trí cột và hàng
-            int column = i % 5; // 5 cột
-            int row = i / 5;
-
-            // Thêm vào GridPane
-            gridPane.add(bookBox, column, row);
+            flowPane.getChildren().add(bookBox);
         }
     }
 
@@ -216,8 +202,14 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         bookImageView.setFitHeight(200); // Đặt chiều cao ảnh
         bookImageView.setPreserveRatio(true);
 
+        // Xử lý tên sách nếu vượt quá 15 kí tự
+        String displayedName = book.getName();
+        if (displayedName.length() > 15) {
+            displayedName = displayedName.substring(0, 15) + "...";
+        }
+
         // Tạo Text cho tên sách
-        Text bookName = new Text(book.getName());
+        Text bookName = new Text(displayedName);
         bookName.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-alignment: center;");
 
         // Tạo Text cho tên tác giả
