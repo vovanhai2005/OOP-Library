@@ -16,7 +16,7 @@
    <children>
       <AnchorPane layoutX="26.0" layoutY="23.0" prefHeight="255.0" prefWidth="923.0" styleClass="book_overview">
          <children>
-            <Text fx:id="bookName" layoutX="25.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter" wrappingWidth="400.13671875">
+            <Text fx:id="bookName" layoutX="23.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter" wrappingWidth="400.13671875">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -67,7 +67,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <Text fx:id="ISBN" strokeType="OUTSIDE" strokeWidth="0.0" text="23020059" wrappingWidth="184.13671875">
+                  <Text fx:id="ISBN" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="184.13671875">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin>
@@ -79,7 +79,7 @@
             </HBox>
             <HBox layoutX="21.0" layoutY="447.0" prefHeight="30.0" prefWidth="243.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="YEAR OF PUBLICATION: ">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PUBLISHED DATE:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -87,7 +87,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <Text fx:id="yearOfPublication" strokeType="OUTSIDE" strokeWidth="0.0" text="2005" textAlignment="CENTER" wrappingWidth="55.6708984375">
+                  <Text fx:id="yearOfPublication" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="110.6708984375">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -107,7 +107,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <Text fx:id="author" strokeType="OUTSIDE" strokeWidth="0.0" text="JK.Rowling" wrappingWidth="154.13671875">
+                  <Text fx:id="author" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="154.13671875">
                      <HBox.margin>
                         <Insets left="5.0" top="5.0" />
                      </HBox.margin>
@@ -124,7 +124,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Text>
-                  <Text fx:id="genre" strokeType="OUTSIDE" strokeWidth="0.0" text="Adventure, Sci-fi, Supernatural " wrappingWidth="237.6708984375">
+                  <Text fx:id="genre" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="237.6708984375">
                      <font>
                         <Font size="15.0" />
                      </font>

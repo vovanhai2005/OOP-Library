@@ -129,7 +129,7 @@
                     </image>
                 </ImageView>
             </children></AnchorPane>
-      <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
+      <AnchorPane layoutX="208.0" prefHeight="99.0" prefWidth="1072.0" styleClass="header_pane">
          <children>
             <ImageView fitHeight="105.0" fitWidth="1072.0" pickOnBounds="true">
                <image>
@@ -163,7 +163,7 @@
                </children></AnchorPane>
             <AnchorPane layoutX="480.0" layoutY="24.0" prefHeight="577.0" prefWidth="567.0" styleClass="chart_field">
                <children>
-                  <BarChart prefHeight="577.0" prefWidth="530.0" title="fsdfsdf">
+                  <BarChart prefHeight="577.0" prefWidth="543.0" title="fsdfsdf">
                     <xAxis>
                       <CategoryAxis label="fsdfd" side="BOTTOM" />
                     </xAxis>
