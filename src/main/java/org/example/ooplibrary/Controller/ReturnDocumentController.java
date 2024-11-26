@@ -3,14 +3,19 @@ package org.example.ooplibrary.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import org.example.ooplibrary.Object.BookLoan;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -77,8 +82,26 @@ public class ReturnDocumentController extends AbstractMenuController implements 
     }
 
     @FXML
-    void openAddRequestView(MouseEvent event) {
-        System.out.println("Request Return Window Opened");
+    void openAddReturnRequestView(MouseEvent event) {
+        try {
+            // Tạo FXMLLoader và nạp file FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/AddReturnRequest_View.fxml"));
+            Parent secondRoot = loader.load();
+
+            // Lấy controller từ loader và thiết lập documentArchiveController
+            AddReturnRequestController addReturnRequestController = loader.getController();
+            addReturnRequestController.setReturnDocumentController(this);
+
+            // Thiết lập cửa sổ và hiển thị
+            Stage secondStage = new Stage();
+            Scene secondScene = new Scene(secondRoot);
+            secondStage.setScene(secondScene);
+            secondStage.setTitle("Thêm tài liệu");
+            secondStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

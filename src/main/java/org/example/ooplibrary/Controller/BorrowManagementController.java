@@ -86,7 +86,25 @@ public class BorrowManagementController extends AbstractMenuController implement
 
     @FXML
     void openRequestBorrowWindow(MouseEvent event) {
-        System.out.println("Request Borrow Window Opened");
+        try {
+            // Tạo FXMLLoader và nạp file FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/AddBorrowBook_View.fxml"));
+            Parent secondRoot = loader.load();
+
+            // Lấy controller từ loader và thiết lập documentArchiveController
+            AddBorrowBookController addBorrowBookController = loader.getController();
+            addBorrowBookController.setBorrowManagementController(this);
+
+            // Thiết lập cửa sổ và hiển thị
+            Stage secondStage = new Stage();
+            Scene secondScene = new Scene(secondRoot);
+            secondStage.setScene(secondScene);
+            secondStage.setTitle("Thêm tài liệu");
+            secondStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

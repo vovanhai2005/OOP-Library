@@ -1,10 +1,15 @@
 .anchor-pane {
     -fx-background-color: #F0E9DD;
-    -fx-border-color: black;
     -fx-border-width: 2;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0);
 }
 
-.user {
+.book_image{
     -fx-background-color: #d9d9d9;
+    -fx-border-style: dashed;
+    -fx-border-color: #ABA8A6;
+    -fx-border-width: 2px;
+}
+
+.autofill_icon:hover{
+    -fx-cursor: hand;
 }
