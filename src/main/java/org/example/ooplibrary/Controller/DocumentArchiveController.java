@@ -61,7 +61,7 @@ public class DocumentArchiveController extends AbstractMenuController implements
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         yearOfPublicationCol.setCellValueFactory(new PropertyValueFactory<>("yearOfPublication"));
         authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
-        genreCol.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        genreCol.setCellValueFactory(new PropertyValueFactory<>("genresString"));
 
         // Cấu hình cột featureCol với các nút tuỳ chỉnh
         addFeatureButtonsToTable();
@@ -75,10 +75,9 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
         ArrayList<Book> temp = SQLController.getBookInfoData();
 
-        if (temp != null)
-            for (Book book : temp) {
-                data.add(book);
-            }
+        for (Book book : temp) {
+            data.add(book);
+        }
 
 
         tableView.setItems(data);

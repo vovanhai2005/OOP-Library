@@ -36,7 +36,7 @@ public class DisplayDocumentController {
         author.setText(book.getAuthor());
         bookName.setText(book.getName());
         description.setText(book.getDescription());
-        genre.setText(book.getGenre());
+        genre.setText(book.getGenresString());
         yearOfPublication.setText(book.getYearOfPublication());
 
         // Nếu có hình ảnh, hiển thị trong bookImage

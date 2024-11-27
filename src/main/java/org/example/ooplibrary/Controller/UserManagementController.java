@@ -194,6 +194,12 @@ public class UserManagementController extends AbstractMenuController implements 
 
     private void deleteUser(User user) {
         System.out.println("Xóa người dùng ");
+        if (SQLController.getUserInfoDataByUsername(user.getUsername()) == null) {
+            System.out.println("User not found");
+            return;
+        }
+        SQLController.deleteUser(user.getUsername());
+        data.remove(user);
     }
 
 

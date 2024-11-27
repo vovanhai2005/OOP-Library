@@ -68,7 +68,7 @@ public class AddDocumentController {
         byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
         if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage))
             return;
-        Book addedBook = new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage);
+        Book addedBook = new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), normalizeToList(genre.getText()), description.getText(), bookImage);
 
         documentArchiveController.addBook(addedBook);
 
@@ -103,7 +103,7 @@ public class AddDocumentController {
         }
         bookName.setText(book.getName());
         author.setText(book.getAuthor());
-        genre.setText(book.getGenre());
+        genre.setText(book.getGenresString());
         yearOfPublication.setText(book.getYearOfPublication());
         description.setText(book.getDescription());
         if (book.getImage() != null) {
@@ -111,6 +111,15 @@ public class AddDocumentController {
             bookImage.setImage(image);
         }
 
+    }
+
+    private ObservableList<String> normalizeToList(String genres) {
+        String[] genresArray = genres.split(",");
+        //remove extra spaces
+        for (int i = 0; i < genresArray.length; i++) {
+            genresArray[i] = genresArray[i].trim();
+        }
+        return FXCollections.observableArrayList(genresArray);
     }
 
 

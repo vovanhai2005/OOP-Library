@@ -93,7 +93,7 @@ public class SignUpController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        ObservableList<String> genderList = FXCollections.observableArrayList("Male", "Female");
+        ObservableList<String> genderList = FXCollections.observableArrayList("Male", "Female", "Lesbian", "Gay", "Bisexual", "Transgender", "Queer", "Intersex", "Asexual", "Other");
         gender.setItems(genderList);
     }
 
@@ -149,7 +149,7 @@ public class SignUpController implements Initializable {
 
 
             System.out.println("Success");
-            SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText(), phoneNumber.getText(), SQLController.convertImageViewToBlob(avatarImage));
+            SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText(), phoneNumber.getText(), SQLController.convertImageViewToBlob(avatarImage), gender.getValue());
             switchToUserMainMenu(event);
 
 

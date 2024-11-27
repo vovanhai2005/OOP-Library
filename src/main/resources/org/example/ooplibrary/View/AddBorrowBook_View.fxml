@@ -55,12 +55,7 @@
             </TextField>
          </children>
       </VBox>
-      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="272.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
-         <image>
-            <Image url="@../Image/Autofill.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="272.0" layoutY="455.0" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
+      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="272.0" layoutY="388.0" onMouseClicked="#autofillByISBN" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
          <image>
             <Image url="@../Image/Autofill.png" />
          </image>
@@ -77,7 +72,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="username" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -91,7 +86,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="phoneNumber" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -105,14 +100,14 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="email" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
          </children>
       </VBox>
-      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="576.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
+      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="576.0" layoutY="97.0" onMouseClicked="#autofillByUsername" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
          <image>
             <Image url="@../Image/Autofill.png" />
          </image>
@@ -124,22 +119,22 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="fullName" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
          </children>
       </VBox>
-      <Button layoutX="511.0" layoutY="491.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Add" />
+      <Button layoutX="511.0" layoutY="491.0" mnemonicParsing="false" onMouseClicked="#handleAddBorrowRequest" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Add" />
       <VBox layoutX="328.0" layoutY="331.0" prefHeight="57.0" prefWidth="235.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Returning date:" wrappingWidth="194.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Due date:" wrappingWidth="194.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <DatePicker prefHeight="27.0" prefWidth="235.0">
+            <DatePicker fx:id="dueDate" prefHeight="27.0" prefWidth="235.0">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -148,12 +143,12 @@
       </VBox>
       <VBox layoutX="328.0" layoutY="403.0" prefHeight="56.0" prefWidth="235.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" wrappingWidth="194.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Note:" wrappingWidth="194.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="note" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
