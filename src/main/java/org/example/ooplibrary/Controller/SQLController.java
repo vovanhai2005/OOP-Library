@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
@@ -27,13 +28,14 @@ public class SQLController {
 
     public static void initialize() {
         try {
+
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             Connection connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306", USER, PASSWORD
             );
 
-            //Create a "librosync_db" database if it doesn't exist
+            //Create a "librosync_db" database if it doesn\"t exist
             Statement statement = connection.createStatement();
             statement.executeUpdate("SET SQL_MODE = \"NO_AUTO_VALUE_ON_ZERO\"");
             statement.executeUpdate("SET time_zone = \"+07:00\";");
@@ -42,7 +44,7 @@ public class SQLController {
             //Go to "librosync_db" database
             statement.executeUpdate("USE librosync_db");
 
-            //Create a "user_info" table if it doesn't exist
+            //Create a "user_info" table if it doesn\"t exist
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS `user_info` (\n" +
                     "  `username` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,\n" +
                     "  `password` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
@@ -52,17 +54,15 @@ public class SQLController {
                     "  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
                     "  `phoneNumber` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
                     "  `userImage` mediumblob NOT NULL,\n" +
-                    "  `isAdmin` tinyint(1) DEFAULT NULL\n" +
+                    "  `isAdmin` tinyint(1) DEFAULT NULL,\n" +
+                    "  PRIMARY KEY (`username`)\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;");
-            statement.executeUpdate("ALTER TABLE `user_info` " +
-                    "ADD PRIMARY KEY (`username`);");
 
-            //Add admin account
-            statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
-                    ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `isAdmin`)" +
-                    " VALUES ('admin', '1', NULL, NULL, NULL, NULL, NULL, '1');");
 
-            //Create a "book_info" table if it doesn't exist
+
+
+
+            //Create a "book_info" table if it doesn\"t exist
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS `book_info` (\n" +
                     "  `ISBN` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,\n" +
                     "  `bookName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
@@ -70,22 +70,36 @@ public class SQLController {
                     "  `author` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
                     "  `genre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
                     "  `description` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
-                    "  `bookImage` mediumblob DEFAULT NULL\n" +
+                    "  `bookImage` mediumblob DEFAULT NULL,\n" +
+                    "  PRIMARY KEY (`ISBN`)\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;");
-            statement.executeUpdate("ALTER TABLE `book_info`\n" +
-                    "  ADD PRIMARY KEY (`ISBN`);");
 
-            //Create a "book_loans" table if it doesn't exist
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `book_loans` (\n" +
-                    "  `bookLoanID` int(11) NOT NULL,\n" +
+
+            //Create a "book_loans" table if it doesn\"t exist
+            System.out.println("CREATE TABLE IF NOT EXISTS `book_loans` (\n" +
+                    "  `bookLoanID` int(11) NOT NULL AUTO_INCREMENT,\n" +
                     "  `ISBN` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,\n" +
                     "  `username` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,\n" +
                     "  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
                     "  `dueDate` date DEFAULT NULL,\n" +
-                    "  `returnDate` date DEFAULT NULL\n" +
+                    "  `returnDate` date DEFAULT NULL,\n" +
+                    "  PRIMARY KEY (`bookLoanID`,`ISBN`,`username`)\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;");
-            statement.executeUpdate("ALTER TABLE `book_loans`\n" +
-                    "  ADD PRIMARY KEY (`bookLoanID`,`ISBN`,`username`);");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `book_loans` (\n" +
+                    "  `bookLoanID` int(11) NOT NULL AUTO_INCREMENT,\n" +
+                    "  `ISBN` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,\n" +
+                    "  `username` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,\n" +
+                    "  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
+                    "  `dueDate` date DEFAULT NULL,\n" +
+                    "  `returnDate` date DEFAULT NULL,\n" +
+                    "  PRIMARY KEY (`bookLoanID`,`ISBN`,`username`)\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;");
+
+
+            //Add admin account
+            statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
+                    ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `isAdmin`)" +
+                    " VALUES (\"admin\", \"1\", NULL, NULL, NULL, NULL, NULL, \"1\");");
 
 
             connection.close();
@@ -104,7 +118,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select password from user_info where username= '" + username + "'");
+            ResultSet resultSet = statement.executeQuery("select password from user_info where username= \"" + username + "\"");
 
             if (resultSet.next()) {
                 System.out.println("password: " + resultSet.getString(1));
@@ -127,7 +141,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM user_info WHERE username = '" + username + "'");
+            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM user_info WHERE username = \"" + username + "\"");
 
             if (checkResult.next()) {
                 int count = checkResult.getInt(1);
@@ -177,7 +191,7 @@ public class SQLController {
             );
             Statement statement = connection.createStatement();
             //Check if ISBN already exists
-            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM book_info WHERE ISBN = '" + ISBN + "';");
+            ResultSet checkResult = statement.executeQuery("SELECT COUNT(*) FROM book_info WHERE ISBN = \"" + ISBN + "\";");
             if (checkResult.next()) {
                 if (checkResult.getInt(1) > 0) {
                     System.out.println("Book already exists. Please choose a different ISBN.");
@@ -185,11 +199,11 @@ public class SQLController {
                     return false;
                 }
             }
-            // If ISBN doesn't exist, add the new book to the database
+            // If ISBN doesn\"t exist, add the new book to the database
             statement.executeUpdate("INSERT INTO `book_info` (`ISBN`, `bookName`" +
                     ", `yearOfPublication`, `author`, `genre`, `description`,`bookImage`)" +
-                    " VALUES ('" + ISBN + "', ' " + bookName + " ', '" + yearOfPublication + "', '" +
-                    author + "', '" + genre + "', '" + description + "', '" + convertByteArrayToString(bookImage) + "');");
+                    " VALUES (\"" + ISBN + "\", \" " + bookName + " \", \"" + yearOfPublication + "\", \"" +
+                    author + "\", \"" + genre + "\", \"" + description + "\", \"" + convertByteArrayToString(bookImage) + "\");");
             connection.close();
 
         } catch (Exception e) {
@@ -229,7 +243,7 @@ public class SQLController {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info");
 
             while (resultSet.next()) {
-                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
+                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
             }
             connection.close();
 
@@ -248,11 +262,11 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info WHERE bookName LIKE '%" + keyword + "%' OR author LIKE '%" + keyword + "%' OR genre LIKE '%" + keyword + "%' OR yearOfPublication LIKE '%" + keyword + "%' OR ISBN LIKE '%" + keyword + "%';");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info WHERE bookName LIKE \"%" + keyword + "%\" OR author LIKE \"%" + keyword + "%\" OR genre LIKE \"%" + keyword + "%\" OR yearOfPublication LIKE \"%" + keyword + "%\" OR ISBN LIKE \"%" + keyword + "%\";");
 
 
             while (resultSet.next()) {
-                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
+                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
             }
             connection.close();
 
@@ -270,7 +284,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM book_info WHERE ISBN = '" + ISBN + "';");
+            statement.executeUpdate("DELETE FROM book_info WHERE ISBN = \"" + ISBN + "\";");
             connection.close();
 
         } catch (Exception e) {
@@ -286,7 +300,8 @@ public class SQLController {
                                String dateOfBirth,
                                String email,
                                String phoneNumber,
-                               byte[] userImage){
+                               byte[] userImage,
+                               String gender){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -295,11 +310,11 @@ public class SQLController {
             );
             Statement statement = connection.createStatement();
 
-            // If username doesn't exist, add the new user to the database
+            // If username doesn\"t exist, add the new user to the database
             statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
                     ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `userImage`, `isAdmin`)" +
-                    " VALUES ('" + username + "', '" + password + "', '" + fullName + "', '" +
-                    dateOfBirth + "', NULL, '" + email + "', '" + phoneNumber +  "','" + convertByteArrayToString(userImage) +"',  '0');");
+                    " VALUES (\"" + username + "\", \"" + password + "\", \"" + fullName + "\", \"" +
+                    dateOfBirth + "\", \"" + gender + "\", \"" + email + "\", \"" + phoneNumber +  "\",\"" + convertByteArrayToString(userImage) +"\",  \"0\");");
             connection.close();
 
 
@@ -403,7 +418,7 @@ public class SQLController {
                 ResultSet borrowResultSet = statement.executeQuery(
                         "SELECT COUNT(*) as borrowCount " +
                                 "FROM book_loans " +
-                                "WHERE dueDate >= '" + rangeStart + "' AND dueDate <= '" + rangeEnd + "';"
+                                "WHERE dueDate >= \"" + rangeStart + "\" AND dueDate <= \"" + rangeEnd + "\";"
                 );
 
                 if (borrowResultSet.next()) {
@@ -414,7 +429,7 @@ public class SQLController {
                 ResultSet returnResultSet = statement.executeQuery(
                         "SELECT COUNT(*) as returnCount " +
                                 "FROM book_loans " +
-                                "WHERE returnDate >= '" + rangeStart + "' AND returnDate <= '" + rangeEnd + "';"
+                                "WHERE returnDate >= \"" + rangeStart + "\" AND returnDate <= \"" + rangeEnd + "\";"
                 );
 
                 if (returnResultSet.next()) {
@@ -439,7 +454,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE isAdmin = 0 AND ( username LIKE '%" + keyword + "%' OR fullName LIKE '%" + keyword + "%' OR gender LIKE '%" + keyword + "%' OR email LIKE '%" + keyword + "%' OR phoneNumber LIKE '%" + keyword + "%');");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE isAdmin = 0 AND ( username LIKE \"%" + keyword + "%\" OR fullName LIKE \"%" + keyword + "%\" OR gender LIKE \"%" + keyword + "%\" OR email LIKE \"%" + keyword + "%\" OR phoneNumber LIKE \"%" + keyword + "%\");");
 
             while (resultSet.next()) {
                 data.add(new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8))));
@@ -459,7 +474,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM book_loans WHERE bookLoanID = '" + bookLoanID + "';");
+            statement.executeUpdate("DELETE FROM book_loans WHERE bookLoanID = \"" + bookLoanID + "\";");
             connection.close();
 
         } catch (Exception e) {
@@ -514,7 +529,7 @@ public class SQLController {
                     "FROM book_loans bl\n" +
                     "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
                     "JOIN user_info u ON u.username = bl.username\n" +
-                    "WHERE b.bookName LIKE '%" + keyword + "%' OR u.fullName LIKE '%" + keyword + "%' OR bl.dueDate LIKE '%" + keyword + "%' OR bl.returnDate LIKE '%" + keyword + "%' OR bl.note LIKE '%" + keyword + "%';");
+                    "WHERE b.bookName LIKE \"%" + keyword + "%\" OR u.fullName LIKE \"%" + keyword + "%\" OR bl.dueDate LIKE \"%" + keyword + "%\" OR bl.returnDate LIKE \"%" + keyword + "%\" OR bl.note LIKE \"%" + keyword + "%\";");
 
             while (resultSet.next()) {
                 data.add(new BookLoan(resultSet.getString(1),
@@ -568,11 +583,11 @@ public class SQLController {
             ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
                     "FROM book_loans bl\n" +
                     "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
-                    "WHERE bl.username = '" + username + "';");
+                    "WHERE bl.username = \"" + username + "\";");
             System.out.println("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
                     "FROM book_loans bl\n" +
                     "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
-                    "WHERE bl.username = '" + username + "';");
+                    "WHERE bl.username = \"" + username + "\";");
 
             while (resultSet.next()) {
                 data.add(new BookLoan(resultSet.getString(1),
@@ -600,7 +615,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT isAdmin FROM user_info WHERE username = '" + username + "';");
+            ResultSet resultSet = statement.executeQuery("SELECT isAdmin FROM user_info WHERE username = \"" + username + "\";");
 
             if (resultSet.next()) {
                 if (resultSet.getInt(1) == 1) {
@@ -622,7 +637,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE username = '" + username + "';");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE username = \"" + username + "\";");
 
             if (resultSet.next()) {
                 return new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8)));
@@ -643,7 +658,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT password FROM user_info WHERE username = '" + username + "';");
+            ResultSet resultSet = statement.executeQuery("SELECT password FROM user_info WHERE username = \"" + username + "\";");
 
             if (resultSet.next()) {
                 return resultSet.getString(1);
@@ -665,12 +680,122 @@ public class SQLController {
             );
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("UPDATE user_info SET password = '" + text + "' WHERE username = '" + username + "';");
+            statement.executeUpdate("UPDATE user_info SET password = \"" + text + "\" WHERE username = \"" + username + "\";");
 
             connection.close();
 
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    private static ObservableList<String> normalizeToList(String genres) {
+        String[] genresArray = genres.split(",");
+        //Remove extra spaces
+        for (int i = 0; i < genresArray.length; i++) {
+            genresArray[i] = genresArray[i].trim();
+        }
+        return FXCollections.observableArrayList(genresArray);
+    }
+
+    public static void deleteUser(String username) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            statement.executeUpdate("DELETE FROM user_info WHERE username = \"" + username + "\";");
+
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public static Book getBookInfoDataWithISBN(String ISBN) {
+        Book book = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info WHERE ISBN = \"" + ISBN + "\";");
+
+            if (resultSet.next()) {
+                book = new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7)));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return book;
+    }
+
+    public static String addBookLoan(String ISBN, String username, String note, String dateOfBirthAsString) {
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            //Create a new book loan with auto increament id
+            statement.executeUpdate("INSERT INTO `book_loans` (`ISBN`, `username`, `note`, `dueDate`)" +
+                    " VALUES (\"" + ISBN + "\", \"" + username + "\", \"" + note + "\", \"" + dateOfBirthAsString + "\");");
+            //returns the bookloanid
+            ResultSet resultSet = statement.executeQuery("SELECT LAST_INSERT_ID();");
+
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+            connection.close();
+
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        return null;
+    }
+
+    public static BookLoan getBookLoansDataWithBookLoanID(String bookLoanId) {
+        BookLoan bookLoan = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username\n" +
+                    "WHERE bl.bookLoanID = \"" + bookLoanId + "\";");
+
+            if (resultSet.next()) {
+                bookLoan = new BookLoan(resultSet.getString(1),
+                                        resultSet.getString(2),
+                                        resultSet.getString(3),
+                                        resultSet.getString(4),
+                                        resultSet.getString(5),
+                                        resultSet.getString(6)
+                                       );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return bookLoan;
     }
 }

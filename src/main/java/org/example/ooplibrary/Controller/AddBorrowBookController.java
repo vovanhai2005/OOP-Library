@@ -2,15 +2,22 @@ package org.example.ooplibrary.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.example.ooplibrary.Object.Book;
+import org.example.ooplibrary.Object.BookLoan;
+import org.example.ooplibrary.Object.User;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,6 +30,50 @@ public class AddBorrowBookController {
 
     @FXML
     private ImageView bookImage;
+
+    @FXML
+    private TextField ISBN;
+
+    @FXML
+    private TextField bookName;
+
+    @FXML
+    private TextField email;
+
+    @FXML
+    private TextField fullName;
+
+    @FXML
+    private TextField phoneNumber;
+
+    @FXML
+    private DatePicker dueDate;
+
+    @FXML
+    private TextField username;
+
+    @FXML
+    private TextField note;
+
+    @FXML
+    void autofillByISBN(MouseEvent event) {
+        if (SQLController.getBookInfoDataWithISBN(ISBN.getText()) != null) {
+            Book book = SQLController.getBookInfoDataWithISBN(ISBN.getText());
+            bookName.setText(book.getName());
+            Image image = new Image(new ByteArrayInputStream(book.getImage()));
+            bookImage.setImage(image);
+        }
+    }
+
+    @FXML
+    void autofillByUsername(MouseEvent event) {
+        if (SQLController.getUserInfoDataByUsername(username.getText()) != null) {
+            User user = SQLController.getUserInfoDataByUsername(username.getText());
+            fullName.setText(user.getFullName());
+            email.setText(user.getEmail());
+            phoneNumber.setText(user.getPhoneNumber());
+        }
+    }
 
     private BorrowManagementController borrowManagementController;
 
@@ -44,6 +95,20 @@ public class AddBorrowBookController {
 
     public void setBorrowManagementController(BorrowManagementController borrowManagementController) {
         this.borrowManagementController = borrowManagementController;
+    }
+
+    @FXML
+    void handleAddBorrowRequest(MouseEvent event) {
+        // check if any textfield is empty
+        if (ISBN.getText().isEmpty() || note.getText().isEmpty() || bookName.getText().isEmpty() || email.getText().isEmpty() || fullName.getText().isEmpty() || phoneNumber.getText().isEmpty() || dueDate.getValue() == null || username.getText().isEmpty()) {
+            System.out.println("Please fill in all the fields");
+            return;
+        }
+        byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
+        String bookLoanId = SQLController.addBookLoan(ISBN.getText(),username.getText(),note.getText(), SQLController.getDateOfBirthAsString(dueDate));
+        //hide the window
+        borrowManagementController.addBookLoan(SQLController.getBookLoansDataWithBookLoanID(bookLoanId));
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
 
 }

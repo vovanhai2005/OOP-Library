@@ -5,26 +5,41 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class Book {
-    private final StringProperty ISBN;
-    private final StringProperty name;
-    private final StringProperty yearOfPublication;
-    private final StringProperty author;
-    private final StringProperty genre;
-    private final StringProperty description;
-    private final byte[] image;
-    private final ImageView[] features;
+import java.util.List;
 
-    public Book(String ISBN, String name, String yearOfPublication, String author, String genre, String description, byte[] image) {
+public class Book {
+    private StringProperty ISBN;
+    private StringProperty name;
+    private StringProperty yearOfPublication;
+    private StringProperty author;
+    private List<String> genres;
+    private String genresString;
+    private StringProperty description;
+    private byte[] image;
+    private ImageView[] features;
+
+    public Book(String ISBN, String name, String yearOfPublication, String author, List<String> genres, String description, byte[] image) {
         this.ISBN = new SimpleStringProperty(ISBN);
         this.name = new SimpleStringProperty(name);
         this.yearOfPublication = new SimpleStringProperty(yearOfPublication);
         this.author = new SimpleStringProperty(author);
-        this.genre = new SimpleStringProperty(genre);
+        this.genres = genres;
         this.description = new SimpleStringProperty(description);
         this.image = image;
         this.features = new ImageView[3];
+        StringBuilder genresString = new StringBuilder();
+        for (int i =0; i< genres.size(); i++) {
+            genresString.append(genres.get(i));
+            if (i != genres.size() - 1) {
+                genresString.append(", ");
+            }
+        }
+        this.genresString = genresString.toString();
     }
+
+
+
+
 
     public String getISBN() {
         return ISBN.get();
@@ -74,16 +89,25 @@ public class Book {
         return author;
     }
 
-    public String getGenre() {
-        return genre.get();
+    public String getGenresString() {
+        return genresString;
     }
 
-    public void setGenre(String genre) {
-        this.genre.set(genre);
+    public List<String> getGenres() {
+        return genres;
     }
 
-    public StringProperty genreProperty() {
-        return genre;
+    public void setGenres(List<String> genres) {
+        this.genres = genres;
+        // Convert genres list to a single string
+        StringBuilder genresString = new StringBuilder();
+        for (int i =0; i< genres.size(); i++) {
+            genresString.append(genres.get(i));
+            if (i != genres.size() - 1) {
+                genresString.append(", ");
+            }
+        }
+        this.genresString = genresString.toString();
     }
 
     public ImageView[] getFeatures() {
