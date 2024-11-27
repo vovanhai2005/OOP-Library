@@ -28,8 +28,24 @@
     -fx-cursor: hand;
 }
 
-.book_field{
-    -fx-background-color: #E6DDD4;
+.filter_field{
+    -fx-background-color: #F0E9DD;
+    -fx-background-radius: 15px;
+    -fx-opacity: 0.9;
+}
+
+.filter_category{
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+}
+
+.filter_category:hover{
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+}
+
+.filter_btn:hover{
+    -fx-cursor: hand;
 }
 
 .scroll_pane{

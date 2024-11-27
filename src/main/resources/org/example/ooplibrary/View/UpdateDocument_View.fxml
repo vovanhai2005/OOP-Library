@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -49,7 +50,7 @@
             </TextField>
          </children>
       </VBox>
-      <Button layoutX="511.0" layoutY="488.0" mnemonicParsing="false" onMouseClicked="#handleAddBook" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Apply" />
+      <Button layoutX="511.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#handleAddBook" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Apply" />
       <VBox layoutX="331.0" layoutY="214.0" prefHeight="59.0" prefWidth="235.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year of publication: " wrappingWidth="194.13671875">
@@ -78,20 +79,6 @@
             </TextField>
          </children>
       </VBox>
-      <VBox layoutX="331.0" layoutY="354.0" prefHeight="115.0" prefWidth="235.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Genre:" wrappingWidth="116.13671875">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Text>
-            <TextField fx:id="genre" alignment="TOP_LEFT" prefHeight="83.0" prefWidth="235.0" styleClass="info_field">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </TextField>
-         </children>
-      </VBox>
       <VBox layoutX="38.0" layoutY="354.0" prefHeight="115.0" prefWidth="235.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" wrappingWidth="116.13671875">
@@ -111,5 +98,33 @@
             <Image url="@../Image/addImage.png" />
          </image>
       </ImageView>
+      <VBox layoutX="331.0" layoutY="357.0" prefHeight="126.0" prefWidth="235.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Genre:" wrappingWidth="58.13671875">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="234.0" />
+               </content>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </ScrollPane>
+         </children>
+      </VBox>
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="571.0" layoutY="354.0" onMouseClicked="#openAddDocumentWindow" pickOnBounds="true" preserveRatio="true" styleClass="addGenre_btn">
+         <image>
+            <Image url="@../Image/add.png" />
+         </image>
+      </ImageView>
+      <Line endX="70.0" layoutX="496.0" layoutY="378.0" startX="-106.86328125" />
+      <TextField alignment="BOTTOM_LEFT" layoutX="381.0" layoutY="349.0" prefHeight="35.0" prefWidth="186.0" styleClass="genre_text">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
     </children>
 </AnchorPane>

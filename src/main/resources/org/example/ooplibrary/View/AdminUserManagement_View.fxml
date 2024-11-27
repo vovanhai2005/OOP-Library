@@ -156,18 +156,6 @@
                   <Image url="@../Image/search_icon.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" layoutX="867.0" layoutY="86.0" onMouseClicked="#openAddUserWindow" prefHeight="47.0" prefWidth="192.0" styleClass="addBook_btn" text="Add new user" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="37.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Image/add.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Label>
          </children>
       </AnchorPane>
    </children>

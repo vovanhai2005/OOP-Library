@@ -13,8 +13,16 @@
     -fx-cursor: hand;
 }
 
-.info_field{
+.info_field {
     -fx-border-radius: 5px;
+}
+
+.genre_text{
+    -fx-background-color: transparent;
+}
+
+.addGenre_btn:hover{
+    -fx-cursor: hand;
 }
 
 .addBook_btn:hover{

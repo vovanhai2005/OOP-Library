@@ -13,12 +13,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.example.ooplibrary.Object.Book;
 
-
 public class GoogleBookAPIUtil {
-
-
-
-
     public static Book fetchBookDetails(String isbnOrTitle, String type) {
         System.out.println(isbnOrTitle + " " + type);
         String urlString;
@@ -97,8 +92,5 @@ public class GoogleBookAPIUtil {
     public static Book fetchBookDetailsByTitle(String title) {
         return fetchBookDetails(title, "title");
     }
-
-
-
 
 }
