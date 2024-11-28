@@ -16,12 +16,12 @@
     <children>
         <AnchorPane layoutX="329.0" layoutY="23.0" prefHeight="674.0" prefWidth="765.0" styleClass="book_overview">
             <children>
-                <Text layoutX="21.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter" wrappingWidth="400.13671875">
+                <Text fx:id="bookName" layoutX="22.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter" wrappingWidth="562.13671875">
                     <font>
                         <Font name="System Bold" size="30.0" />
                     </font>
                 </Text>
-                <Text layoutX="21.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter is a series of novels by British author J. K. Rowling. The novels follow Harry Potter, an 11-year-old boy who discovers he is the son of famous wizards and will attend Hogwarts School of Witchcraft and Wizardry. Harry learns of an entire society of wizards and witches.Harry Potter and the Philosopher's Stone is a fantasy novel written by the British author J. K. Rowling. It is the first novel in the Harry Potter series and was Rowling's debut novel. It follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. " wrappingWidth="727.13671875">
+                <Text fx:id="description" layoutX="21.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter is a series of novels by British author J. K. Rowling. The novels follow Harry Potter, an 11-year-old boy who discovers he is the son of famous wizards and will attend Hogwarts School of Witchcraft and Wizardry. Harry learns of an entire society of wizards and witches.Harry Potter and the Philosopher's Stone is a fantasy novel written by the British author J. K. Rowling. It is the first novel in the Harry Potter series and was Rowling's debut novel. It follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. " wrappingWidth="727.13671875">
                     <font>
                         <Font size="20.0" />
                     </font>
@@ -61,7 +61,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="23020059" wrappingWidth="184.13671875">
+                  <Text fx:id="ISBN" strokeType="OUTSIDE" strokeWidth="0.0" text="23020059" wrappingWidth="184.13671875">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin>
@@ -81,7 +81,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2005" textAlignment="CENTER" wrappingWidth="55.6708984375">
+                  <Text fx:id="yearOfPublication" strokeType="OUTSIDE" strokeWidth="0.0" text="2005" textAlignment="CENTER" wrappingWidth="55.6708984375">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -101,7 +101,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="JK.Rowling" wrappingWidth="154.13671875">
+                  <Text fx:id="author" strokeType="OUTSIDE" strokeWidth="0.0" text="JK.Rowling" wrappingWidth="154.13671875">
                      <HBox.margin>
                         <Insets left="5.0" top="5.0" />
                      </HBox.margin>
@@ -118,7 +118,7 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adventure, Sci-fi, Supernatural " wrappingWidth="237.6708984375">
+                  <Text fx:id="genre" strokeType="OUTSIDE" strokeWidth="0.0" text="Adventure, Sci-fi, Supernatural " wrappingWidth="237.6708984375">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -128,7 +128,7 @@
                   </Text>
                </children>
             </VBox>
-            <ImageView fitHeight="330.0" fitWidth="226.0" layoutX="29.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="bookImage" fitHeight="330.0" fitWidth="226.0" layoutX="29.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Image/sample.jpg" />
                </image>

@@ -20,6 +20,7 @@ import org.example.ooplibrary.Object.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UserManagementController extends AbstractMenuController implements Initializable {
@@ -193,13 +194,46 @@ public class UserManagementController extends AbstractMenuController implements 
     }
 
     private void deleteUser(User user) {
-        System.out.println("Xóa người dùng ");
-        if (SQLController.getUserInfoDataByUsername(user.getUsername()) == null) {
-            System.out.println("User not found");
-            return;
+        // Tạo Alert kiểu xác nhận
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Xác nhận xóa");
+        alert.setHeaderText("Bạn có chắc chắn muốn xóa người dùng này?");
+        alert.setContentText("Tên đăng nhập: " + user.getUsername() + "\n"
+                + "Họ và tên: " + user.getFullName() + "\n\n"
+                + "Lưu ý: Người dùng này sẽ bị xóa khỏi cơ sở dữ liệu và không thể khôi phục!");
+
+        // Hiển thị cửa sổ Alert và chờ phản hồi từ người dùng
+        Optional<ButtonType> result = alert.showAndWait();
+
+        // Kiểm tra phản hồi
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Người dùng chọn OK
+            if (SQLController.getUserInfoDataByUsername(user.getUsername()) == null) {
+                // Người dùng không tồn tại
+                Alert notFoundAlert = new Alert(Alert.AlertType.WARNING);
+                notFoundAlert.setTitle("Người dùng không tồn tại");
+                notFoundAlert.setHeaderText(null);
+                notFoundAlert.setContentText("Người dùng \"" + user.getUsername() + "\" không tồn tại trong cơ sở dữ liệu.");
+                notFoundAlert.show();
+                return;
+            }
+
+            // Xóa người dùng khỏi cơ sở dữ liệu
+            SQLController.deleteUser(user.getUsername());
+            // Xóa thành công: Cập nhật danh sách
+            data.remove(user);
+
+            // Hiển thị thông báo thành công
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Xóa thành công");
+            successAlert.setHeaderText(null);
+            successAlert.setContentText("Người dùng \"" + user.getUsername() + "\" đã được xóa thành công!");
+            successAlert.show();
+
+        } else {
+            // Người dùng chọn Cancel hoặc đóng cửa sổ Alert
+            System.out.println("Hủy xóa người dùng: " + user.getUsername());
         }
-        SQLController.deleteUser(user.getUsername());
-        data.remove(user);
     }
 
 

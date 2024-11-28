@@ -230,6 +230,25 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
     @FXML
     private void openBookDetailView(Book book) {
         System.out.println("Opening book detail view: " + book.getName() + "(in progress)");
+        try {
+            // Tải FXML của giao diện hiển thị tài liệu
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UserDisplayDocument_View.fxml"));
+            Parent root = loader.load();
+
+            // Lấy controller của cửa sổ hiển thị tài liệu
+            UserDisplayDocumentController userDisplayDocumentController = loader.getController();
+
+            // Gán dữ liệu tài liệu vào controller
+            userDisplayDocumentController.setDocumentDetails(book);
+
+            // Tạo cửa sổ mới để hiển thị thông tin chi tiết
+            Stage stage = new Stage();
+            stage.setTitle("Thông tin chi tiết tài liệu");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setUsername(String username) {
