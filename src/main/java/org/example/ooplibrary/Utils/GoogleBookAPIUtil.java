@@ -7,8 +7,10 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.example.ooplibrary.Object.Book;
@@ -54,9 +56,18 @@ public class GoogleBookAPIUtil {
                         : "N/A";
                 String title = bookInfo.has("title") ? bookInfo.get("title").getAsString() : "N/A";
                 String author = bookInfo.has("authors") ? bookInfo.getAsJsonArray("authors").get(0).getAsString() : "N/A";
-                List<String> genres = bookInfo.has("categories")
-                        ? List.of(bookInfo.getAsJsonArray("categories").get(0).getAsString())
-                        : List.of();
+                List<String> genres = new ArrayList<>();
+                if (bookInfo.has("categories")) {
+                    // Iterate over all elements in the "categories" array
+                    for (JsonElement categoryElement : bookInfo.getAsJsonArray("categories")) {
+                        genres.add(categoryElement.getAsString());
+                    }
+                } else {
+                    genres = List.of();  // Empty list if "categories" is not present
+                }
+                for (String tmp : genres){
+                    System.out.println(tmp);
+                }
                 String description = bookInfo.has("description") ? bookInfo.get("description").getAsString() : "N/A";
                 String yearOfPublication = bookInfo.has("publishedDate") ? bookInfo.get("publishedDate").getAsString() : "N/A";
 
