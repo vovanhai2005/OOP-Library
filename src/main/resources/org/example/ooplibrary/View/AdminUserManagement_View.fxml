@@ -121,11 +121,26 @@
                   </Label>
                </children>
             </HBox>
-            <ImageView fitHeight="167.0" fitWidth="164.0" layoutX="22.0" layoutY="14.0" onMouseClicked="#switchToMainMenuView" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
+            <ImageView fitHeight="139.0" fitWidth="141.0" layoutX="35.0" layoutY="37.0" onMouseClicked="#switchToMainMenuView" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
                <image>
                   <Image url="@../Image/Logo_Image.png" />
                </image>
             </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="101.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" styleClass="vietnam_btn">
+               <image>
+                  <Image url="@../Image/vietnam.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="146.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
+               <image>
+                  <Image url="@../Image/united-states-of-america.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="12.0" layoutY="9.0" text="Language:" textFill="#f0e9dd">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <TableView fx:id="tableView" layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0" styleClass="table_view">

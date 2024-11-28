@@ -8,25 +8,27 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
 import org.example.ooplibrary.Utils.GoogleBookAPIUtil;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddDocumentController {
@@ -43,7 +45,7 @@ public class AddDocumentController {
     private TextField description;
 
     @FXML
-    private TextField genre;
+    private FlowPane flowPane;
 
     @FXML
     private TextField yearOfPublication;
@@ -62,13 +64,18 @@ public class AddDocumentController {
     @FXML
     private ImageView autofillBtn;
 
+    @FXML
+    private TextField genreField;
+
+    private ArrayList<String> genreLists = new ArrayList<String>();
+
 
     @FXML
     void handleAddBook(MouseEvent event) {
         byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
-        if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genre.getText(), description.getText(), bookImage))
+        if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), createGenresAsString() , description.getText(), bookImage))
             return;
-        Book addedBook = new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), normalizeToList(genre.getText()), description.getText(), bookImage);
+        Book addedBook = new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genreLists, description.getText(), bookImage);
 
         documentArchiveController.addBook(addedBook);
 
@@ -103,7 +110,7 @@ public class AddDocumentController {
         }
         bookName.setText(book.getName());
         author.setText(book.getAuthor());
-//        genre.setText(book.getGenresString());
+
         yearOfPublication.setText(book.getYearOfPublication());
         description.setText(book.getDescription());
         if (book.getImage() != null) {
@@ -111,7 +118,17 @@ public class AddDocumentController {
             bookImage.setImage(image);
         }
 
+        flowPane.getChildren().clear();
+        for (String genre1 : book.getGenres()) {
+            HBox genreBox = createGenreBox(genre1);
+            genreBox.setSpacing(10);
+            genreBox.setPrefWidth(flowPane.getWidth());
+            flowPane.getChildren().add(genreBox);
+            genreLists.add(genre1);
+        }
+
     }
+
 
     private ObservableList<String> normalizeToList(String genres) {
         String[] genresArray = genres.split(",");
@@ -122,5 +139,56 @@ public class AddDocumentController {
         return FXCollections.observableArrayList(genresArray);
     }
 
+    private HBox createGenreBox(String genreName) {
+        // Tạo HBox
+        HBox genreBox = new HBox();
+        genreBox.setSpacing(10); // Khoảng cách giữa các phần tử
+        genreBox.setStyle("-fx-padding: 5; -fx-background-color: #f4f4f4; -fx-border-color: #d3d3d3; -fx-border-radius: 5;");
 
+        // Tạo Text để hiển thị tên thể loại
+        Text genreNamed = new Text(genreName);
+        genreNamed.setStyle("-fx-font-size: 14;");
+
+        // Tạo Region để đẩy deleteButton sang phải
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS); // Đặt thuộc tính để Region giãn nở
+
+        // Tạo Button để xóa HBox
+        Button deleteButton = new Button("X");
+        deleteButton.setStyle("-fx-background-color: #ff6b6b; -fx-text-fill: white; -fx-padding: 5; -fx-border-radius: 5;");
+        deleteButton.setOnAction(event -> {
+            if (genreBox.getParent() instanceof FlowPane) {
+                FlowPane parent = (FlowPane) genreBox.getParent();
+                genreLists.remove(genreName);
+                parent.getChildren().remove(genreBox); // Xóa HBox khỏi FlowPane
+            }
+        });
+
+        // Thêm Text, Region và Button vào HBox
+        genreBox.getChildren().addAll(genreNamed, spacer, deleteButton);
+
+        return genreBox;
+    }
+
+    @FXML
+    void addGenre(MouseEvent event) {
+        if (genreField.getText().isEmpty()) return;
+
+        HBox genreBox = createGenreBox(genreField.getText());
+        genreBox.setSpacing(10);
+        genreBox.setPrefWidth(flowPane.getWidth());
+        flowPane.getChildren().add(genreBox);
+        genreLists.add(genreField.getText());
+    }
+
+    private String createGenresAsString() {
+        StringBuilder genresString = new StringBuilder();
+        for (int i =0; i< genreLists.size(); i++) {
+            genresString.append(genreLists.get(i));
+            if (i != genreLists.size() - 1) {
+                genresString.append(", ");
+            }
+        }
+        return genresString.toString();
+    }
 }

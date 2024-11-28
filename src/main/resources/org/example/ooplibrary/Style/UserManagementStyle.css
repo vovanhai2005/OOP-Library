@@ -48,3 +48,8 @@
     -fx-background-color: #E6DDD4;
     -fx-cell-size: 200px;
 }
+
+.vietnam_btn:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #DCE0E2;
+}
