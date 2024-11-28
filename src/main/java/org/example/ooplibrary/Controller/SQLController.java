@@ -26,6 +26,11 @@ public class SQLController {
     final static private String USER = "root";
     final static private String PASSWORD = "";
 
+    /**
+     * Tạo database có tên là "librosync_db", đồng thời tạo các bảng "user_info",
+     * "book_info", "book_loans" nếu chưa tồn tại. Sau đó, thêm một tài khoản admin
+     * dùng dể quản lý hệ thống.
+     */
     public static void initialize() {
         try {
 
@@ -57,9 +62,6 @@ public class SQLController {
                     "  `isAdmin` tinyint(1) DEFAULT NULL,\n" +
                     "  PRIMARY KEY (`username`)\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;");
-
-
-
 
 
             //Create a "book_info" table if it doesn\"t exist
@@ -108,6 +110,15 @@ public class SQLController {
         }
     }
 
+    //User
+
+    /**
+     * Kiểm tra xem người dùng có tồn tại ko
+     *
+     * @param username Tên tài khoản
+     * @param password Mật khẩu
+     * @return boolean
+     */
     public static boolean checkPassword(String username, String password) {
         System.out.println("username: " + username);
         System.out.println("password: " + password);
@@ -133,6 +144,12 @@ public class SQLController {
         return false;
     }
 
+    /**
+     * Kiểm tra xem tên tài khoản đã tồn tại chưa, trả về true nếu chưa tồn tại, ngược lại trả về false
+     *
+     * @param username Tên tài khoản
+     * @return boolean
+     */
     public static boolean checkSignUp(String username) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -163,6 +180,12 @@ public class SQLController {
         return false;
     }
 
+    /**
+     * Trả về ngày sinh dưới dạng chuỗi từ DatePicker
+     *
+     * @param dateOfBirth
+     * @return
+     */
     public static String getDateOfBirthAsString(DatePicker dateOfBirth) {
         if (dateOfBirth.getValue() != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -171,6 +194,245 @@ public class SQLController {
         return "";
     }
 
+    /**
+     * Thêm người dùng mới vào database
+     *
+     * @param username    Tên đăng nhập của người dùng
+     * @param password    Mật khẩu của người dùng
+     * @param fullName    Họ và tên của người dùng
+     * @param dateOfBirth Ngày sinh của người dùng
+     * @param email       Email của người dùng
+     * @param phoneNumber Số điện thoại của người dùng
+     * @param userImage   Hình ảnh người dùng
+     * @param gender      Giới tính của người dùng
+     */
+    public static void addUser(String username,
+                               String password,
+                               String fullName,
+                               String dateOfBirth,
+                               String email,
+                               String phoneNumber,
+                               byte[] userImage,
+                               String gender) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            // If username doesn\"t exist, add the new user to the database
+            statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
+                    ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `userImage`, `isAdmin`)" +
+                    " VALUES (\"" + username + "\", \"" + password + "\", \"" + fullName + "\", \"" +
+                    dateOfBirth + "\", \"" + gender + "\", \"" + email + "\", \"" + phoneNumber + "\",\"" + convertByteArrayToString(userImage) + "\",  \"0\");");
+            connection.close();
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    /**
+     * Lấy thông tin người dùng từ database
+     *
+     * @return ArrayList<User>
+     */
+    public static ArrayList<User> getUserInfoData() {
+        ArrayList<User> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE isAdmin = 0");
+
+            while (resultSet.next()) {
+                data.add(new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8))));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    /**
+     * Lấy thông tin người dùng từ database với từ khóa
+     *
+     * @param keyword Từ khóa tìm kiếm
+     * @return ArrayList<User>
+     */
+    public static ArrayList<User> getUserInfoDataWithKeyword(String keyword) {
+        ArrayList<User> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE isAdmin = 0 AND ( username LIKE \"%" + keyword + "%\" OR fullName LIKE \"%" + keyword + "%\" OR gender LIKE \"%" + keyword + "%\" OR email LIKE \"%" + keyword + "%\" OR phoneNumber LIKE \"%" + keyword + "%\");");
+
+            while (resultSet.next()) {
+                data.add(new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8))));
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    /**
+     * Kiểm tra xem người dùng có phải là admin không
+     *
+     * @param username Tên đăng nhập của người dùng
+     * @return boolean
+     */
+    public static boolean isAdmin(String username) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT isAdmin FROM user_info WHERE username = \"" + username + "\";");
+
+            if (resultSet.next()) {
+                if (resultSet.getInt(1) == 1) {
+                    return true;
+                }
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    /**
+     * Lấy thông tin người dùng từ database với tên đăng nhập
+     *
+     * @param username Tên đăng nhập của người dùng
+     * @return User
+     */
+    public static User getUserInfoDataByUsername(String username) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE username = \"" + username + "\";");
+
+            if (resultSet.next()) {
+                return new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8)));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    /**
+     * Trả về mật khẩu của người dùng
+     *
+     * @param username Tên đăng nhập của người dùng
+     * @return String
+     */
+    public static String getUserPassword(String username) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT password FROM user_info WHERE username = \"" + username + "\";");
+
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    /**
+     * Cập nhật mật khẩu người dùng
+     *
+     * @param username    Tên đăng nhập của người dùng
+     * @param newPassword Mật khẩu mới
+     */
+    public static void updateUserPassword(String username, String newPassword) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            statement.executeUpdate("UPDATE user_info SET password = \"" + newPassword + "\" WHERE username = \"" + username + "\";");
+
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * Xoá người dùng khỏi database
+     *
+     * @param username Tên đăng nhập của người dùng
+     */
+    public static void deleteUser(String username) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            statement.executeUpdate("DELETE FROM user_info WHERE username = \"" + username + "\";");
+
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    // Book
+
+    /**
+     * Thêm sách mới vào database, trả về true nếu thêm sách thành công, ngược lại trả về false
+     *
+     * @param ISBN              Mã ISBN
+     * @param bookName          Tên sách
+     * @param yearOfPublication Năm xuất bản
+     * @param author            Tác giả
+     * @param genre             Thể loại
+     * @param description       Mô tả
+     * @param bookImage         Hình ảnh sách
+     * @return boolean
+     */
     public static boolean addBook(String ISBN,
                                   String bookName,
                                   String yearOfPublication,
@@ -213,24 +475,11 @@ public class SQLController {
 
     }
 
-
-    public static String convertByteArrayToString(byte[] byteArray) {
-        if (byteArray == null) {
-            return null;  // Nếu byte array là null, trả về null
-        }
-        // Mã hóa mảng byte thành chuỗi Base64
-        return Base64.getEncoder().encodeToString(byteArray);
-    }
-
-    public static byte[] convertStringToByteArray(String string) {
-        if (string == null) {
-            return null;  // Nếu byte array là null, trả về null
-        }
-        // Mã hóa mảng byte thành chuỗi Base64
-        return Base64.getDecoder().decode(string);
-    }
-
-
+    /**
+     * Lấy thông tin sách từ database
+     *
+     * @return ArrayList<Book>
+     */
     public static ArrayList<Book> getBookInfoData() {
         ArrayList<Book> data = new ArrayList<>();
         try {
@@ -253,6 +502,12 @@ public class SQLController {
         return data;
     }
 
+    /**
+     * Lấy thông tin sách từ database với từ khóa
+     *
+     * @param keyword Từ khóa tìm kiếm
+     * @return ArrayList<Book>
+     */
     public static ArrayList<Book> getBookInfoDataWithKeyword(String keyword) {
         ArrayList<Book> data = new ArrayList<>();
         try {
@@ -276,6 +531,260 @@ public class SQLController {
         return data;
     }
 
+
+    /**
+     * Lấy thông tin sách từ database với mã ISBN
+     *
+     * @param ISBN Mã ISBN của sách
+     * @return Book
+     */
+    public static Book getBookInfoDataWithISBN(String ISBN) {
+        Book book = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info WHERE ISBN = \"" + ISBN + "\";");
+
+            if (resultSet.next()) {
+                book = new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7)));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return book;
+    }
+
+    //Book Loan
+
+    /**
+     * Thêm lượt mượn sách mới vào database và trả về mã lượt mượn sách
+     *
+     * @param ISBN                Mã ISBN của sách
+     * @param username            Tên đăng nhập của người dùng
+     * @param note                Ghi chú
+     * @param dateOfBirthAsString Ngày hết hạn dưới dạng chuỗi
+     * @return String
+     */
+    public static String addBookLoan(String ISBN, String username, String note, String dateOfBirthAsString) {
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            //Create a new book loan with auto increament id
+            statement.executeUpdate("INSERT INTO `book_loans` (`ISBN`, `username`, `note`, `dueDate`)" +
+                    " VALUES (\"" + ISBN + "\", \"" + username + "\", \"" + note + "\", \"" + dateOfBirthAsString + "\");");
+            //returns the bookloanid
+            ResultSet resultSet = statement.executeQuery("SELECT LAST_INSERT_ID();");
+
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        return null;
+    }
+
+    /**
+     * Lấy thông tin lượt mượn sách từ database với mã lượt mượn sách
+     *
+     * @param bookLoanId
+     * @return
+     */
+    public static BookLoan getBookLoansDataWithBookLoanID(String bookLoanId) {
+        BookLoan bookLoan = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username\n" +
+                    "WHERE bl.bookLoanID = \"" + bookLoanId + "\";");
+
+            if (resultSet.next()) {
+                bookLoan = new BookLoan(resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6)
+                );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return bookLoan;
+    }
+
+    /**
+     * Trả về lượt mượn sách của người dùng
+     *
+     * @param username Tên đăng nhập của người dùng
+     * @return ArrayList<BookLoan>
+     */
+    public static ArrayList<BookLoan> getBookLoansDataWithUser(String username) {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "WHERE bl.username = \"" + username + "\";");
+            System.out.println("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "WHERE bl.username = \"" + username + "\";");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                resultSet.getString(2),
+                                null,
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getString(5)
+                        )
+                );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    /**
+     * Xóa lượt mượn sách có chỉ số là bookLoanID, trả về true nếu xóa thành công, ngược lại trả về false
+     *
+     * @param bookLoanID
+     * @return
+     */
+    public static boolean deleteBookLoan(String bookLoanID) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM book_loans WHERE bookLoanID = \"" + bookLoanID + "\";");
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Lấy thông tin lượt mượn sách từ database
+     *
+     * @return ArrayList<BookLoan>
+     */
+    public static ArrayList<BookLoan> getBookLoansData() {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username;");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getString(5),
+                                resultSet.getString(6)
+                        )
+                );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    /**
+     * Lấy thông tin lượt mượn sách từ database với từ khóa
+     *
+     * @param keyword Từ khóa tìm kiếm
+     * @return ArrayList<BookLoan>
+     */
+    public static ArrayList<BookLoan> getBookLoansDataWithKeyword(String keyword) {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username\n" +
+                    "WHERE b.bookName LIKE \"%" + keyword + "%\" OR u.fullName LIKE \"%" + keyword + "%\" OR bl.dueDate LIKE \"%" + keyword + "%\" OR bl.returnDate LIKE \"%" + keyword + "%\" OR bl.note LIKE \"%" + keyword + "%\";");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getString(5),
+                                resultSet.getString(6)
+                        )
+                );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    /**
+     * Xóa sách khỏi database, trả về true nếu xóa sách thành công, ngược lại trả về false
+     *
+     * @param ISBN Mã ISBN của sách cần xóa
+     * @return
+     */
     public static boolean deleteBook(String ISBN) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -294,58 +803,11 @@ public class SQLController {
         return true;
     }
 
-    public static void addUser(String username,
-                               String password,
-                               String fullName,
-                               String dateOfBirth,
-                               String email,
-                               String phoneNumber,
-                               byte[] userImage,
-                               String gender){
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+    // Functions for dashboards (why the fuck did you put in here vohai)
 
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-
-            // If username doesn\"t exist, add the new user to the database
-            statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
-                    ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `userImage`, `isAdmin`)" +
-                    " VALUES (\"" + username + "\", \"" + password + "\", \"" + fullName + "\", \"" +
-                    dateOfBirth + "\", \"" + gender + "\", \"" + email + "\", \"" + phoneNumber +  "\",\"" + convertByteArrayToString(userImage) +"\",  \"0\");");
-            connection.close();
-
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-    }
-
-    public static ArrayList<User> getUserInfoData() {
-        ArrayList<User> data = new ArrayList<>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE isAdmin = 0");
-
-            while (resultSet.next()) {
-                data.add(new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8))));
-            }
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return data;
-    }
-
+    /**
+     * @return int[]
+     */
     public static int[] estimateUserAge() {
         int[] ageGroups = new int[3];
 
@@ -383,6 +845,9 @@ public class SQLController {
         return ageGroups;
     }
 
+    /**
+     * @return int[][]
+     */
     public static int[][] estimateTransactions() {
         int[][] transactions = null; // Mảng lưu số lượng giao dịch mượn và trả trong từng khoảng thời gian
 
@@ -445,110 +910,15 @@ public class SQLController {
         return transactions;
     }
 
-    public static ArrayList<User> getUserInfoDataWithKeyword(String keyword) {
-        ArrayList<User> data = new ArrayList<>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE isAdmin = 0 AND ( username LIKE \"%" + keyword + "%\" OR fullName LIKE \"%" + keyword + "%\" OR gender LIKE \"%" + keyword + "%\" OR email LIKE \"%" + keyword + "%\" OR phoneNumber LIKE \"%" + keyword + "%\");");
+    // Support functions
 
-            while (resultSet.next()) {
-                data.add(new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8))));
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return data;
-    }
-
-    public static boolean deleteBookLoan(String bookLoanID) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("DELETE FROM book_loans WHERE bookLoanID = \"" + bookLoanID + "\";");
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-        return true;
-    }
-
-    public static ArrayList<BookLoan> getBookLoansData() {
-        ArrayList<BookLoan> data = new ArrayList<>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
-                    "FROM book_loans bl\n" +
-                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
-                    "JOIN user_info u ON u.username = bl.username;");
-
-            while (resultSet.next()) {
-                data.add(new BookLoan(resultSet.getString(1),
-                                      resultSet.getString(2),
-                                      resultSet.getString(3),
-                                      resultSet.getString(4),
-                                      resultSet.getString(5),
-                                      resultSet.getString(6)
-                                     )
-                        );
-            }
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return data;
-    }
-
-    public static ArrayList<BookLoan> getBookLoansDataWithKeyword(String keyword) {
-        ArrayList<BookLoan> data = new ArrayList<>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
-                    "FROM book_loans bl\n" +
-                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
-                    "JOIN user_info u ON u.username = bl.username\n" +
-                    "WHERE b.bookName LIKE \"%" + keyword + "%\" OR u.fullName LIKE \"%" + keyword + "%\" OR bl.dueDate LIKE \"%" + keyword + "%\" OR bl.returnDate LIKE \"%" + keyword + "%\" OR bl.note LIKE \"%" + keyword + "%\";");
-
-            while (resultSet.next()) {
-                data.add(new BookLoan(resultSet.getString(1),
-                                      resultSet.getString(2),
-                                      resultSet.getString(3),
-                                      resultSet.getString(4),
-                                      resultSet.getString(5),
-                                      resultSet.getString(6)
-                                     )
-                        );
-            }
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return data;
-    }
-
+    /**
+     * Chuyển đổi ImageView thành mảng byte[]
+     *
+     * @param imageView ImageView cần chuyển đổi
+     * @return byte[]
+     */
     public static byte[] convertImageViewToBlob(ImageView imageView) {
         Image image = imageView.getImage();  // Lấy Image từ ImageView
 
@@ -571,124 +941,40 @@ public class SQLController {
         }
     }
 
-    public static ArrayList<BookLoan> getBookLoansDataWithUser(String username) {
-        ArrayList<BookLoan> data = new ArrayList<>();
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
-                    "FROM book_loans bl\n" +
-                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
-                    "WHERE bl.username = \"" + username + "\";");
-            System.out.println("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
-                    "FROM book_loans bl\n" +
-                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
-                    "WHERE bl.username = \"" + username + "\";");
-
-            while (resultSet.next()) {
-                data.add(new BookLoan(resultSet.getString(1),
-                                      resultSet.getString(2),
-                                      null,
-                                      resultSet.getString(3),
-                                      resultSet.getString(4),
-                                      resultSet.getString(5)
-                                     )
-                        );
-            }
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
+    /**
+     * Chuyển đổi định dạng từ mảng byte[] sang chuỗi
+     *
+     * @param byteArray Mảng byte cần chuyển đổi
+     * @return
+     */
+    public static String convertByteArrayToString(byte[] byteArray) {
+        if (byteArray == null) {
+            return null;  // Nếu byte array là null, trả về null
         }
-        return data;
+        // Mã hóa mảng byte thành chuỗi Base64
+        return Base64.getEncoder().encodeToString(byteArray);
     }
 
-    public static boolean isAdmin(String username) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT isAdmin FROM user_info WHERE username = \"" + username + "\";");
-
-            if (resultSet.next()) {
-                if (resultSet.getInt(1) == 1) {
-                    return true;
-                }
-            }
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e);
+    /**
+     * Chuyển đổi định dạng từ chuỗi sang mảng byte[]
+     *
+     * @param string Chuỗi cần chuyển đổi
+     * @return
+     */
+    public static byte[] convertStringToByteArray(String string) {
+        if (string == null) {
+            return null;  // Nếu byte array là null, trả về null
         }
-        return false;
+        // Mã hóa mảng byte thành chuỗi Base64
+        return Base64.getDecoder().decode(string);
     }
 
-    public static User getUserInfoDataByUsername(String username) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM user_info WHERE username = \"" + username + "\";");
-
-            if (resultSet.next()) {
-                return new User(resultSet.getString(1), resultSet.getString(3), resultSet.getString(5), resultSet.getString(4), resultSet.getString(6), resultSet.getString(7), convertStringToByteArray(resultSet.getString(8)));
-            }
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    public static String getUserPassword(String username) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT password FROM user_info WHERE username = \"" + username + "\";");
-
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            }
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return null;
-    }
-
-    public static void updateUserPassword(String username, String text) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-
-            statement.executeUpdate("UPDATE user_info SET password = \"" + text + "\" WHERE username = \"" + username + "\";");
-
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
+    /**
+     * Chuẩn hóa chuỗi thể loại sách thành danh sách thể loại sách
+     *
+     * @param genres Chuỗi thể loại sách
+     * @return ObservableList<String>
+     */
     private static ObservableList<String> normalizeToList(String genres) {
         String[] genresArray = genres.split(",");
         //Remove extra spaces
@@ -696,106 +982,5 @@ public class SQLController {
             genresArray[i] = genresArray[i].trim();
         }
         return FXCollections.observableArrayList(genresArray);
-    }
-
-    public static void deleteUser(String username) {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-
-            statement.executeUpdate("DELETE FROM user_info WHERE username = \"" + username + "\";");
-
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public static Book getBookInfoDataWithISBN(String ISBN) {
-        Book book = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info WHERE ISBN = \"" + ISBN + "\";");
-
-            if (resultSet.next()) {
-                book = new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7)));
-            }
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return book;
-    }
-
-    public static String addBookLoan(String ISBN, String username, String note, String dateOfBirthAsString) {
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-
-            //Create a new book loan with auto increament id
-            statement.executeUpdate("INSERT INTO `book_loans` (`ISBN`, `username`, `note`, `dueDate`)" +
-                    " VALUES (\"" + ISBN + "\", \"" + username + "\", \"" + note + "\", \"" + dateOfBirthAsString + "\");");
-            //returns the bookloanid
-            ResultSet resultSet = statement.executeQuery("SELECT LAST_INSERT_ID();");
-
-            if (resultSet.next()) {
-                return resultSet.getString(1);
-            }
-            connection.close();
-
-        }
-        catch (Exception e) {
-            System.out.println(e);
-            return null;
-        }
-        return null;
-    }
-
-    public static BookLoan getBookLoansDataWithBookLoanID(String bookLoanId) {
-        BookLoan bookLoan = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
-                    "FROM book_loans bl\n" +
-                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
-                    "JOIN user_info u ON u.username = bl.username\n" +
-                    "WHERE bl.bookLoanID = \"" + bookLoanId + "\";");
-
-            if (resultSet.next()) {
-                bookLoan = new BookLoan(resultSet.getString(1),
-                                        resultSet.getString(2),
-                                        resultSet.getString(3),
-                                        resultSet.getString(4),
-                                        resultSet.getString(5),
-                                        resultSet.getString(6)
-                                       );
-            }
-            connection.close();
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return bookLoan;
     }
 }

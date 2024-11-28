@@ -20,6 +20,7 @@ import org.example.ooplibrary.Object.Book;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class DocumentArchiveController extends AbstractMenuController implements Initializable {
@@ -213,12 +214,44 @@ public class DocumentArchiveController extends AbstractMenuController implements
     }
 
     private void deleteBook(Book book) {
-        // Mã để xóa tài liệu
-        System.out.println("Xóa tài liệu: " + book.getName());
-        // Xóa tài liệu khỏi cơ sở dữ liệu và cập nhật TableView
-        if (SQLController.deleteBook(book.getISBN())) {
-            data.remove(book); // Xóa sách khỏi danh sách
-            tableView.refresh(); // Làm mới bảng
+        // Tạo Alert kiểu xác nhận
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Xác nhận xóa");
+        alert.setHeaderText("Bạn có chắc chắn muốn xóa tài liệu này?");
+        alert.setContentText("Tên tài liệu: " + book.getName() + "\n"
+                + "Tác giả: " + book.getAuthor() + "\n\n"
+                + "Lưu ý: Tài liệu sẽ bị xóa khỏi cơ sở dữ liệu và không thể khôi phục!");
+
+        // Hiển thị cửa sổ Alert và chờ phản hồi từ người dùng
+        Optional<ButtonType> result = alert.showAndWait();
+
+        // Kiểm tra phản hồi
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Người dùng chọn OK
+            if (SQLController.deleteBook(book.getISBN())) {
+                // Xóa sách khỏi danh sách dữ liệu
+                data.remove(book);
+
+                // Làm mới bảng
+                tableView.refresh();
+
+                // Hiển thị thông báo thành công
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Xóa thành công");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Tài liệu \"" + book.getName() + "\" đã được xóa thành công!");
+                successAlert.show();
+            } else {
+                // Hiển thị thông báo lỗi nếu không xóa được trong cơ sở dữ liệu
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Lỗi xóa");
+                errorAlert.setHeaderText("Không thể xóa tài liệu");
+                errorAlert.setContentText("Đã xảy ra lỗi trong quá trình xóa tài liệu. Vui lòng thử lại sau.");
+                errorAlert.show();
+            }
+        } else {
+            // Người dùng chọn Cancel hoặc đóng cửa sổ Alert
+            System.out.println("Hủy xóa tài liệu: " + book.getName());
         }
     }
 
