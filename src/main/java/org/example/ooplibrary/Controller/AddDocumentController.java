@@ -103,7 +103,7 @@ public class AddDocumentController {
         }
         bookName.setText(book.getName());
         author.setText(book.getAuthor());
-        genre.setText(book.getGenresString());
+//        genre.setText(book.getGenresString());
         yearOfPublication.setText(book.getYearOfPublication());
         description.setText(book.getDescription());
         if (book.getImage() != null) {
@@ -121,7 +121,6 @@ public class AddDocumentController {
         }
         return FXCollections.observableArrayList(genresArray);
     }
-
 
 
 }
