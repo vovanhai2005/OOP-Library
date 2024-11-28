@@ -79,14 +79,14 @@
             </TextField>
          </children>
       </VBox>
-      <VBox layoutX="38.0" layoutY="354.0" prefHeight="115.0" prefWidth="235.0">
+      <VBox layoutX="38.0" layoutY="354.0" prefHeight="126.0" prefWidth="235.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" wrappingWidth="116.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="description" alignment="TOP_LEFT" prefHeight="83.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="description" alignment="TOP_LEFT" prefHeight="102.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
