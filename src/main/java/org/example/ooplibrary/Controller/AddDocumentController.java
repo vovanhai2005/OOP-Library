@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -106,6 +107,13 @@ public class AddDocumentController {
     public void autofill(MouseEvent event) {
         Book book = GoogleBookAPIUtil.fetchBookDetailsByISBN(ISBN.getText());
         if (book == null) {
+            //Alert user that the book was not found
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Book not found!");
+            alert.setHeaderText("Book not found");
+            alert.setContentText("The book with the ISBN " + ISBN.getText() + " was not found. Please enter the details manually or check the ISBN again.");
+            alert.showAndWait();
+
             return;
         }
         bookName.setText(book.getName());
