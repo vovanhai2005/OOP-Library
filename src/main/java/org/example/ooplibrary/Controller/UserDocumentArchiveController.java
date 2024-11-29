@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
@@ -240,7 +241,11 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         bookName.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-alignment: center;");
 
         // Tạo Text cho tên tác giả
-        Text authorName = new Text("By: " + book.getAuthor());
+        String author = book.getAuthor();
+        if (author.length() > 15) {
+            author = author.substring(0, 15) + "...";
+        }
+        Text authorName = new Text("By: " + author);
         authorName.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;");
 
         // Thêm Rating
@@ -248,17 +253,21 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         rating.setMax(5); // Maximum 5 stars
         rating.setPartialRating(true); // Allow partial stars (optional)
         rating.setRating(3.5); // Default rating (for example, 3.5 stars)
-        rating.setStyle("-fx-scale-x: 1.2; -fx-scale-y: 1.2; -fx-alignment: center;"); // Optional: Adjust size or alignment
-        Scale scale = new Scale(0.5, 0.5); // Scale down to 80% size
-        rating.getTransforms().add(scale);
+        rating.setStyle("-fx-scale-x: 0.6; -fx-scale-y: 0.6;"); // Optional: Adjust size
 
         // Add a listener if you want to handle rating changes (optional)
         rating.ratingProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println("New Rating for " + book.getName() + ": " + newValue);
         });
 
+        // Tạo HBox bao bọc Rating và căn chỉnh vào giữa
+        HBox ratingContainer = new HBox(rating);
+        ratingContainer.setStyle("-fx-alignment: center;");
+        ratingContainer.setPrefWidth(rating.prefWidth(-1)); // Đặt kích thước bằng Rating
+        ratingContainer.setPrefHeight(rating.prefHeight(-1));
+
         // Tạo VBox để chứa ảnh, thông tin và Rating
-        VBox bookBox = new VBox(bookImageView, bookName, authorName, rating);
+        VBox bookBox = new VBox(bookImageView, bookName, authorName, ratingContainer);
         bookBox.setSpacing(10);
         bookBox.setStyle("-fx-alignment: center; -fx-padding: 10px; -fx-background-color: #F0E9DD;");
         bookBox.setPrefWidth(boxWidth); // Fixed width for each bookBox
