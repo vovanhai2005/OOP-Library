@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
+import org.controlsfx.control.Rating;
 import org.example.ooplibrary.Object.Book;
 
 import java.io.ByteArrayInputStream;
@@ -32,6 +34,9 @@ public class UserDisplayDocumentController {
     @FXML
     private Text yearOfPublication;
 
+    @FXML
+    private Rating star_ranking;
+
 
     public void setDocumentDetails(Book book) {
         ISBN.setText(book.getISBN());
@@ -40,6 +45,9 @@ public class UserDisplayDocumentController {
         description.setText(book.getDescription());
         genre.setText(book.getGenresString());
         yearOfPublication.setText(book.getYearOfPublication());
+
+        Scale scale = new Scale(0.7, 0.7);
+        star_ranking.getTransforms().add(scale);
 
         // Nếu có hình ảnh, hiển thị trong bookImage
         if (book.getImage() != null) {
