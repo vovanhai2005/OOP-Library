@@ -17,3 +17,20 @@
     -fx-border-color: #ABA8A6;
     -fx-border-width: 2px;
 }
+
+.exit_btn:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #DCE0E2;
+}
+
+.table_view{
+    -fx-background-color: #F0E9DD;
+    -fx-border-style: solid;
+    -fx-border-radius: 5px;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 14px;          /* Kích thước font */
+    -fx-font-weight: bold;        /* Font đậm */
+    -fx-padding: 5px;             /* Khoảng cách trong */
+}
