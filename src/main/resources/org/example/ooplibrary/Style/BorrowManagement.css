@@ -48,3 +48,6 @@
     -fx-cursor: hand;
 }
 
+.app_logo:hover{
+    -fx-cursor: hand;
+}
