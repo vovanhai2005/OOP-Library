@@ -35,3 +35,11 @@
 .quote_field{
     -fx-background-color: #F0E9DD;
 }
+
+.vietnam_btn:hover{
+    -fx-cursor: hand;
+}
+
+.usa_btn:hover{
+    -fx-cursor: hand;
+}

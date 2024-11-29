@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -31,7 +32,7 @@
                                 <Insets left="28.0" top="13.0" />
                             </HBox.margin>
                         </ImageView>
-                        <Label fx:id="dashboardBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Dashboard">
+                        <Label fx:id="dashboardBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Main Menu">
                             <font>
                                 <Font size="18.0" />
                             </font>
@@ -141,70 +142,75 @@
                     </image>
                 </ImageView>
             </children></AnchorPane>
-        <AnchorPane layoutX="207.0" layoutY="295.0" prefHeight="425.0" prefWidth="1072.0" styleClass="quote_field">
-            <children>
-                <VBox layoutX="73.0" layoutY="63.0" prefHeight="106.0" prefWidth="140.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="90k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
-                            <font>
-                                <Font name="System Bold" size="50.0" />
-                            </font>
-                        </Text>
-                        <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Books" textAlignment="CENTER" wrappingWidth="139.9830722808838">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </Text>
-                    </children>
-                </VBox>
-                <VBox layoutX="441.0" layoutY="63.0" prefHeight="106.0" prefWidth="140.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
-                            <font>
-                                <Font name="System Bold" size="50.0" />
-                            </font>
-                        </Text>
-                        <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Users" textAlignment="CENTER" wrappingWidth="155.9830722808838">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </Text>
-                    </children>
-                </VBox>
-                <VBox layoutX="809.0" layoutY="63.0" prefHeight="106.0" prefWidth="140.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="100k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
-                            <font>
-                                <Font name="System Bold" size="50.0" />
-                            </font>
-                        </Text>
-                        <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions" textAlignment="CENTER" wrappingWidth="155.9830722808838">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </Text>
-                    </children>
-                </VBox>
-                <Text fill="#de401f" layoutX="73.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Discover New Realms: Immerse Yourself" wrappingWidth="311.0">
-                    <font>
-                        <Font name="System Bold" size="30.0" />
-                    </font>
-                </Text>
-                <Text layoutX="73.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lose yourself in the joy of reading with our seamless and elegant interface. Customize your reading experience, from font size to background color, for the ultimate iterary escape. rowse through our extensive collection of books, meticulously curated for every taste. From timeless classics to contemporary gems, your next favorite read awaits." wrappingWidth="605.0">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Text>
-                <Line endX="526.0" endY="-6.0" layoutX="455.0" layoutY="288.0" startX="-100.0" style="-fx-opacity: 0.5;" />
-            </children></AnchorPane>
+      <ScrollPane layoutX="207.0" layoutY="295.0" prefHeight="425.0" prefWidth="1072.0">
+         <content>
+              <AnchorPane prefHeight="425.0" prefWidth="1072.0" styleClass="quote_field">
+                  <children>
+                      <VBox layoutX="73.0" layoutY="63.0" prefHeight="106.0" prefWidth="140.0">
+                          <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="90k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
+                                  <font>
+                                      <Font name="System Bold" size="50.0" />
+                                  </font>
+                              </Text>
+                              <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Books" textAlignment="CENTER" wrappingWidth="139.9830722808838">
+                                  <font>
+                                      <Font name="System Bold" size="18.0" />
+                                  </font>
+                                  <VBox.margin>
+                                      <Insets />
+                                  </VBox.margin>
+                              </Text>
+                          </children>
+                      </VBox>
+                      <VBox layoutX="441.0" layoutY="63.0" prefHeight="106.0" prefWidth="140.0">
+                          <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
+                                  <font>
+                                      <Font name="System Bold" size="50.0" />
+                                  </font>
+                              </Text>
+                              <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Users" textAlignment="CENTER" wrappingWidth="155.9830722808838">
+                                  <font>
+                                      <Font name="System Bold" size="18.0" />
+                                  </font>
+                                  <VBox.margin>
+                                      <Insets />
+                                  </VBox.margin>
+                              </Text>
+                          </children>
+                      </VBox>
+                      <VBox layoutX="809.0" layoutY="63.0" prefHeight="106.0" prefWidth="140.0">
+                          <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="100k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
+                                  <font>
+                                      <Font name="System Bold" size="50.0" />
+                                  </font>
+                              </Text>
+                              <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions" textAlignment="CENTER" wrappingWidth="155.9830722808838">
+                                  <font>
+                                      <Font name="System Bold" size="18.0" />
+                                  </font>
+                                  <VBox.margin>
+                                      <Insets />
+                                  </VBox.margin>
+                              </Text>
+                          </children>
+                      </VBox>
+                      <Text fill="#de401f" layoutX="73.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Discover New Realms: Immerse Yourself" wrappingWidth="311.0">
+                          <font>
+                              <Font name="System Bold" size="30.0" />
+                          </font>
+                      </Text>
+                      <Text layoutX="73.0" layoutY="332.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lose yourself in the joy of reading with our seamless and elegant interface. Customize your reading experience, from font size to background color, for the ultimate iterary escape. rowse through our extensive collection of books, meticulously curated for every taste. From timeless classics to contemporary gems, your next favorite read awaits." wrappingWidth="605.0">
+                          <font>
+                              <Font size="15.0" />
+                          </font>
+                      </Text>
+                      <Line endX="526.0" endY="-6.0" layoutX="455.0" layoutY="288.0" startX="-100.0" style="-fx-opacity: 0.5;" />
+                  </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
     </children>
 </AnchorPane>

@@ -1,0 +1,41 @@
+.menu_pane{
+    -fx-background-color: #BCB09E;
+}
+
+.menu_button:hover{
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+}
+
+.log_out_button:hover {
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+    -fx-text-fill: red;
+}
+
+.search_btn{
+    -fx-background-color: #F0E9DD;
+    -fx-background-radius: 20px;
+    -fx-opacity: 0.9;
+    -fx-border-color: transparent;
+}
+
+.header_title{
+    -fx-fill: #FFF5CD;
+}
+
+.quote_field{
+    -fx-background-color: #F2E9DD;
+}
+
+.table_view{
+    -fx-background-color: #E6DDD4;
+}
+
+.vietnam_btn:hover{
+    -fx-cursor: hand;
+}
+
+.usa_btn:hover{
+    -fx-cursor: hand;
+}

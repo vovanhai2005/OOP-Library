@@ -3,6 +3,7 @@ package org.example.ooplibrary.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,7 +18,9 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import org.controlsfx.control.Rating;
 import org.example.ooplibrary.Object.Book;
 import org.example.ooplibrary.Object.User;
 
@@ -117,7 +120,10 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         }
         flowPane.getChildren().clear();
         for (int i = 0; i < bookList.size(); i++) {
-            VBox bookBox = createBookBox(bookList.get(i));
+            int flowPaneWidth = 1072; // Width of the FlowPane
+            int spacing = 10;        // Spacing between elements in the FlowPane
+            int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5;
+            VBox bookBox = createBookBox(bookList.get(i), boxWidth);
 
             flowPane.getChildren().add(bookBox);
         }
@@ -135,7 +141,10 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             }
             flowPane.getChildren().clear();
             for (int i = 0; i < bookList.size(); i++) {
-                VBox bookBox = createBookBox(bookList.get(i));
+                int flowPaneWidth = 1072; // Width of the FlowPane
+                int spacing = 10;        // Spacing between elements in the FlowPane
+                int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5;
+                VBox bookBox = createBookBox(bookList.get(i), boxWidth);
 
                 flowPane.getChildren().add(bookBox);
             }
@@ -184,14 +193,32 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         } else {
             bookList = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
         }
+
+        // Calculate layout properties
+        int flowPaneWidth = 1072; // Width of the FlowPane
+        int spacing = 10;        // Spacing between elements in the FlowPane
+        int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5; // Number of boxes per row is 6
+        int numBoxesPerRow = (flowPaneWidth + spacing) / (boxWidth + spacing);
+
+        // Set horizontal and vertical gaps
+        flowPane.setHgap(0); // Disable FlowPane's horizontal gap
+        flowPane.setVgap(10); // Keep vertical gap
+
         for (int i = 0; i < bookList.size(); i++) {
-            VBox bookBox = createBookBox(bookList.get(i));
+            VBox bookBox = createBookBox(bookList.get(i) , boxWidth);
+
+            // Add spacing only for non-last items in a row
+            if ((i + 1) % numBoxesPerRow != 0) {
+                FlowPane.setMargin(bookBox, new Insets(0, spacing, 10, 0)); // Add right margin
+            } else {
+                FlowPane.setMargin(bookBox, new Insets(0, 0, 10, 0)); // No right margin
+            }
 
             flowPane.getChildren().add(bookBox);
         }
     }
 
-    private VBox createBookBox(Book book) {
+    private VBox createBookBox(Book book, int boxWidth) {
         // Tạo ImageView từ byte[]
         ImageView bookImageView = new ImageView();
         if (book.getImage() != null) {
@@ -200,7 +227,7 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         }
         bookImageView.setFitWidth(150); // Đặt chiều rộng ảnh
         bookImageView.setFitHeight(200); // Đặt chiều cao ảnh
-        bookImageView.setPreserveRatio(true);
+        bookImageView.setPreserveRatio(false);
 
         // Xử lý tên sách nếu vượt quá 15 kí tự
         String displayedName = book.getName();
@@ -216,10 +243,25 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         Text authorName = new Text("By: " + book.getAuthor());
         authorName.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;");
 
-        // Tạo VBox để chứa ảnh và thông tin
-        VBox bookBox = new VBox(bookImageView, bookName, authorName);
+        // Thêm Rating
+        Rating rating = new Rating();
+        rating.setMax(5); // Maximum 5 stars
+        rating.setPartialRating(true); // Allow partial stars (optional)
+        rating.setRating(3.5); // Default rating (for example, 3.5 stars)
+        rating.setStyle("-fx-scale-x: 1.2; -fx-scale-y: 1.2; -fx-alignment: center;"); // Optional: Adjust size or alignment
+        Scale scale = new Scale(0.5, 0.5); // Scale down to 80% size
+        rating.getTransforms().add(scale);
+
+        // Add a listener if you want to handle rating changes (optional)
+        rating.ratingProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("New Rating for " + book.getName() + ": " + newValue);
+        });
+
+        // Tạo VBox để chứa ảnh, thông tin và Rating
+        VBox bookBox = new VBox(bookImageView, bookName, authorName, rating);
         bookBox.setSpacing(10);
-        bookBox.setStyle("-fx-alignment: center; -fx-padding: 10px; -fx-background-color: #f9f9f9;");
+        bookBox.setStyle("-fx-alignment: center; -fx-padding: 10px; -fx-background-color: #F0E9DD;");
+        bookBox.setPrefWidth(boxWidth); // Fixed width for each bookBox
 
         // Thêm sự kiện click để hiển thị thông tin chi tiết
         bookBox.setOnMouseClicked(event -> openBookDetailView(book));

@@ -20,3 +20,17 @@
     -fx-cursor: hand;
     -fx-background-color: #a6a6a6;
 }
+
+.sendCmt_btn:hover{
+    -fx-cursor: hand;
+}
+
+.scroll-pane .scroll-bar {
+    -fx-opacity: 0; /* Ẩn thanh trượt */
+    -fx-padding: 0;
+}
+
+.scroll-pane .scroll-bar:hover {
+    -fx-opacity: 1; /* Hiện thanh trượt khi hover */
+}
+
