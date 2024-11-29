@@ -79,7 +79,7 @@
             </HBox>
             <HBox layoutX="21.0" layoutY="447.0" prefHeight="30.0" prefWidth="243.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PUBLISHED DATE:">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DATE PUBLISHED:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>

@@ -51,5 +51,8 @@
 
 .vietnam_btn:hover{
     -fx-cursor: hand;
-    -fx-background-color: #DCE0E2;
+}
+
+.usa_btn:hover{
+    -fx-cursor: hand;
 }

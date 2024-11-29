@@ -40,3 +40,11 @@
     -fx-background-color: #BAB1A0;
     -fx-background-radius: 20px;
 }
+
+.vietnam_btn:hover{
+    -fx-cursor: hand;
+}
+
+.usa_btn:hover{
+    -fx-cursor: hand;
+}
