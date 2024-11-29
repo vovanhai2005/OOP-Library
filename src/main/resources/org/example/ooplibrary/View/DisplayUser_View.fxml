@@ -127,7 +127,7 @@
          <children>
             <ImageView fitHeight="40.0" fitWidth="44.0" layoutX="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../../../Downloads/long-arrow-pointing-to-left.png" />
+                  <Image url="@../Image/long-arrow-pointing-to-left.png" />
                </image>
             </ImageView>
          </children>

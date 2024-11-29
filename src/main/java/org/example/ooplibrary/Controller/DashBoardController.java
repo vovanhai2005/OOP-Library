@@ -47,8 +47,8 @@ public class DashBoardController extends AbstractMenuController implements Initi
         returnSeries.setName("Return Transactions");
 
         for (int i = 0; i < 6; i++) {
-            borrowSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), i * 10 + 5));
-            returnSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), i * 20 + 5));
+            borrowSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][0]));
+            returnSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][1]));
         }
 
         lineChart.getData().addAll(borrowSeries , returnSeries);
