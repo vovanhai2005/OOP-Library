@@ -53,7 +53,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <Rating fx:id="star_ranking" layoutX="563.0" layoutY="289.0" prefHeight="21.0" prefWidth="167.0" />
+            <Rating fx:id="star_ranking" layoutX="563.0" layoutY="289.0" partialRating="true" prefHeight="21.0" prefWidth="167.0" />
             </children>
         </AnchorPane>
       <AnchorPane layoutX="26.0" layoutY="24.0" prefHeight="674.0" prefWidth="278.0" styleClass="book_detail">
