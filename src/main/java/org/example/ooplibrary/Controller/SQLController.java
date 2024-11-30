@@ -19,6 +19,8 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SQLController {
 
@@ -854,55 +856,53 @@ public class SQLController {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-            );
-            Statement statement = connection.createStatement();
+            // Kết nối đến cơ sở dữ liệu
+            try (Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD);
+                 Statement statement = connection.createStatement()) {
 
-            // Xác định ngày bắt đầu và ngày kết thúc (ngày 1 đến ngày 30 của tháng trước)
-            LocalDate now = LocalDate.now();
-            LocalDate startDate = now.minusMonths(1).withDayOfMonth(1); // Ngày 1 của tháng trước
-            LocalDate endDate = now.minusMonths(1).withDayOfMonth(30); // Ngày 30 của tháng trước
+                // Xác định ngày bắt đầu và ngày kết thúc (ngày 1 đến ngày cuối cùng của tháng trước)
+                LocalDate now = LocalDate.now();
+                LocalDate startDate = now.minusMonths(1).withDayOfMonth(1); // Ngày 1 của tháng trước
+                LocalDate endDate = now.minusMonths(1).withDayOfMonth(now.minusMonths(1).lengthOfMonth()); // Ngày cuối của tháng trước
 
-            // Chia khoảng thời gian thành các đoạn 5 ngày
-            int timeRanges = (int) (java.time.Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays() / 5) + 1;
+                // Chia khoảng thời gian thành các đoạn 5 ngày
+                int timeRanges = (int) (java.time.Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays() / 5) + 1;
 
-            transactions = new int[timeRanges][2]; // Cập nhật kích thước cho mảng dựa trên số khoảng
+                transactions = new int[timeRanges][2]; // Cập nhật kích thước cho mảng dựa trên số khoảng
 
-            // Truy vấn số lượng sách mượn và trả trong từng khoảng thời gian 5 ngày
-            for (int i = 0; i < timeRanges; i++) {
-                LocalDate rangeStart = startDate.plusDays(i * 5); // Ngày bắt đầu của khoảng
-                LocalDate rangeEnd = rangeStart.plusDays(4); // Ngày kết thúc của khoảng
+                // Truy vấn số lượng sách mượn và trả trong từng khoảng thời gian 5 ngày
+                for (int i = 0; i < timeRanges; i++) {
+                    LocalDate rangeStart = startDate.plusDays(i * 5); // Ngày bắt đầu của khoảng
+                    LocalDate rangeEnd = rangeStart.plusDays(4); // Ngày kết thúc của khoảng
 
-                // Giới hạn ngày kết thúc không vượt quá ngày 30 của tháng trước
-                if (rangeEnd.isAfter(endDate)) {
-                    rangeEnd = endDate;
-                }
+                    // Giới hạn ngày kết thúc không vượt quá ngày cuối của tháng trước
+                    if (rangeEnd.isAfter(endDate)) {
+                        rangeEnd = endDate;
+                    }
+                    // Truy vấn số lượng sách mượn trong khoảng thời gian này
+                    ResultSet borrowResultSet = statement.executeQuery(
+                            "SELECT COUNT(*) as borrowCount " +
+                                    "FROM book_loans " +
+                                    "WHERE dueDate >= '" + rangeStart + "' AND dueDate <= '" + rangeEnd + "';"
+                    );
 
-                // Truy vấn số lượng sách mượn trong khoảng thời gian này
-                ResultSet borrowResultSet = statement.executeQuery(
-                        "SELECT COUNT(*) as borrowCount " +
-                                "FROM book_loans " +
-                                "WHERE dueDate >= \"" + rangeStart + "\" AND dueDate <= \"" + rangeEnd + "\";"
-                );
+                    if (borrowResultSet.next()) {
+                        transactions[i][0] = borrowResultSet.getInt("borrowCount"); // Số lượng mượn
+                    }
 
-                if (borrowResultSet.next()) {
-                    transactions[i][0] = borrowResultSet.getInt("borrowCount"); // Số lượng mượn
-                }
+                    // Truy vấn số lượng sách trả trong khoảng thời gian này
+                    ResultSet returnResultSet = statement.executeQuery(
+                            "SELECT COUNT(*) as returnCount " +
+                                    "FROM book_loans " +
+                                    "WHERE returnDate >= '" + rangeStart + "' AND returnDate <= '" + rangeEnd + "';"
+                    );
 
-                // Truy vấn số lượng sách trả trong khoảng thời gian này
-                ResultSet returnResultSet = statement.executeQuery(
-                        "SELECT COUNT(*) as returnCount " +
-                                "FROM book_loans " +
-                                "WHERE returnDate >= \"" + rangeStart + "\" AND returnDate <= \"" + rangeEnd + "\";"
-                );
-
-                if (returnResultSet.next()) {
-                    transactions[i][1] = returnResultSet.getInt("returnCount"); // Số lượng trả
+                    if (returnResultSet.next()) {
+                        transactions[i][1] = returnResultSet.getInt("returnCount"); // Số lượng trả
+                    }
                 }
             }
-
-            connection.close();
         } catch (Exception e) {
             System.out.println("Error estimating borrow and return transactions: " + e.getMessage());
         }
@@ -910,6 +910,39 @@ public class SQLController {
         return transactions;
     }
 
+    /**
+     *
+     * @return Map<String,int[]>
+     */
+    public static Map<String, int[]> getTransactionsByGenres() {
+        // Map lưu trữ số lượng giao dịch theo thể loại
+        Map<String, int[]> genreTransactions = new HashMap<>();
+
+        String query = """
+        SELECT genre,
+               SUM(CASE WHEN dueDate IS NOT NULL THEN 1 ELSE 0 END) AS borrow_count,
+               SUM(CASE WHEN returnDate IS NOT NULL THEN 1 ELSE 0 END) AS return_count
+        FROM book_loans
+        JOIN book_info ON book_loans.ISBN = book_info.ISBN
+        GROUP BY genre
+    """;
+        // Khối try-with-resources đảm bảo tự động đóng tài nguyên
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/librosync_db", "root", "");
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String genre = resultSet.getString("genre");
+                int borrowCount = resultSet.getInt("borrow_count");
+                int returnCount = resultSet.getInt("return_count");
+                genreTransactions.put(genre, new int[]{borrowCount, returnCount});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return genreTransactions;
+    }
 
     // Support functions
 

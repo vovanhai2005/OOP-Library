@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class DashBoardController extends AbstractMenuController implements Initializable {
@@ -20,7 +21,10 @@ public class DashBoardController extends AbstractMenuController implements Initi
     private PieChart pieChart;
 
     @FXML
-    private LineChart lineChart;
+    private LineChart<String, Number> lineChart;
+
+    @FXML
+    private BarChart<String, Number> barChart;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,25 +39,52 @@ public class DashBoardController extends AbstractMenuController implements Initi
 
         pieChart.setData(pieChartData);
         pieChart.setTitle("Percent of users' age:");
+        loadLineChart();
+        loadBarChart();
+    }
 
-        // Using 2-Line Chart for percents of borrow and return transactions in the past 12 months
-        int[][] transactions = SQLController.estimateTransactions();
+    private void loadLineChart() {
+        int[][] transactions = SQLController.estimateTransactions(); // Lấy dữ liệu
 
-        lineChart.setTitle("Total transactions in last month");
+        lineChart.setTitle("Borrow and Return Transactions in Last Month");
+
+        // Tạo các series cho dữ liệu
         XYChart.Series<String, Number> borrowSeries = new XYChart.Series<>();
         borrowSeries.setName("Borrow Transactions");
 
         XYChart.Series<String, Number> returnSeries = new XYChart.Series<>();
         returnSeries.setName("Return Transactions");
 
-        for (int i = 0; i < 6; i++) {
-            borrowSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][0]));
-            returnSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][1]));
+        // Thêm dữ liệu vào series
+        for (int i = 0; i < transactions.length; i++) {
+            borrowSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][0]));  // Số lượng sách mượn
+            returnSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][1]));  // Số lượng sách trả
         }
 
-        lineChart.getData().addAll(borrowSeries , returnSeries);
-
-        // Using Bar Chart for
+        // Xóa dữ liệu cũ và thêm dữ liệu mới
+        lineChart.getData().clear(); // Xóa dữ liệu cũ
+        lineChart.getData().addAll(borrowSeries, returnSeries); // thêm dữ liệu mới
     }
 
+    private void loadBarChart() {
+        Map<String, int[]> genreTransactions = SQLController.getTransactionsByGenres();
+
+        barChart.setTitle("Transactions by Genre");
+
+        XYChart.Series<String, Number> borrowSeries = new XYChart.Series<>();
+        borrowSeries.setName("Borrow");
+
+        XYChart.Series<String, Number> returnSeries = new XYChart.Series<>();
+        returnSeries.setName("Return");
+
+        for (Map.Entry<String, int[]> entry : genreTransactions.entrySet()) {
+            String genre = entry.getKey();
+            int[] counts = entry.getValue();
+
+            borrowSeries.getData().add(new XYChart.Data<>(genre, counts[0]));
+            returnSeries.getData().add(new XYChart.Data<>(genre, counts[1]));
+        }
+
+        barChart.getData().addAll(borrowSeries, returnSeries);
+    }
 }
