@@ -717,7 +717,7 @@ public class SQLController {
                     "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
             );
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.username, bl.dueDate, bl.returnDate, bl.note\n" +
                     "FROM book_loans bl\n" +
                     "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
                     "JOIN user_info u ON u.username = bl.username;");

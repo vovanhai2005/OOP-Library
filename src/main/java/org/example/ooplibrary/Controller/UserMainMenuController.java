@@ -66,32 +66,42 @@ public class UserMainMenuController extends AbstractMenuController implements In
         dataBox.setStyle("-fx-border-width: 0; -fx-border-color: transparent;"); // Loại bỏ viền
 
         // Tạo các ô hiển thị số sách, số người dùng và số lượt mượn trả sách
-        HBox booksCountBox = new HBox();
+        VBox booksCountBox = new VBox();
         booksCountBox.setPrefWidth(358);  // Chiều ngang bằng nhau
         booksCountBox.setPrefHeight(150); // Chiều dọc cố định
         booksCountBox.setAlignment(Pos.CENTER); // Căn lề giữa
-        Text booksCountText = new Text("Books: " + getBooksCount());
-        booksCountText.setStyle("-fx-font-size: 30px;");  // Phóng to chữ lên 30px
+        Text booksCountText = new Text(String.valueOf(getBooksCount()));
+        Text booksText = new Text("Books");
+        booksCountText.setStyle("-fx-font-size: 50px; -fx-fill: #de401f; -fx-font-weight: bold");  // Phóng to chữ lên 30px
         booksCountText.setTextAlignment(TextAlignment.CENTER);
-        booksCountBox.getChildren().add(booksCountText);
+        booksText.setStyle("-fx-font-weight: bold; -fx-font-size: 18px");
+        booksText.setTextAlignment(TextAlignment.CENTER);
+        booksCountBox.getChildren().addAll(booksCountText, booksText);
 
-        HBox usersCountBox = new HBox();
+        VBox usersCountBox = new VBox();
         usersCountBox.setPrefWidth(358);  // Chiều ngang bằng nhau
         usersCountBox.setPrefHeight(150); // Chiều dọc cố định
         usersCountBox.setAlignment(Pos.CENTER); // Căn lề giữa
-        Text usersCountText = new Text("Users: " + getUsersCount());
-        usersCountText.setStyle("-fx-font-size: 30px;");  // Phóng to chữ lên 30px
+        Text usersCountText = new Text(String.valueOf(getUsersCount()));
+        Text userText = new Text("Users");
+        usersCountText.setStyle("-fx-font-size: 50px; -fx-fill: #de401f; -fx-font-weight: bold");  // Phóng to chữ lên 30px
         usersCountText.setTextAlignment(TextAlignment.CENTER);
-        usersCountBox.getChildren().add(usersCountText);
+        userText.setStyle("-fx-font-weight: bold; -fx-font-size: 18px");
+        userText.setTextAlignment(TextAlignment.CENTER);
+        usersCountText.setTextAlignment(TextAlignment.CENTER);
+        usersCountBox.getChildren().addAll(usersCountText , userText);
 
-        HBox borrowCountBox = new HBox();
+        VBox borrowCountBox = new VBox();
         borrowCountBox.setPrefWidth(358);  // Chiều ngang bằng nhau
         borrowCountBox.setPrefHeight(150); // Chiều dọc cố định
         borrowCountBox.setAlignment(Pos.CENTER); // Căn lề giữa
-        Text borrowCountText = new Text("Borrow/Return: " + getBorrowReturnCount());
-        borrowCountText.setStyle("-fx-font-size: 30px;");  // Phóng to chữ lên 30px
-        borrowCountText.setTextAlignment(TextAlignment.CENTER);
-        borrowCountBox.getChildren().add(borrowCountText);
+        Text transactionsText = new Text("Transactions");
+        Text transactionsCountText = new Text(String.valueOf(getBorrowReturnCount()));
+        transactionsCountText.setStyle("-fx-font-size: 50px; -fx-fill: #de401f; -fx-font-weight: bold");  // Phóng to chữ lên 30px
+        transactionsCountText.setTextAlignment(TextAlignment.CENTER);
+        transactionsText.setStyle("-fx-font-weight: bold; -fx-font-size: 18px");
+        transactionsText.setTextAlignment(TextAlignment.CENTER);
+        borrowCountBox.getChildren().addAll(transactionsCountText , transactionsText);
 
         // Thêm các ô vào dataBox
         dataBox.getChildren().addAll(booksCountBox, usersCountBox, borrowCountBox);

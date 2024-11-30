@@ -143,7 +143,7 @@
             </children></AnchorPane>
       <ScrollPane hbarPolicy="NEVER" layoutX="207.0" layoutY="295.0" prefHeight="425.0" prefWidth="1072.0">
          <content>
-            <FlowPane fx:id="flowPane" prefHeight="424.0" prefWidth="1069.0" />
+            <FlowPane fx:id="flowPane" prefHeight="424.0" prefWidth="1069.0" style="-fx-background-color: F0E9DD;" />
          </content>
       </ScrollPane>
     </children>
