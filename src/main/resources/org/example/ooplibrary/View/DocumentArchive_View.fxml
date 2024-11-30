@@ -166,8 +166,8 @@
                         <TableColumn fx:id="nameCol" prefWidth="211.0" styleClass="table_column" text="Name" />
                         <TableColumn fx:id="yearOfPublicationCol" minWidth="0.0" prefWidth="138.0" styleClass="table_column" text="Year of Publication" />
                         <TableColumn fx:id="authorCol" minWidth="0.0" prefWidth="156.0" styleClass="table_column" text="Author" />
-                        <TableColumn fx:id="genreCol" minWidth="0.0" prefWidth="195.0" styleClass="table_column" text="Genre" />
-                        <TableColumn fx:id="featureCol" minWidth="0.0" prefWidth="209.0" sortable="false" styleClass="table_column" text="Feature" />
+                        <TableColumn fx:id="genreCol" minWidth="0.0" prefWidth="228.80010986328125" styleClass="table_column" text="Genre" />
+                        <TableColumn fx:id="featureCol" minWidth="0.0" prefWidth="176.7999267578125" sortable="false" styleClass="table_column" text="Feature" />
                     </columns></TableView>
             </children>
         </AnchorPane>

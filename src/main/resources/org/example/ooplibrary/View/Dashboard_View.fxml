@@ -161,14 +161,14 @@
                     </yAxis>
                   </LineChart>
                </children></AnchorPane>
-            <AnchorPane layoutX="480.0" layoutY="24.0" prefHeight="577.0" prefWidth="567.0" styleClass="chart_field">
+            <AnchorPane layoutX="480.0" layoutY="8.0" prefHeight="594.0" prefWidth="567.0" styleClass="chart_field">
                <children>
-                  <BarChart prefHeight="577.0" prefWidth="543.0" title="fsdfsdf">
+                  <BarChart fx:id="barChart" layoutY="3.0" prefHeight="575.0" prefWidth="543.0" title="">
                     <xAxis>
-                      <CategoryAxis label="fsdfd" side="BOTTOM" />
+                      <CategoryAxis label="Genres" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis label="fsfsd" side="LEFT" />
+                      <NumberAxis label="Count" />
                     </yAxis>
                   </BarChart>
                </children></AnchorPane>

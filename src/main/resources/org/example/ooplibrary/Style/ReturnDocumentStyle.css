@@ -40,6 +40,13 @@
     -fx-cursor: hand;
 }
 
+.addBook_btn{
+    -fx-background-color: #bab1a0;
+    -fx-background-radius: 5px;
+    -fx-opacity: 0.9;
+    -fx-border-color: transparent;
+}
+
 .app_logo:hover{
     -fx-cursor: hand;
 }
