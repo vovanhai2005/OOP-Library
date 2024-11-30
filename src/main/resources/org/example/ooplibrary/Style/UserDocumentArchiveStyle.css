@@ -52,6 +52,15 @@
     -fx-background-color: #F0E9DD;
 }
 
+.scroll_pane .scroll-bar{
+    -fx-opacity: 0; /* Ẩn thanh trượt */
+    -fx-padding: 0;
+}
+
+.scroll_pane .scroll-bar:hover{
+    -fx-opacity: 1;
+}
+
 .vietnam_btn:hover{
     -fx-cursor: hand;
 }
