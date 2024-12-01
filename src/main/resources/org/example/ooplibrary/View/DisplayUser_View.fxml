@@ -104,6 +104,11 @@
                   </Label>
                </children>
             </HBox>
+            <Label alignment="CENTER" layoutX="557.0" layoutY="191.0" prefHeight="47.0" prefWidth="141.0" styleClass="updateInfo_btn" text="Update info">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="24.0" layoutY="312.0" prefHeight="392.0" prefWidth="1233.0" styleClass="user_overview">

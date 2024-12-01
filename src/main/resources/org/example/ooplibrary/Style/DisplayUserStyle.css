@@ -4,7 +4,7 @@
 
 .user_overview{
     -fx-background-color: #F0E9DD;
-
+    -fx-border-style: solid;
 }
 
 .addBook_icon:hover{
@@ -33,4 +33,13 @@
     -fx-font-size: 14px;          /* Kích thước font */
     -fx-font-weight: bold;        /* Font đậm */
     -fx-padding: 5px;             /* Khoảng cách trong */
+}
+
+.updateInfo_btn{
+    /*-fx-background-color: white;*/
+}
+
+.updateInfo_btn:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #DCE0E2;
 }
