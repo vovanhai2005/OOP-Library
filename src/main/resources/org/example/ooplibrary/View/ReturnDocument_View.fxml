@@ -145,7 +145,7 @@
                         <Image url="@../Image/search_icon.png" />
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="840.0" layoutY="86.0" onMouseClicked="#openAddReturnRequestView" prefHeight="47.0" prefWidth="219.0" styleClass="addBook_btn" text="Add new request" textAlignment="CENTER">
+                <Label alignment="CENTER" layoutX="832.0" layoutY="86.0" onMouseClicked="#openAddReturnRequestView" prefHeight="47.0" prefWidth="227.0" styleClass="addBook_btn" text="Add return request" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>

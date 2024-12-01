@@ -13,3 +13,8 @@
 .autofill_icon:hover{
     -fx-cursor: hand;
 }
+
+.addBook_btn:hover{
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+}
