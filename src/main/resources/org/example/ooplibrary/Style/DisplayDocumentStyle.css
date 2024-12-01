@@ -4,7 +4,7 @@
 
 .book_overview{
     -fx-background-color: #F0E9DD;
-    -fx-border-radius: 15px;
+    -fx-border-style: solid;
 }
 
 .borrow_history{
@@ -14,5 +14,18 @@
 
 .book_detail{
     -fx-background-color: #F0E9DD;
+    -fx-border-style: solid;
+}
+
+.book_description{
+    -fx-background-color: #F0E9DD;
+}
+
+.book_description .scroll-bar{
+    -fx-opacity: 0;
+}
+
+.book_description .scroll-bar:hover{
+    -fx-opacity: 1;
 }
 

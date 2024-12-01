@@ -64,6 +64,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
         dataBox.setSpacing(20);  // Khoảng cách giữa các ô
         dataBox.setPrefWidth(1074);
         dataBox.setStyle("-fx-border-width: 0; -fx-border-color: transparent;"); // Loại bỏ viền
+        dataBox.setPadding(new Insets(15 , 0 , 0 , 0));
 
         // Tạo các ô hiển thị số sách, số người dùng và số lượt mượn trả sách
         VBox booksCountBox = new VBox();
@@ -109,6 +110,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
         // 3. Phần thứ hai: Suggested for you
         VBox suggestedForYouBox = new VBox();
         Text suggestedText = new Text("Suggested for you");
+        suggestedText.setLayoutX(20);
         suggestedText.setStyle("-fx-font-weight: bold; -fx-font-size: 30px;");
 
         FlowPane subFlowPaneSuggested = new FlowPane(Orientation.VERTICAL);
@@ -116,7 +118,8 @@ public class UserMainMenuController extends AbstractMenuController implements In
         subFlowPaneSuggested.setVgap(10);
         subFlowPaneSuggested.setPrefWidth(1074);
         subFlowPaneSuggested.setPrefWrapLength(290);
-        subFlowPaneSuggested.setStyle("-fx-border-width: 0; -fx-border-color: transparent;");
+        subFlowPaneSuggested.setStyle("-fx-border-width: 0; -fx-border-color: transparent; -fx-background-color: #F0E9DD");
+
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
         ArrayList<Book> suggestedBooks = SQLController.getBookInfoData();
@@ -128,10 +131,14 @@ public class UserMainMenuController extends AbstractMenuController implements In
         // Đặt subFlowPaneSuggested vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneSuggested = new ScrollPane(subFlowPaneSuggested);
         subScrollPaneSuggested.setFitToHeight(true);
-        subScrollPaneSuggested.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);  // Hiển thị thanh cuộn ngang
+        subScrollPaneSuggested.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);  // Hiển thị thanh cuộn ngang
         subScrollPaneSuggested.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);  // Ẩn thanh cuộn dọc
         subScrollPaneSuggested.setPrefHeight(290);  // Chiều cao cố định bằng chiều cao của VBox
-        subScrollPaneSuggested.setStyle("-fx-border-width: 0; -fx-border-color: transparent;");
+        subScrollPaneSuggested.setStyle("-fx-border-width: 0; -fx-border-color: transparent");
+        subScrollPaneSuggested.setStyle("-fx-background-color: transparent; -fx-background-insets: 0;");
+
+
+        subScrollPaneSuggested.setContent(subFlowPaneSuggested);
 
         suggestedForYouBox.getChildren().addAll(suggestedText, subScrollPaneSuggested);
 
@@ -145,7 +152,8 @@ public class UserMainMenuController extends AbstractMenuController implements In
         subFlowPaneLatest.setVgap(10);
         subFlowPaneLatest.setPrefWidth(1074);
         subFlowPaneLatest.setPrefWrapLength(290);
-        subFlowPaneLatest.setStyle("-fx-border-width: 0; -fx-border-color: transparent;");  // Ngăn chặn việc xuống dòng
+        subFlowPaneLatest.setStyle("-fx-border-width: 0; -fx-border-color: transparent;-fx-background-color: #F0E9DD");  // Ngăn chặn việc xuống dòng
+
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
         ArrayList<Book> latestBooks = SQLController.getBookInfoData(); // Lấy sách mới nhất
@@ -157,10 +165,11 @@ public class UserMainMenuController extends AbstractMenuController implements In
         // Đặt subFlowPaneLatest vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneLatest = new ScrollPane(subFlowPaneLatest);
         subScrollPaneLatest.setFitToHeight(true);
-        subScrollPaneLatest.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);  // Hiển thị thanh cuộn ngang
+        subScrollPaneLatest.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);  // Hiển thị thanh cuộn ngang
         subScrollPaneLatest.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);  // Ẩn thanh cuộn dọc
         subScrollPaneLatest.setPrefHeight(290);  // Chiều cao cố định bằng chiều cao của VBox
         subScrollPaneLatest.setStyle("-fx-border-width: 0; -fx-border-color: transparent;");
+        subScrollPaneLatest.setStyle("-fx-background-color: transparent; -fx-background-insets: 0;");
 
         latestBooksBox.getChildren().addAll(latestBooksText, subScrollPaneLatest);
 
@@ -387,13 +396,6 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
         return bookBox;
     }
-
-
-
-
-
-
-
 
     public void setUsername(String text) {
         this.username = text;

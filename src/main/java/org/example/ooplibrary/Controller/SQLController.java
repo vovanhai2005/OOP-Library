@@ -865,6 +865,8 @@ public class SQLController {
                 LocalDate now = LocalDate.now();
                 LocalDate startDate = now.minusMonths(1).withDayOfMonth(1); // Ngày 1 của tháng trước
                 LocalDate endDate = now.minusMonths(1).withDayOfMonth(now.minusMonths(1).lengthOfMonth()); // Ngày cuối của tháng trước
+//                System.out.println(startDate);
+//                System.out.println(endDate);
 
                 // Chia khoảng thời gian thành các đoạn 5 ngày
                 int timeRanges = (int) (java.time.Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays() / 5) + 1;
