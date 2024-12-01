@@ -14,8 +14,8 @@
    <children>
       <AnchorPane layoutX="24.0" layoutY="49.0" prefHeight="240.0" prefWidth="513.0" styleClass="user_overview">
          <children>
-            <AnchorPane layoutX="35.0" layoutY="34.0" prefHeight="188.0" prefWidth="141.0" styleClass="user_image" />
-            <ImageView fx:id="imageView" fitHeight="188.0" fitWidth="141.0" layoutX="35.0" layoutY="34.0" pickOnBounds="true" />
+            <AnchorPane layoutX="32.0" layoutY="26.0" prefHeight="188.0" prefWidth="141.0" styleClass="user_image" />
+            <ImageView fx:id="imageView" fitHeight="188.0" fitWidth="141.0" layoutX="32.0" layoutY="26.0" pickOnBounds="true" />
             <HBox layoutX="203.0" layoutY="34.0" prefHeight="47.0" prefWidth="278.0">
                <children>
                   <Label prefHeight="51.0" prefWidth="98.0" text="Full name:">

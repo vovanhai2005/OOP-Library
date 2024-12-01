@@ -47,6 +47,11 @@
     -fx-border-color: transparent;
 }
 
+.addBook_btn:hover{
+    -fx-background-color: #DCE0E2;
+    -fx-cursor: hand;
+}
+
 .app_logo:hover{
     -fx-cursor: hand;
 }

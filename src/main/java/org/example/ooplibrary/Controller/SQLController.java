@@ -26,7 +26,7 @@ public class SQLController {
 
     // Change "user" and "password" variables to your MySQL username and password
     final static private String USER = "root";
-    final static private String PASSWORD = "";
+    final static    private String PASSWORD = "";
 
     /**
      * Tạo database có tên là "librosync_db", đồng thời tạo các bảng "user_info",
@@ -523,12 +523,14 @@ public class SQLController {
 
 
             while (resultSet.next()) {
-                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
+                data.add(new Book(resultSet.getString(1), resultSet.getString(
+                        2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
             }
             connection.close();
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e)
+            ;
         }
         return data;
     }

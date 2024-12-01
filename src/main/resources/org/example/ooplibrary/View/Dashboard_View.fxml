@@ -147,7 +147,7 @@
          <children>
             <AnchorPane fx:id="pieChart_pane" layoutX="31.0" layoutY="25.0" prefHeight="260.0" prefWidth="430.0" styleClass="chart_field">
                <children>
-                  <PieChart fx:id="pieChart" labelLineLength="5.0" legendSide="RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="260.0" prefWidth="430.0" />
+                  <PieChart fx:id="pieChart" labelLineLength="5.0" labelsVisible="false" legendSide="RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="260.0" prefWidth="430.0" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="31.0" layoutY="315.0" prefHeight="284.0" prefWidth="430.0" styleClass="chart_field">
