@@ -173,5 +173,7 @@ public class BorrowManagementController extends AbstractMenuController implement
 
     public void addBookLoan(BookLoan bookLoan) {
         data.add(bookLoan);
+        tableView.setItems(data);
+        tableView.refresh();
     }
 }
