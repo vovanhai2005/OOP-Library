@@ -169,7 +169,7 @@ public class UserManagementController extends AbstractMenuController implements 
             DisplayUserController displayUserController = loader.getController();
             displayUserController.setUserManagementController(this);
             displayUserController.setEmail(user.getEmail());
-            displayUserController.setFullName(user.getFulLName());
+            displayUserController.setFullName(user.getFullName());
             displayUserController.setDateofBirth(user.getDob());
             displayUserController.setGender(user.getGender());
             displayUserController.setPhoneNumber(user.getPhoneNumber());

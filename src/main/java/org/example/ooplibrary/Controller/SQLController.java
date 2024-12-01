@@ -94,18 +94,36 @@ public class SQLController {
                     "  `ISBN` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,\n" +
                     "  `username` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci NOT NULL,\n" +
                     "  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,\n" +
+                    "  `borrowDate` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,\n" +
                     "  `dueDate` date DEFAULT NULL,\n" +
                     "  `returnDate` date DEFAULT NULL,\n" +
-                    "  PRIMARY KEY (`bookLoanID`,`ISBN`,`username`)\n" +
+                    "  PRIMARY KEY (`bookLoanID`,`ISBN`,`username`)\n   " +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;");
+
+            //Create a "user_ratings" table if it doesn't exist
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `user_ratings` (\n" +
+                    "  `ratingID` int(11) NOT NULL AUTO_INCREMENT,\n" +
+                    "  `ISBN` varchar(32) NOT NULL,\n" +
+                    "  `username` varchar(32) NOT NULL,\n" +
+                    "  `rating` float NOT NULL,\n" +
+                    "  `review` mediumtext NOT NULL,\n" +
+                    "  `ratingDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,\n" +
+                    "  PRIMARY KEY (`ratingID`)\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;");
 
 
             //Add admin account
-            statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
-                    ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `isAdmin`)" +
-                    " VALUES (\"admin\", \"1\", NULL, NULL, NULL, NULL, NULL, \"1\");");
+            statement.executeQuery("SELECT COUNT(*) FROM user_info WHERE username = \"admin\";");
+            ResultSet checkResult = statement.getResultSet();
+            if (checkResult.next()) {
+                int count = checkResult.getInt(1);
 
-
+                if (count == 0) {
+                    statement.executeUpdate("INSERT INTO `user_info` (`username`, `password`" +
+                            ", `fullName`, `dateOfBirth`, `gender`, `email`, `phoneNumber`, `isAdmin`)" +
+                            " VALUES (\"admin\", \"1\", NULL, NULL, NULL, NULL, NULL, \"1\");");
+                }
+            }
             connection.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -913,21 +931,20 @@ public class SQLController {
     }
 
     /**
-     *
-     * @return Map<String,int[]>
+     * @return Map<String, int [ ]>
      */
     public static Map<String, int[]> getTransactionsByGenres() {
         // Map lưu trữ số lượng giao dịch theo thể loại
         Map<String, int[]> genreTransactions = new HashMap<>();
 
         String query = """
-        SELECT genre,
-               SUM(CASE WHEN dueDate IS NOT NULL THEN 1 ELSE 0 END) AS borrow_count,
-               SUM(CASE WHEN returnDate IS NOT NULL THEN 1 ELSE 0 END) AS return_count
-        FROM book_loans
-        JOIN book_info ON book_loans.ISBN = book_info.ISBN
-        GROUP BY genre
-    """;
+                    SELECT genre,
+                           SUM(CASE WHEN dueDate IS NOT NULL THEN 1 ELSE 0 END) AS borrow_count,
+                           SUM(CASE WHEN returnDate IS NOT NULL THEN 1 ELSE 0 END) AS return_count
+                    FROM book_loans
+                    JOIN book_info ON book_loans.ISBN = book_info.ISBN
+                    GROUP BY genre
+                """;
         // Khối try-with-resources đảm bảo tự động đóng tài nguyên
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/librosync_db", "root", "");
              PreparedStatement statement = connection.prepareStatement(query);
@@ -1017,5 +1034,101 @@ public class SQLController {
             genresArray[i] = genresArray[i].trim();
         }
         return FXCollections.observableArrayList(genresArray);
+    }
+
+    public static double getRecentlyUserRating(String isbn, String username) {
+        double rating = 0;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT rating FROM user_ratings WHERE ISBN = \"" + isbn + "\" AND username = \"" + username + "\" ORDER BY ratingDate DESC;");
+
+            if (resultSet.next()) {
+                rating = resultSet.getDouble(1);
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return rating;
+    }
+
+    public static String getRecentlyUserComment(String isbn, String username) {
+        String comment = "";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT review FROM user_ratings WHERE ISBN = \"" + isbn + "\" AND username = \"" + username + "\" ORDER BY ratingDate DESC;");
+
+            if (resultSet.next()) {
+                comment = resultSet.getString(1);
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return comment;
+    }
+
+    public static ArrayList<String> getRecentlyUsernameFromUserRatingsByISBN(String ISBN) {
+        ArrayList<String> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT username FROM user_ratings WHERE ISBN = \"" + ISBN + "\" ORDER BY ratingDate DESC;");
+
+            while (resultSet.next()) {
+                data.add(resultSet.getString(1));
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public static void addUserRatings(String ISBN, String username, double rating, String reviewText) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO `user_ratings` (`ISBN`, `username`, `rating`, `review`)" +
+                    " VALUES (\"" + ISBN + "\", \"" + username + "\", \"" + rating + "\", \"" + reviewText + "\");");
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public static boolean userReviewed(String text, String username) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM user_ratings WHERE ISBN = \"" + text + "\" AND username = \"" + username + "\";");
+
+            if (resultSet.next()) {
+                if (resultSet.getInt(1) > 0) {
+                    return true;
+                }
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
     }
 }

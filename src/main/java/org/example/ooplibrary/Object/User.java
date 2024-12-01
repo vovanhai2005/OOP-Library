@@ -23,9 +23,7 @@ public class User {
         this.features = new ImageView[3];
     }
 
-    public String getFulLName() {
-        return fullName;
-    }
+
 
     public void setFulLName(String fulLName) {
         this.fullName = fulLName;

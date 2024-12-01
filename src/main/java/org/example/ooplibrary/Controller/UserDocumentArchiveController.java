@@ -69,7 +69,7 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             User user = SQLController.getUserInfoDataByUsername(username);
             DisplayUserController displayUserController = loader.getController();
             displayUserController.setEmail(user.getEmail());
-            displayUserController.setFullName(user.getFulLName());
+            displayUserController.setFullName(user.getFullName());
             displayUserController.setDateofBirth(user.getDob());
             displayUserController.setGender(user.getGender());
             displayUserController.setPhoneNumber(user.getPhoneNumber());
@@ -254,6 +254,7 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         rating.setPartialRating(true); // Allow partial stars (optional)
         rating.setRating(3.5); // Default rating (for example, 3.5 stars)
         rating.setStyle("-fx-scale-x: 0.6; -fx-scale-y: 0.6;"); // Optional: Adjust size
+        rating.setDisable(true); // User can only see actual ratings
 
         // Add a listener if you want to handle rating changes (optional)
         rating.ratingProperty().addListener((observable, oldValue, newValue) -> {
@@ -290,7 +291,8 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             UserDisplayDocumentController userDisplayDocumentController = loader.getController();
 
             // Gán dữ liệu tài liệu vào controller
-            userDisplayDocumentController.setDocumentDetails(book);
+            userDisplayDocumentController.setDetails(book,username);
+            userDisplayDocumentController.setReviewsPane();
 
             // Tạo cửa sổ mới để hiển thị thông tin chi tiết
             Stage stage = new Stage();
