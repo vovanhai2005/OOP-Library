@@ -7,16 +7,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Core.Main;
 
+
 import java.io.IOException;
 
-public class LogInController {
+public class LogInController implements AbstractLanguageConfig {
 
     @FXML
     private Button loginButton;
@@ -33,6 +36,23 @@ public class LogInController {
     @FXML
     private TextField userName;
 
+    @FXML
+    private Text signInText;
+
+    @FXML
+    private Label SignUp;
+
+    @FXML
+    private ImageView viBtn;
+
+    @FXML
+    private ImageView enBtn;
+
+    @FXML
+    private Label languageText;
+
+    private String language;
+
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -43,7 +63,12 @@ public class LogInController {
         String username = userName.getText();
         String pass = password.getText();
         if (username.isEmpty() || pass.isEmpty()) {
-            signInAlert.setText("Username or Password cannot be empty");
+            if (language.equals("en")) {
+                signInAlert.setText("Username or Password cannot be empty");
+            }
+            else {
+                signInAlert.setText("Tên đăng nhập hoặc mật khẩu không thể để trống");
+            }
             return;
         }
 
@@ -56,7 +81,12 @@ public class LogInController {
             }
             System.out.println("Switched to Main Menu");
         } else {
-            signInAlert.setText("Incorrect password or username");
+            if (language.equals("en")) {
+                signInAlert.setText("Incorrect password or username");
+            }
+            else {
+                signInAlert.setText("Sai tên đăng nhập hoặc mật khẩu");
+            }
             System.out.println("Login Failed");
         }
     }
@@ -64,9 +94,16 @@ public class LogInController {
     @FXML
     void handleSignUpAction(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/SignUp_View.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/SignUp_View.fxml"));
+            root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
+            SignUpController signUpController = loader.getController();
+            if (language.equals("en")) {
+                signUpController.setLanguageToEn();
+            } else {
+                signUpController.setLanguageToVi();
+            }
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -76,9 +113,17 @@ public class LogInController {
 
     private void switchToMainMenu(ActionEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/MainMenu_View.fxml"));
+            root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
+            MainMenuController mainMenuController = loader.getController();
+            if (language.equals("en")) {
+                mainMenuController.setLanguageToEn();
+            } else {
+                mainMenuController.setLanguageToVi();
+            }
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -93,12 +138,38 @@ public class LogInController {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             UserMainMenuController userMainMenuController = loader.getController();
             userMainMenuController.setUsername(userName.getText());
+            if (language.equals("en")) {
+                userMainMenuController.setLanguageToEn();
+            } else {
+                userMainMenuController.setLanguageToVi();
+            }
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setLanguageToEn() {
+        language = "en";
+        languageText.setText("Language:");
+        signInText.setText("Sign In");
+        SignUp.setText("Sign Up");
+        loginButton.setText("Login");
+        userName.setPromptText("Username");
+        password.setPromptText("Password");
+
+    }
+
+    public void setLanguageToVi() {
+        language = "vi";
+        languageText.setText("Ngôn ngữ:");
+        signInText.setText("Đăng nhập");
+        SignUp.setText("Đăng ký");
+        loginButton.setText("Đăng nhập");
+        userName.setPromptText("Tên đăng nhập");
+        password.setPromptText("Mật khẩu");
     }
 
 
