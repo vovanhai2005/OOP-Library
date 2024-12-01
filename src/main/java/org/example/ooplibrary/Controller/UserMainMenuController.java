@@ -131,7 +131,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
         // Đặt subFlowPaneSuggested vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneSuggested = new ScrollPane(subFlowPaneSuggested);
         subScrollPaneSuggested.setFitToHeight(true);
-        subScrollPaneSuggested.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);  // Hiển thị thanh cuộn ngang
+        subScrollPaneSuggested.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);  // Hiển thị thanh cuộn ngang
         subScrollPaneSuggested.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);  // Ẩn thanh cuộn dọc
         subScrollPaneSuggested.setPrefHeight(290);  // Chiều cao cố định bằng chiều cao của VBox
         subScrollPaneSuggested.setStyle("-fx-border-width: 0; -fx-border-color: transparent");
@@ -165,7 +165,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
         // Đặt subFlowPaneLatest vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneLatest = new ScrollPane(subFlowPaneLatest);
         subScrollPaneLatest.setFitToHeight(true);
-        subScrollPaneLatest.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);  // Hiển thị thanh cuộn ngang
+        subScrollPaneLatest.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);  // Hiển thị thanh cuộn ngang
         subScrollPaneLatest.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);  // Ẩn thanh cuộn dọc
         subScrollPaneLatest.setPrefHeight(290);  // Chiều cao cố định bằng chiều cao của VBox
         subScrollPaneLatest.setStyle("-fx-border-width: 0; -fx-border-color: transparent;");
@@ -205,7 +205,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
             User user = SQLController.getUserInfoDataByUsername(username);
             DisplayUserController displayUserController = loader.getController();
             displayUserController.setEmail(user.getEmail());
-            displayUserController.setFullName(user.getFulLName());
+            displayUserController.setFullName(user.getFullName());
             displayUserController.setDateofBirth(user.getDob());
             displayUserController.setGender(user.getGender());
             displayUserController.setPhoneNumber(user.getPhoneNumber());
