@@ -512,11 +512,6 @@ public class SQLController {
 
     }
 
-    /**
-     * Lấy thông tin sách từ database
-     *
-     * @return ArrayList<Book>
-     */
     public static ArrayList<Book> getBookInfoData() {
         ArrayList<Book> data = new ArrayList<>();
         try {
@@ -527,6 +522,33 @@ public class SQLController {
             );
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info");
+
+            while (resultSet.next()) {
+                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    /**
+     * Lấy thông tin sách từ database
+     *
+     * @return ArrayList<Book>
+     */
+    public static ArrayList<Book> getBookInfoDataSortedByYearPublished() {
+        ArrayList<Book> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info ORDER BY yearOfPublication DESC");
 
             while (resultSet.next()) {
                 data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
@@ -901,11 +923,8 @@ public class SQLController {
                  Statement statement = connection.createStatement()) {
 
                 // Xác định ngày bắt đầu và ngày kết thúc (ngày 1 đến ngày cuối cùng của tháng trước)
-                LocalDate now = LocalDate.now();
-                LocalDate startDate = now.minusMonths(1).withDayOfMonth(1); // Ngày 1 của tháng trước
-                LocalDate endDate = now.minusMonths(1).withDayOfMonth(now.minusMonths(1).lengthOfMonth()); // Ngày cuối của tháng trước
-//                System.out.println(startDate);
-//                System.out.println(endDate);
+                LocalDate endDate = LocalDate.now();
+                LocalDate startDate = endDate.withDayOfMonth(1); // Ngày 1 của tháng trước
 
                 // Chia khoảng thời gian thành các đoạn 5 ngày
                 int timeRanges = (int) (java.time.Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays() / 5) + 1;
@@ -925,7 +944,7 @@ public class SQLController {
                     ResultSet borrowResultSet = statement.executeQuery(
                             "SELECT COUNT(*) as borrowCount " +
                                     "FROM book_loans " +
-                                    "WHERE dueDate >= '" + rangeStart + "' AND dueDate <= '" + rangeEnd + "';"
+                                    "WHERE borrowDate >= '" + rangeStart + "' AND borrowDate <= '" + rangeEnd + "';"
                     );
 
                     if (borrowResultSet.next()) {
@@ -936,7 +955,7 @@ public class SQLController {
                     ResultSet returnResultSet = statement.executeQuery(
                             "SELECT COUNT(*) as returnCount " +
                                     "FROM book_loans " +
-                                    "WHERE returnDate >= '" + rangeStart + "' AND returnDate <= '" + rangeEnd + "';"
+                                    "WHERE borrowDate >= '" + rangeStart + "' AND borrowDate <= '" + rangeEnd + "';"
                     );
 
                     if (returnResultSet.next()) {

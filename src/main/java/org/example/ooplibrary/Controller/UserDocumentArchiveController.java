@@ -1,5 +1,7 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -7,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -58,6 +61,12 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
     private Label userListBtn;
 
     private String username;
+
+    @FXML
+    private ComboBox<String> categoriesBox;
+
+    @FXML
+    private ComboBox<String> orderBox;
 
     @FXML
     void openDisplayUserWindow(MouseEvent event) {
@@ -186,6 +195,10 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> categoriesList = FXCollections.observableArrayList("All" , "Author" , "Genre");
+        categoriesBox.setItems(categoriesList);
+        ObservableList<String> orderList = FXCollections.observableArrayList("From A to Z" , "From Z to A");
+        orderBox.setItems(orderList);
         System.out.println(searchKeyword.getText());
         List<Book> bookList;
         if (searchKeyword.getText().isEmpty()) {
