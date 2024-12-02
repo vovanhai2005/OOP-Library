@@ -73,6 +73,8 @@ public class UserUpdateInfoController implements Initializable {
 
     private String language;
 
+    private DisplayUserController displayUserController;
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ObservableList<String> genderList = FXCollections.observableArrayList("Male", "Female", "Lesbian", "Gay", "Bisexual", "Transgender", "Queer", "Intersex", "Asexual", "Other");
         gender.setItems(genderList);
@@ -171,6 +173,20 @@ public class UserUpdateInfoController implements Initializable {
                 alert.showAndWait();
                 return;
             }
+            if (bookImage.getImage() == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                if (language.equals("en")) {
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Book Image is empty");
+                    alert.setContentText("Please enter your book image");
+                } else {
+                    alert.setTitle("Lỗi");
+                    alert.setHeaderText("Ảnh trống");
+                    alert.setContentText("Vui lòng nhập ảnh của bạn");
+                }
+                alert.showAndWait();
+                return;
+            }
             byte[] bookImageBlob = SQLController.convertImageViewToBlob(bookImage);
             User user = SQLController.getUserInfoDataByUsername(username);
 //            System.out.println(user.getFullName());
@@ -183,6 +199,14 @@ public class UserUpdateInfoController implements Initializable {
             user.setImage(bookImageBlob);
 
             SQLController.updateUserInfo(user);
+
+            displayUserController.setEmail(user.getEmail());
+            displayUserController.setFullName(user.getFullName());
+            displayUserController.setDateofBirth(user.getDob());
+            displayUserController.setGender(user.getGender());
+            displayUserController.setPhoneNumber(user.getPhoneNumber());
+            displayUserController.setUsername(user.getUsername());
+            displayUserController.setImage(user.getImage());
 
             if (language.equals("en")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -204,6 +228,10 @@ public class UserUpdateInfoController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setDisplayUserController(DisplayUserController displayUserController){
+        this.displayUserController = displayUserController;
     }
 
     @FXML
