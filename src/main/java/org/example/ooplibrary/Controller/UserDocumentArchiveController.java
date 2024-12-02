@@ -61,7 +61,6 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
     private ComboBox<String> orderBox;
 
 
-
     @FXML
     private Text bookListTitle;
 
@@ -104,6 +103,12 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             displayUserController.setUsername(user.getUsername());
             displayUserController.setImage(user.getImage());
             displayUserController.setTableView();
+
+            if (language.equals("en")) {
+                displayUserController.setLanguageToEn();
+            } else {
+                displayUserController.setLanguageToVi();
+            }
 
 
             // Tạo cửa sổ mới để hiển thị thông tin chi tiết
@@ -224,9 +229,9 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> categoriesList = FXCollections.observableArrayList("All" , "Author" , "Genre");
+        ObservableList<String> categoriesList = FXCollections.observableArrayList("All", "Genre");
         categoriesBox.setItems(categoriesList);
-        ObservableList<String> orderList = FXCollections.observableArrayList("From A to Z" , "From Z to A");
+        ObservableList<String> orderList = FXCollections.observableArrayList("From A to Z", "From Z to A");
         orderBox.setItems(orderList);
         System.out.println(searchKeyword.getText());
         List<Book> bookList;
@@ -248,7 +253,7 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         flowPane.setVgap(10); // Keep vertical gap
 
         for (int i = 0; i < bookList.size(); i++) {
-            VBox bookBox = createBookBox(bookList.get(i) , boxWidth);
+            VBox bookBox = createBookBox(bookList.get(i), boxWidth);
 
             // Add spacing only for non-last items in a row
             if ((i + 1) % numBoxesPerRow != 0) {
@@ -333,7 +338,7 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             UserDisplayDocumentController userDisplayDocumentController = loader.getController();
 
             // Gán dữ liệu tài liệu vào controller
-            userDisplayDocumentController.setDetails(book,username);
+            userDisplayDocumentController.setDetails(book, username);
             userDisplayDocumentController.setReviewsPane();
             if (this.language.equals("en")) {
                 userDisplayDocumentController.setLanguageToEn();

@@ -132,6 +132,7 @@ public class DisplayUserController implements Initializable {
 
             UserUpdateInfoController controller = loader.getController();
             controller.setUsername(username.getText()); // Truyền username vào UserUpdateInfoController
+            controller.setDisplayUserController(this);
             if (this.language.equals("en")) {
                 controller.setLanguageToEn();
             } else {
