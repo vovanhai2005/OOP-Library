@@ -16,7 +16,7 @@ import com.google.gson.JsonParser;
 import org.example.ooplibrary.Object.Book;
 
 public class GoogleBookAPIUtil {
-    public static Book fetchBookDetails(String isbnOrTitle, String type) {
+    public static <JsonObject> Book fetchBookDetails(String isbnOrTitle, String type) {
         System.out.println(isbnOrTitle + " " + type);
         String urlString;
 

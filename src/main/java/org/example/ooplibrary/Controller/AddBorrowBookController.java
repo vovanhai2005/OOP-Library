@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -57,13 +58,26 @@ public class AddBorrowBookController {
 
     @FXML
     void autofillByISBN(MouseEvent event) {
-        if (SQLController.getBookInfoDataWithISBN(ISBN.getText()) != null) {
-            Book book = SQLController.getBookInfoDataWithISBN(ISBN.getText());
-            bookName.setText(book.getName());
-            Image image = new Image(new ByteArrayInputStream(book.getImage()));
-            bookImage.setImage(image);
-        }
+        String isbn = ISBN.getText(); // Lấy mã ISBN từ TextField
+
+        // Tạo Task để lấy thông tin sách theo ISBN
+        Task<Book> bookTask = SQLController.getBookInfoDataWithISBN(isbn);
+
+        bookTask.setOnSucceeded(e -> {
+            Book book = bookTask.getValue(); // Lấy thông tin sách
+            if (book != null) {
+                bookName.setText(book.getName()); // Điền tên sách vào TextField
+                Image image = new Image(new ByteArrayInputStream(book.getImage())); // Tạo hình ảnh từ byte array
+                bookImage.setImage(image); // Cập nhật hình ảnh sách
+            } else {
+                System.out.println("No book found with the given ISBN.");
+            }
+        });
+
+        // Chạy Task trên một luồng nền
+        new Thread(bookTask).start();
     }
+
 
     @FXML
     void autofillByUsername(MouseEvent event) {
