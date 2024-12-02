@@ -592,7 +592,28 @@ public class SQLController {
         return data;
     }
 
+    public static Book getInfoDataWithBookName(String bookName) {
+        Book book = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            System.out.println(bookName);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info WHERE bookName = \"" + bookName + "\";");
+
+            if (resultSet.next()) {
+                book = new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7)));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return book;
+    }
     /**
      * Lấy thông tin sách từ database với mã ISBN
      *
@@ -722,6 +743,24 @@ public class SQLController {
             System.out.println(e);
         }
         return bookLoan;
+    }
+
+    public static String getISBNWithBookLoanID(String BookLoanId) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT ISBN FROM book_loans where bookLoanID = \"" + BookLoanId + "\";");
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
     /**

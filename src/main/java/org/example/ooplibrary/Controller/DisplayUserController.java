@@ -164,4 +164,5 @@ public class DisplayUserController implements Initializable  {
             System.out.println("No image found");
         }
     }
+
 }

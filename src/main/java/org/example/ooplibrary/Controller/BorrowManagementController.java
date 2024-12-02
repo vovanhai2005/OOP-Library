@@ -62,11 +62,7 @@ public class BorrowManagementController extends AbstractMenuController implement
 
 
 
-        // Cấu hình cột featureCol với các nút tuỳ chỉnh
-        addFeatureButtonsToTable();
-
-
-        tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, dueDateCol, informationCol, featureCol);
+        tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, dueDateCol, informationCol);
 
         data = FXCollections.observableArrayList(
 
@@ -134,34 +130,6 @@ public class BorrowManagementController extends AbstractMenuController implement
 
             tableView.setItems(data);
         }
-    }
-
-    private void addFeatureButtonsToTable() {
-        featureCol.setCellFactory(param -> new TableCell<BookLoan, Void>() {
-            private final Button viewButton = new Button("Xem");
-
-            {
-                // Xử lý sự kiện khi nhấn vào nút "Xem"
-                viewButton.setOnAction(event -> {
-                    BookLoan bookLoan = getTableView().getItems().get(getIndex());
-                    viewBookLoanDetails(bookLoan);
-                });
-
-
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    HBox buttonsBox = new HBox(5, viewButton);
-                    setGraphic(buttonsBox);
-                }
-            }
-        });
     }
 
     private void viewBookLoanDetails(BookLoan bookLoan) {

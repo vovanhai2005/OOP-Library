@@ -150,12 +150,12 @@
          <children>
             <VBox layoutX="73.0" layoutY="63.0" prefHeight="106.0" prefWidth="140.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="90k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
+                  <Text fx:id="bookCount" strokeType="OUTSIDE" strokeWidth="0.0" text="90k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
                      <font>
                         <Font name="System Bold" size="50.0" />
                      </font>
                   </Text>
-                  <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Books" textAlignment="CENTER" wrappingWidth="139.9830722808838">
+                  <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Books" textAlignment="CENTER" wrappingWidth="163.9830722808838">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -167,12 +167,12 @@
             </VBox>
             <VBox layoutX="441.0" layoutY="63.0" prefHeight="106.0" prefWidth="140.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
+                  <Text fx:id="userCount" strokeType="OUTSIDE" strokeWidth="0.0" text="3k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
                      <font>
                         <Font name="System Bold" size="50.0" />
                      </font>
                   </Text>
-                  <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Users" textAlignment="CENTER" wrappingWidth="155.9830722808838">
+                  <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Users" textAlignment="CENTER" wrappingWidth="163.9830722808838">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -184,12 +184,12 @@
             </VBox>
             <VBox layoutX="809.0" layoutY="63.0" prefHeight="106.0" prefWidth="140.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="100k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
+                  <Text fx:id="transactionsCount" strokeType="OUTSIDE" strokeWidth="0.0" text="100k+" textAlignment="CENTER" wrappingWidth="163.9830722808838">
                      <font>
                         <Font name="System Bold" size="50.0" />
                      </font>
                   </Text>
-                  <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions" textAlignment="CENTER" wrappingWidth="155.9830722808838">
+                  <Text fill="#de401f" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions" textAlignment="CENTER" wrappingWidth="166.9830722808838">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
