@@ -34,8 +34,6 @@ public class ReturnDocumentController extends AbstractMenuController implements 
     @FXML
     private TableColumn<BookLoan, String> noteCol;
 
-    @FXML
-    private TableColumn<BookLoan, Void> featureCol;
 
     @FXML
     private TableColumn<BookLoan, String> returnDateCol;
@@ -91,11 +89,10 @@ public class ReturnDocumentController extends AbstractMenuController implements 
         returnDateCol.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
 
 
-        // Cấu hình cột featureCol với các nút tuỳ chỉnh
-        addFeatureButtonsToTable();
 
 
-        tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, noteCol, returnDateCol, featureCol);
+
+        tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, noteCol, returnDateCol);
 
         data = FXCollections.observableArrayList(
 
@@ -165,34 +162,7 @@ public class ReturnDocumentController extends AbstractMenuController implements 
         }
     }
 
-    private void addFeatureButtonsToTable() {
-        featureCol.setCellFactory(param -> new TableCell<BookLoan, Void>() {
-            private final Button viewButton = new Button("Xem");
 
-
-            {
-                // Xử lý sự kiện khi nhấn vào nút "Xem"
-                viewButton.setOnAction(event -> {
-                    BookLoan bookLoan = getTableView().getItems().get(getIndex());
-                    viewBookLoanDetails(bookLoan);
-                });
-
-
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    HBox buttonsBox = new HBox(5, viewButton);
-                    setGraphic(buttonsBox);
-                }
-            }
-        });
-    }
 
     private void viewBookLoanDetails(BookLoan bookLoan) {
 
@@ -217,7 +187,6 @@ public class ReturnDocumentController extends AbstractMenuController implements 
         borrowerNameCol.setText("Borrower Name");
         returnDateCol.setText("Return Date");
         noteCol.setText("Note");
-        featureCol.setText("Feature");
         tableView.setPlaceholder(new Label("No content in table"));
     }
 
@@ -238,11 +207,7 @@ public class ReturnDocumentController extends AbstractMenuController implements 
         borrowerNameCol.setText("Tên người mượn");
         returnDateCol.setText("Ngày trả");
         noteCol.setText("Ghi chú");
-        featureCol.setText("Chức năng");
         tableView.setPlaceholder(new Label("Không có dữ liệu trong bảng"));
-
-
-
     }
 
 
