@@ -1,7 +1,6 @@
 package org.example.ooplibrary.Controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,6 +30,7 @@ import org.example.ooplibrary.Object.User;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -141,44 +141,62 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
 
     @FXML
     void performSearch1(MouseEvent event) {
-        List<Book> bookList;
-        if (searchKeyword.getText().isEmpty()) {
-            bookList = SQLController.getBookInfoData(); // Lấy danh sách sách (từ database hoặc bất kỳ nguồn nào)
+        String keyword = searchKeyword.getText();
+        Task<ArrayList<Book>> searchTask;
+
+        // Tạo Task để tìm kiếm sách dựa vào từ khóa
+        if (keyword.isEmpty()) {
+            searchTask = SQLController.getBookInfoData(); // Lấy tất cả sách
         } else {
-            bookList = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
+            searchTask = SQLController.getBookInfoDataWithKeyword(keyword); // Tìm kiếm theo từ khóa
         }
-        flowPane.getChildren().clear();
-        for (int i = 0; i < bookList.size(); i++) {
-            int flowPaneWidth = 1072; // Width of the FlowPane
-            int spacing = 10;        // Spacing between elements in the FlowPane
-            int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5;
-            VBox bookBox = createBookBox(bookList.get(i), boxWidth);
 
-            flowPane.getChildren().add(bookBox);
-        }
-    }
-
-    @FXML
-    void performSearch2(KeyEvent event) {
-        if (event.getCode().toString().equals("ENTER")) {
-            List<Book> bookList;
-            if (searchKeyword.getText().isEmpty()) {
-
-                bookList = SQLController.getBookInfoData(); // Lấy danh sách sách (từ database hoặc bất kỳ nguồn nào)
-            } else {
-                bookList = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
-            }
+        searchTask.setOnSucceeded(e -> {
+            List<Book> bookList = searchTask.getValue(); // Lấy danh sách sách tìm thấy
             flowPane.getChildren().clear();
+
+            // Tính toán kích thước cho từng bookBox
             for (int i = 0; i < bookList.size(); i++) {
                 int flowPaneWidth = 1072; // Width of the FlowPane
                 int spacing = 10;        // Spacing between elements in the FlowPane
-                int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5;
+                int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5; // Tính kích thước cho mỗi bookBox
                 VBox bookBox = createBookBox(bookList.get(i), boxWidth);
-
-                flowPane.getChildren().add(bookBox);
+                flowPane.getChildren().add(bookBox); // Thêm bookBox vào FlowPane
             }
+        });
+        new Thread(searchTask).start();
+    }
+    @FXML
+    void performSearch2(KeyEvent event) {
+        if (event.getCode().toString().equals("ENTER")) {
+            String keyword = searchKeyword.getText();
+            Task<ArrayList<Book>> searchTask;
+
+            // Tạo Task để tìm kiếm sách dựa vào từ khóa
+            if (keyword.isEmpty()) {
+                searchTask = SQLController.getBookInfoData(); // Lấy tất cả sách
+            } else {
+                searchTask = SQLController.getBookInfoDataWithKeyword(keyword); // Tìm kiếm theo từ khóa
+            }
+
+            searchTask.setOnSucceeded(e -> {
+                List<Book> bookList = searchTask.getValue(); // Lấy danh sách sách tìm thấy
+                flowPane.getChildren().clear(); // Xóa các phần tử cũ trong FlowPane
+
+                // Tính toán kích thước cho từng bookBox
+                for (int i = 0; i < bookList.size(); i++) {
+                    int flowPaneWidth = 1072; // Width of the FlowPane
+                    int spacing = 10;        // Spacing between elements in the FlowPane
+                    int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5; // Tính kích thước cho mỗi bookBox
+                    VBox bookBox = createBookBox(bookList.get(i), boxWidth);
+                    flowPane.getChildren().add(bookBox); // Thêm bookBox vào FlowPane
+                }
+            });
+
+            new Thread(searchTask).start();
         }
     }
+
 
     @FXML
     void switchToUserDocumentArchiveView(MouseEvent event) {
@@ -224,41 +242,51 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> categoriesList = FXCollections.observableArrayList("All" , "Author" , "Genre");
-        categoriesBox.setItems(categoriesList);
-        ObservableList<String> orderList = FXCollections.observableArrayList("From A to Z" , "From Z to A");
-        orderBox.setItems(orderList);
-        System.out.println(searchKeyword.getText());
-        List<Book> bookList;
-        if (searchKeyword.getText().isEmpty()) {
-            System.out.println(searchKeyword.getText() + "  !!!!!");
-            bookList = SQLController.getBookInfoData(); // Lấy danh sách sách (từ database hoặc bất kỳ nguồn nào)
+        String keyword = searchKeyword.getText(); // Lấy từ khóa tìm kiếm
+        Task<ArrayList<Book>> loadBooksTask;
+
+        // Tạo Task để lấy sách dựa vào từ khóa
+        if (keyword.isEmpty()) {
+            loadBooksTask = SQLController.getBookInfoData(); // Lấy tất cả sách
         } else {
-            bookList = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
+            loadBooksTask = SQLController.getBookInfoDataWithKeyword(keyword); // Tìm kiếm theo từ khóa
         }
 
-        // Calculate layout properties
-        int flowPaneWidth = 1072; // Width of the FlowPane
-        int spacing = 10;        // Spacing between elements in the FlowPane
-        int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5; // Number of boxes per row is 6
-        int numBoxesPerRow = (flowPaneWidth + spacing) / (boxWidth + spacing);
+        loadBooksTask.setOnSucceeded(event -> {
+            List<Book> bookList = loadBooksTask.getValue(); // Lấy danh sách sách tìm thấy
 
-        // Set horizontal and vertical gaps
-        flowPane.setHgap(0); // Disable FlowPane's horizontal gap
-        flowPane.setVgap(10); // Keep vertical gap
+            // Calculate layout properties
+            int flowPaneWidth = 1072; // Width of the FlowPane
+            int spacing = 10;        // Spacing between elements in the FlowPane
+            int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5; // Number of boxes per row is 6
+            int numBoxesPerRow = (flowPaneWidth + spacing) / (boxWidth + spacing);
 
-        for (int i = 0; i < bookList.size(); i++) {
-            VBox bookBox = createBookBox(bookList.get(i) , boxWidth);
+            // Set horizontal and vertical gaps
+            flowPane.setHgap(0); // Disable FlowPane's horizontal gap
+            flowPane.setVgap(10); // Keep vertical gap
 
-            // Add spacing only for non-last items in a row
-            if ((i + 1) % numBoxesPerRow != 0) {
-                FlowPane.setMargin(bookBox, new Insets(0, spacing, 10, 0)); // Add right margin
-            } else {
-                FlowPane.setMargin(bookBox, new Insets(0, 0, 10, 0)); // No right margin
+            flowPane.getChildren().clear(); // Clear previous items in the FlowPane
+
+            for (int i = 0; i < bookList.size(); i++) {
+                VBox bookBox = createBookBox(bookList.get(i), boxWidth);
+
+                // Add spacing only for non-last items in a row
+                if ((i + 1) % numBoxesPerRow != 0) {
+                    FlowPane.setMargin(bookBox, new Insets(0, spacing, 10, 0)); // Add right margin
+                } else {
+                    FlowPane.setMargin(bookBox, new Insets(0, 0, 10, 0)); // No right margin
+                }
+
+                flowPane.getChildren().add(bookBox);
             }
+        });
 
-            flowPane.getChildren().add(bookBox);
-        }
+        loadBooksTask.setOnFailed(event -> {
+            System.err.println("Error loading books: " + loadBooksTask.getException().getMessage());
+        });
+
+        // Chạy Task trên một luồng nền
+        new Thread(loadBooksTask).start();
     }
 
     private VBox createBookBox(Book book, int boxWidth) {

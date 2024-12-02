@@ -2,6 +2,7 @@ package org.example.ooplibrary.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -85,27 +86,36 @@ public class DashBoardController extends AbstractMenuController implements Initi
     }
 
     private void loadLineChart() {
-        int[][] transactions = SQLController.estimateTransactions(); // Lấy dữ liệu
+        // Tạo một Task để lấy dữ liệu giao dịch từ SQLController
+        Task<int[][]> transactionsTask = SQLController.estimateTransactions();
 
-        lineChart.setTitle("Borrow and Return Transactions in Last Month");
+        transactionsTask.setOnSucceeded(event -> {
+            int[][] transactions = transactionsTask.getValue(); // Lấy dữ liệu
 
-        // Tạo các series cho dữ liệu
-        XYChart.Series<String, Number> borrowSeries = new XYChart.Series<>();
-        borrowSeries.setName("Borrow Transactions");
+            lineChart.setTitle("Borrow and Return Transactions in Last Month");
 
-        XYChart.Series<String, Number> returnSeries = new XYChart.Series<>();
-        returnSeries.setName("Return Transactions");
+            // Tạo các series cho dữ liệu
+            XYChart.Series<String, Number> borrowSeries = new XYChart.Series<>();
+            borrowSeries.setName("Borrow Transactions");
 
-        // Thêm dữ liệu vào series
-        for (int i = 0; i < transactions.length; i++) {
-            borrowSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][0]));  // Số lượng sách mượn
-            returnSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][1]));  // Số lượng sách trả
-        }
+            XYChart.Series<String, Number> returnSeries = new XYChart.Series<>();
+            returnSeries.setName("Return Transactions");
 
-        // Xóa dữ liệu cũ và thêm dữ liệu mới
-        lineChart.getData().clear(); // Xóa dữ liệu cũ
-        lineChart.getData().addAll(borrowSeries, returnSeries); // thêm dữ liệu mới
+            // Thêm dữ liệu vào series
+            for (int i = 0; i < transactions.length; i++) {
+                borrowSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][0]));  // Số lượng sách mượn
+                returnSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][1]));  // Số lượng sách trả
+            }
+
+            // Xóa dữ liệu cũ và thêm dữ liệu mới
+            lineChart.getData().clear(); // Xóa dữ liệu cũ
+            lineChart.getData().addAll(borrowSeries, returnSeries); // Thêm dữ liệu mới
+        });
+
+        // Chạy Task trên một luồng nền
+        new Thread(transactionsTask).start();
     }
+
 
     private void loadBarChart() {
         Map<String, int[]> genreTransactions = SQLController.getTransactionsByGenres();
