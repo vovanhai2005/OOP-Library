@@ -18,7 +18,7 @@
             <ImageView fx:id="imageView" fitHeight="188.0" fitWidth="141.0" layoutX="32.0" layoutY="26.0" pickOnBounds="true" />
             <HBox layoutX="203.0" layoutY="34.0" prefHeight="47.0" prefWidth="278.0">
                <children>
-                  <Label prefHeight="51.0" prefWidth="98.0" text="Full name:">
+                  <Label fx:id="fullNameTxt" prefHeight="47.0" prefWidth="158.0" text="Full name:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -32,7 +32,7 @@
             </HBox>
             <HBox layoutX="203.0" layoutY="134.0" prefHeight="47.0" prefWidth="278.0">
                <children>
-                  <Label prefHeight="47.0" prefWidth="106.0" text="User name:">
+                  <Label fx:id="usernameText" prefHeight="47.0" prefWidth="160.0" text="User name:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -50,7 +50,7 @@
          <children>
             <HBox layoutX="360.0" layoutY="28.0" prefHeight="47.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="51.0" prefWidth="98.0" text="Gender:">
+                  <Label fx:id="genderText" prefHeight="51.0" prefWidth="98.0" text="Gender:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -64,7 +64,7 @@
             </HBox>
             <HBox layoutX="35.0" layoutY="128.0" prefHeight="47.0" prefWidth="239.0">
                <children>
-                  <Label prefHeight="51.0" prefWidth="98.0" text="DOB:">
+                  <Label fx:id="dobText" prefHeight="51.0" prefWidth="98.0" text="DOB:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -78,7 +78,7 @@
             </HBox>
             <HBox layoutX="360.0" layoutY="128.0" prefHeight="47.0" prefWidth="310.0">
                <children>
-                  <Label prefHeight="51.0" prefWidth="98.0" text="Email:">
+                  <Label fx:id="emailText" prefHeight="51.0" prefWidth="98.0" text="Email:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -92,7 +92,7 @@
             </HBox>
             <HBox layoutX="35.0" layoutY="28.0" prefHeight="47.0" prefWidth="239.0">
                <children>
-                  <Label prefHeight="51.0" prefWidth="98.0" text="Phone:">
+                  <Label fx:id="phoneText" prefHeight="51.0" prefWidth="98.0" text="Phone:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -104,7 +104,7 @@
                   </Label>
                </children>
             </HBox>
-            <Label alignment="CENTER" layoutX="557.0" layoutY="191.0" onMouseClicked="#switchToUpdateInfo" prefHeight="47.0" prefWidth="141.0" styleClass="updateInfo_btn" text="Update info">
+            <Label fx:id="updateInfoText" alignment="CENTER_RIGHT" layoutX="227.0" layoutY="193.0" onMouseClicked="#switchToUpdateInfo" prefHeight="47.0" prefWidth="459.0" styleClass="updateInfo_btn" text="Update info">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -113,7 +113,7 @@
       </AnchorPane>
       <AnchorPane layoutX="24.0" layoutY="312.0" prefHeight="392.0" prefWidth="1233.0" styleClass="user_overview">
          <children>
-            <Text layoutX="24.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrow History" wrappingWidth="278.0">
+            <Text fx:id="borrowHistoryTitle" layoutX="24.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrow History" wrappingWidth="278.0">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>

@@ -74,7 +74,8 @@ public class AddDocumentController {
     @FXML
     void handleAddBook(MouseEvent event) {
         byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
-        if (!SQLController.addBook(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), createGenresAsString() , description.getText(), bookImage))
+        String bookTitle = bookName.getText().replace("\\s" , "");
+        if (!SQLController.addBook(ISBN.getText(), bookTitle, yearOfPublication.getText(), author.getText(), createGenresAsString() , description.getText(), bookImage))
             return;
         Book addedBook = new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genreLists, description.getText(), bookImage);
 

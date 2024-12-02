@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -33,16 +34,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class UserDocumentArchiveController extends AbstractMenuController implements Initializable {
+public class UserDocumentArchiveController extends AbstractMenuController implements Initializable, AbstractLanguageConfig {
 
     @FXML
     private Label bookListBtn;
-
-    @FXML
-    private Label borrowBtn;
-
-    @FXML
-    private Label dashboardBtn;
 
     @FXML
     private GridPane gridPane;
@@ -56,10 +51,41 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
     @FXML
     private TextField searchKeyword;
 
-    @FXML
-    private Label userListBtn;
 
     private String username;
+
+    @FXML
+    private ComboBox<String> categoriesBox;
+
+    @FXML
+    private ComboBox<String> orderBox;
+
+
+
+    @FXML
+    private Text bookListTitle;
+
+    @FXML
+    private Label languageText;
+
+    @FXML
+    private Label mainMenuBtn;
+
+    @FXML
+    private ScrollPane scrollPane;
+
+
+    @FXML
+    private Label settingsBtn;
+
+    @FXML
+    private Label userInfoBtn;
+
+    @FXML
+    private Label sortByText;
+
+    @FXML
+    private Label orderText;
 
     @FXML
     void openDisplayUserWindow(MouseEvent event) {
@@ -180,6 +206,11 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             UserDocumentArchiveController userDocumentArchiveController = loader.getController();
             userDocumentArchiveController.setUsername(username);
+            if (this.language.equals("en")) {
+                userDocumentArchiveController.setLanguageToEn();
+            } else {
+                userDocumentArchiveController.setLanguageToVi();
+            }
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -196,6 +227,11 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             UserMainMenuController userMainMenuController = loader.getController();
             userMainMenuController.setUsername(username);
+            if (this.language.equals("en")) {
+                userMainMenuController.setLanguageToEn();
+            } else {
+                userMainMenuController.setLanguageToVi();
+            }
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -253,7 +289,6 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         new Thread(loadBooksTask).start();
     }
 
-
     private VBox createBookBox(Book book, int boxWidth) {
         // Tạo ImageView từ byte[]
         ImageView bookImageView = new ImageView();
@@ -287,7 +322,7 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         Rating rating = new Rating();
         rating.setMax(5); // Maximum 5 stars
         rating.setPartialRating(true); // Allow partial stars (optional)
-        rating.setRating(3.5); // Default rating (for example, 3.5 stars)
+        rating.setRating(SQLController.getUserRatings(book.getISBN())); // Set the actual rating
         rating.setStyle("-fx-scale-x: 0.6; -fx-scale-y: 0.6;"); // Optional: Adjust size
         rating.setDisable(true); // User can only see actual ratings
 
@@ -328,10 +363,19 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             // Gán dữ liệu tài liệu vào controller
             userDisplayDocumentController.setDetails(book,username);
             userDisplayDocumentController.setReviewsPane();
+            if (this.language.equals("en")) {
+                userDisplayDocumentController.setLanguageToEn();
+            } else {
+                userDisplayDocumentController.setLanguageToVi();
+            }
 
             // Tạo cửa sổ mới để hiển thị thông tin chi tiết
             Stage stage = new Stage();
-            stage.setTitle("Thông tin chi tiết tài liệu");
+            if (this.language.equals("en")) {
+                stage.setTitle("Document details");
+            } else {
+                stage.setTitle("Thông tin chi tiết tài liệu");
+            }
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -345,5 +389,34 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
 
     public void setSearchKeyword(String text) {
         searchKeyword.setText(text);
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+        languageText.setText("Language:");
+        mainMenuBtn.setText("Main Menu");
+        bookListBtn.setText("Books List");
+        userInfoBtn.setText("User Info");
+        settingsBtn.setText("Settings");
+        logOutBtn.setText("Log Out");
+        bookListTitle.setText("Book List");
+        sortByText.setText("Sort by:");
+        orderText.setText("Order:");
+
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
+        languageText.setText("Ngôn ngữ:");
+        mainMenuBtn.setText("Trang chủ");
+        bookListBtn.setText("DS sách");
+        userInfoBtn.setText("TT người dùng");
+        settingsBtn.setText("Cài đặt");
+        logOutBtn.setText("Đăng xuất");
+        bookListTitle.setText("Danh sách tài liệu");
+        sortByText.setText("SXếp theo:");
+        orderText.setText("Thứ tự:");
     }
 }

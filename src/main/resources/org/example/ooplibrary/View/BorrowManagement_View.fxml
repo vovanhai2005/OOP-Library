@@ -19,9 +19,8 @@
           <TableColumn fx:id="IDCol" prefWidth="104.00001525878906" text="ISBN" />
           <TableColumn fx:id="bookNameCol" prefWidth="188.80001831054688" text="Book Title" />
             <TableColumn fx:id="borrowerNameCol" minWidth="2.39996337890625" prefWidth="148.0" text="Username" />
-            <TableColumn fx:id="dueDateCol" minWidth="0.800048828125" prefWidth="168.0" text="Due Date" />
-            <TableColumn fx:id="informationCol" minWidth="0.0" prefWidth="256.00006103515625" text="Note" />
-            <TableColumn fx:id="featureCol" prefWidth="212.7999267578125" text="Feature" />
+            <TableColumn fx:id="dueDateCol" minWidth="0.800048828125" prefWidth="362.0" text="Due Date" />
+            <TableColumn fx:id="informationCol" minWidth="0.0" prefWidth="267.0" text="Note" />
         </columns>
       </TableView>
         <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">

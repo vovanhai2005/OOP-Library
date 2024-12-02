@@ -8,6 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -28,19 +29,13 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="userName" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
          </children>
       </VBox>
-      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="588.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
-         <image>
-            <Image url="@../Image/Autofill.png" />
-         </image>
-      </ImageView>
-      <AnchorPane layoutX="44.0" layoutY="63.0" prefHeight="280.0" prefWidth="195.0" styleClass="book_image" />
       <VBox layoutX="25.0" layoutY="358.0" prefHeight="56.0" prefWidth="235.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN:" wrappingWidth="194.13671875">
@@ -57,15 +52,18 @@
       </VBox>
       <VBox layoutX="329.0" layoutY="146.0" prefHeight="118.0" prefWidth="249.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="List of books:" wrappingWidth="194.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Books:" wrappingWidth="67.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <ScrollPane prefHeight="89.0" prefWidth="246.0">
+            <ScrollPane fx:id="bookLoanPane" prefHeight="89.0" prefWidth="246.0">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
+               <content>
+                  <FlowPane fx:id="flowPane" prefHeight="87.0" prefWidth="247.0" />
+               </content>
             </ScrollPane>
          </children>
       </VBox>
@@ -76,7 +74,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="ISBN1" alignment="TOP_LEFT" prefHeight="89.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="note" alignment="TOP_LEFT" prefHeight="89.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -112,5 +110,18 @@
             </DatePicker>
          </children>
       </VBox>
+      <Line endX="70.0" layoutX="500.0" layoutY="167.0" startX="-106.86328125" />
+      <Text fx:id="bookTitle" layoutX="392.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="54.0" layoutY="65.0" prefHeight="280.0" prefWidth="195.0" styleClass="book_image" />
+      <ImageView fx:id="bookImage" fitHeight="280.0" fitWidth="195.0" layoutX="54.0" layoutY="65.0" pickOnBounds="true" />
+      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="588.0" layoutY="100.0" onMouseClicked="#autofill" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
+         <image>
+            <Image url="@../Image/Autofill.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

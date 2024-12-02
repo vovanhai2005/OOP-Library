@@ -27,7 +27,7 @@ public class SQLController {
 
     // Change "user" and "password" variables to your MySQL username and password
     final static private String USER = "root";
-    final static    private String PASSWORD = "";
+    final static private String PASSWORD = "";
 
     /**
      * Thêm ký tự '\' trước dấu " trong chuỗi
@@ -706,6 +706,24 @@ public class SQLController {
         return bookLoan;
     }
 
+    public static String getISBNWithBookLoanID(String BookLoanId) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT ISBN FROM book_loans where bookLoanID = \"" + BookLoanId + "\";");
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     /**
      * Trả về lượt mượn sách của người dùng
      *
@@ -1164,6 +1182,89 @@ public class SQLController {
             );
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM user_ratings WHERE ISBN = \"" + normalizeString(text) + "\" AND username = \"" + normalizeString(username) + "\";");
+
+            if (resultSet.next()) {
+                if (resultSet.getInt(1) > 0) {
+                    return true;
+                }
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public static int getBookCount() {
+        int count = 0;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM book_info;");
+
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return count;
+    }
+
+    public static int getUserCount() {
+        int count = 0;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM user_info WHERE isAdmin = 0;");
+
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return count;
+    }
+
+    public static double getUserRatings(String isbn) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT AVG(rating) FROM user_ratings WHERE ISBN = \"" + normalizeString(isbn) + "\";");
+
+            if (resultSet.next()) {
+                if (resultSet.getDouble(1) == 0) {
+                    return 5;
+                }
+                return resultSet.getDouble(1);
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 5;
+    }
+
+    public static boolean isUserBorrowedBook(String username, String text) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM book_loans WHERE username = \"" + normalizeString(username) + "\" AND ISBN = \"" + normalizeString(text) + "\" AND returnDate IS NULL;");
 
             if (resultSet.next()) {
                 if (resultSet.getInt(1) > 0) {
