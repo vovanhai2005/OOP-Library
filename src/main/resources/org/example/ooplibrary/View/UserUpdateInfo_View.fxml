@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -10,71 +11,72 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="596.0" prefWidth="482.0" styleClass="update_field" stylesheets="@../Style/UpdateUserInfoStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.UserUpdateInfoController">
+<AnchorPane fx:id="anchorPane" prefHeight="596.0" prefWidth="482.0" styleClass="update_field" stylesheets="@../Style/UserUpdateInfoStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.UserUpdateInfoController">
    <children>
-      <Text layoutX="152.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update info">
+      <Text layoutX="152.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Info">
          <font>
             <Font name="System Bold" size="32.0" />
          </font>
       </Text>
       <AnchorPane layoutX="129.0" layoutY="73.0" prefHeight="300.0" prefWidth="225.0" styleClass="user_image" />
-      <ImageView fx:id="imageView" fitHeight="300.0" fitWidth="225.0" layoutX="129.0" layoutY="73.0" pickOnBounds="true" />
+      <ImageView fx:id="bookImage" fitHeight="300.0" fitWidth="225.0" layoutX="129.0" layoutY="73.0" pickOnBounds="true" />
       <ImageView fx:id="addImageButton" fitHeight="27.0" fitWidth="31.0" layoutX="367.0" layoutY="343.0" onMouseClicked="#chooseImage" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" styleClass="addImage_btn">
          <image>
             <Image url="@../Image/addImage.png" />
          </image>
       </ImageView>
-      <VBox layoutX="24.0" layoutY="394.0" prefHeight="57.0" prefWidth="134.0">
+      <VBox layoutX="24.0" layoutY="385.0" prefHeight="57.0" prefWidth="134.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" wrappingWidth="194.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="ISBN" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="Phone" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
          </children>
       </VBox>
-      <VBox layoutX="263.0" layoutY="394.0" prefHeight="57.0" prefWidth="134.0">
+      <VBox layoutX="263.0" layoutY="385.0" prefHeight="57.0" prefWidth="134.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DOB:" wrappingWidth="194.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="ISBN1" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="DOB" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
          </children>
       </VBox>
-      <VBox layoutX="24.0" layoutY="478.0" prefHeight="43.0" prefWidth="195.0">
+      <VBox layoutX="24.0" layoutY="469.0" prefHeight="57.0" prefWidth="195.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" wrappingWidth="194.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" wrappingWidth="194.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <ComboBox prefHeight="25.0" prefWidth="196.0" />
          </children>
       </VBox>
-      <VBox layoutX="263.0" layoutY="478.0" prefHeight="57.0" prefWidth="134.0">
+      <VBox layoutX="263.0" layoutY="469.0" prefHeight="57.0" prefWidth="134.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DOB:" wrappingWidth="194.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="194.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="ISBN11" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+            <TextField fx:id="email" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
          </children>
       </VBox>
+      <ComboBox fx:id="gender" layoutX="25.0" layoutY="501.0" prefHeight="24.0" prefWidth="195.0" />
+      <Button layoutX="202.0" layoutY="542.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Update" />
    </children>
 </AnchorPane>

@@ -8,3 +8,8 @@
     -fx-border-color: #ABA8A6;
     -fx-border-width: 2px;
 }
+
+.addBook_btn:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #a6a6a6;
+}

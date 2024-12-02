@@ -104,7 +104,7 @@
                   </Label>
                </children>
             </HBox>
-            <Label alignment="CENTER" layoutX="557.0" layoutY="191.0" prefHeight="47.0" prefWidth="141.0" styleClass="updateInfo_btn" text="Update info">
+            <Label alignment="CENTER" layoutX="557.0" layoutY="191.0" onMouseClicked="#switchToUpdateInfo" prefHeight="47.0" prefWidth="141.0" styleClass="updateInfo_btn" text="Update info">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -128,7 +128,7 @@
                </columns>
             </TableView>
          </children></AnchorPane>
-      <AnchorPane prefHeight="40.0" prefWidth="75.0" styleClass="exit_btn">
+      <AnchorPane onMouseClicked="#closeDisplayUserView" prefHeight="40.0" prefWidth="75.0" styleClass="exit_btn">
          <children>
             <ImageView fitHeight="40.0" fitWidth="44.0" layoutX="16.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -3,13 +3,19 @@ package org.example.ooplibrary.Controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
 import org.example.ooplibrary.Object.BookLoan;
 import org.example.ooplibrary.Object.User;
@@ -63,6 +69,7 @@ public class DisplayUserController implements Initializable  {
 
     private UserManagementController userManagementController;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableView.getColumns().clear();
@@ -74,7 +81,6 @@ public class DisplayUserController implements Initializable  {
         informationCol.setCellValueFactory(new PropertyValueFactory<>("note"));
 
 
-
         tableView.getColumns().addAll(IDCol, bookNameCol, dueDateCol, returnDateCol, informationCol);
 
         data = FXCollections.observableArrayList(
@@ -82,6 +88,30 @@ public class DisplayUserController implements Initializable  {
         );
 
         tableView.setItems(data);
+    }
+
+    @FXML
+    public void closeDisplayUserView(MouseEvent mouseEvent) {
+        Stage stage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void switchToUpdateInfo(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UserUpdateInfo_View.fxml"));
+            Parent root = loader.load();
+
+            // Lấy Stage hiện tại
+            Stage stage = new Stage();
+
+            // Set scene mới
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setTableView() {
