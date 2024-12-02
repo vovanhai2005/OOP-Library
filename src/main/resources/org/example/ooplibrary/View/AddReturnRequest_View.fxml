@@ -21,7 +21,7 @@
             <Font name="System Bold" size="27.0" />
          </font>
       </Text>
-      <Button layoutX="516.0" layoutY="502.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Add" />
+      <Button layoutX="516.0" layoutY="502.0" mnemonicParsing="false" onMouseClicked="#handleReturnRequest" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Add" />
       <VBox layoutX="329.0" layoutY="68.0" prefHeight="56.0" prefWidth="249.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" wrappingWidth="194.13671875">
@@ -103,7 +103,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <DatePicker prefHeight="33.0" prefWidth="249.0">
+            <DatePicker fx:id="returnDate" prefHeight="33.0" prefWidth="249.0">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
