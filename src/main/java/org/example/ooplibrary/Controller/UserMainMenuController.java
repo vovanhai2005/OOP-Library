@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -122,11 +123,18 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
-        ArrayList<Book> suggestedBooks = SQLController.getBookInfoData();
-        for (Book book : suggestedBooks) {
-            VBox bookBox = createBookBox2(book);
-            subFlowPaneSuggested.getChildren().add(bookBox);
-        }
+        Task<ArrayList<Book>> suggestedBooksTask = SQLController.getBookInfoData();
+
+        suggestedBooksTask.setOnSucceeded(event -> {
+            ArrayList<Book> suggestedBooks = suggestedBooksTask.getValue(); // Lấy dữ liệu gợi ý
+
+            for (Book book : suggestedBooks) {
+                VBox bookBox = createBookBox2(book);
+                subFlowPaneSuggested.getChildren().add(bookBox);
+            }
+        });
+
+        new Thread(suggestedBooksTask).start();
 
         // Đặt subFlowPaneSuggested vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneSuggested = new ScrollPane(subFlowPaneSuggested);
@@ -156,11 +164,17 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
-        ArrayList<Book> latestBooks = SQLController.getBookInfoData(); // Lấy sách mới nhất
-        for (Book book : latestBooks) {
-            VBox bookBox = createBookBox2(book);
-            subFlowPaneLatest.getChildren().add(bookBox);
-        }
+        Task<ArrayList<Book>> latestBooksTask = SQLController.getBookInfoData(); // Thay đổi nếu có phương thức riêng để lấy sách mới
+
+        latestBooksTask.setOnSucceeded(event -> {
+            ArrayList<Book> latestBooks = latestBooksTask.getValue(); // Lấy dữ liệu sách mới phát hành
+
+            for (Book book : latestBooks) {
+                VBox bookBox = createBookBox2(book);
+                subFlowPaneLatest.getChildren().add(bookBox);
+            }
+        });
+        new Thread(latestBooksTask).start();
 
         // Đặt subFlowPaneLatest vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneLatest = new ScrollPane(subFlowPaneLatest);

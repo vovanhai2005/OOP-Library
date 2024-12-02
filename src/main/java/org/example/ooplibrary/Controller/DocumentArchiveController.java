@@ -2,6 +2,7 @@ package org.example.ooplibrary.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -54,6 +55,7 @@ public class DocumentArchiveController extends AbstractMenuController implements
     private ObservableList<Book> data;
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableView.getColumns().clear();
@@ -66,23 +68,25 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
         // Cấu hình cột featureCol với các nút tuỳ chỉnh
         addFeatureButtonsToTable();
-
-
         tableView.getColumns().addAll(ISBNCol, nameCol, yearOfPublicationCol, authorCol, genreCol, featureCol);
 
-        data = FXCollections.observableArrayList(
+        // Tạo một Task để lấy dữ liệu từ cơ sở dữ liệu
+        Task<ArrayList<Book>> loadBooksTask = SQLController.getBookInfoData();
 
-        );
+        loadBooksTask.setOnSucceeded(event -> {
+            ArrayList<Book> temp = loadBooksTask.getValue();
+            data = FXCollections.observableArrayList(temp);
+            tableView.setItems(data);
+        });
 
-        ArrayList<Book> temp = SQLController.getBookInfoData();
+        loadBooksTask.setOnFailed(event -> {
+            System.err.println("Error loading book info: " + loadBooksTask.getException().getMessage());
+        });
 
-        for (Book book : temp) {
-            data.add(book);
-        }
-
-
-        tableView.setItems(data);
+        // Chạy Task trên một luồng nền
+        new Thread(loadBooksTask).start();
     }
+
 
 
     @FXML
@@ -110,32 +114,43 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
     @FXML
     void performSearch1(MouseEvent event) {
-        ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
+        String keyword = searchKeyword.getText();
 
-        if (temp != null) {
-            data.clear();
-            for (Book book : temp) {
-                data.add(book);
+        Task<ArrayList<Book>> searchTask = SQLController.getBookInfoDataWithKeyword(keyword);
+
+        searchTask.setOnSucceeded(e -> {
+            ArrayList<Book> temp = searchTask.getValue();
+            if (temp != null) {
+                data.clear();
+                data.addAll(temp);
+                tableView.setItems(data);
             }
-            tableView.setItems(data);
-        }
+        });
+
+        new Thread(searchTask).start();
     }
+
 
     @FXML
     void performSearch2(KeyEvent event) {
-        //Check if KeyEvent is Enter
         if (event.getCode().toString().equals("ENTER")) {
-            data.clear();
-            ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(searchKeyword.getText());
+            String keyword = searchKeyword.getText();
 
-            if (temp != null)
-                for (Book book : temp) {
-                    data.add(book);
+            Task<ArrayList<Book>> searchTask = SQLController.getBookInfoDataWithKeyword(keyword);
+
+            searchTask.setOnSucceeded(e -> {
+                ArrayList<Book> temp = searchTask.getValue();
+                if (temp != null) {
+                    data.clear();
+                    data.addAll(temp);
+                    tableView.setItems(data);
                 }
+            });
 
-            tableView.setItems(data);
+            new Thread(searchTask).start();
         }
     }
+
 
     public void addBook(Book book) {
         data.add(book);
