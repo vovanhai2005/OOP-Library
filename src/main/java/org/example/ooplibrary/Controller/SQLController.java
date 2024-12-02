@@ -512,11 +512,6 @@ public class SQLController {
 
     }
 
-    /**
-     * Lấy thông tin sách từ database
-     *
-     * @return ArrayList<Book>
-     */
     public static ArrayList<Book> getBookInfoData() {
         ArrayList<Book> data = new ArrayList<>();
         try {
@@ -527,6 +522,33 @@ public class SQLController {
             );
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info");
+
+            while (resultSet.next()) {
+                data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    /**
+     * Lấy thông tin sách từ database
+     *
+     * @return ArrayList<Book>
+     */
+    public static ArrayList<Book> getBookInfoDataSortedByYearPublished() {
+        ArrayList<Book> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info ORDER BY yearOfPublication DESC");
 
             while (resultSet.next()) {
                 data.add(new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7))));

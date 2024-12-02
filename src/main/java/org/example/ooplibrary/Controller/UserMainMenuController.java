@@ -156,7 +156,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
-        ArrayList<Book> latestBooks = SQLController.getBookInfoData(); // Lấy sách mới nhất
+        ArrayList<Book> latestBooks = SQLController.getBookInfoDataSortedByYearPublished(); // Lấy sách mới nhất
         for (Book book : latestBooks) {
             VBox bookBox = createBookBox2(book);
             subFlowPaneLatest.getChildren().add(bookBox);
