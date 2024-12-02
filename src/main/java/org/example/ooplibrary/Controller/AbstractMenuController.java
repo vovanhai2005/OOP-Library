@@ -16,6 +16,8 @@ abstract class AbstractMenuController {
     protected Scene scene;
     protected Parent root;
 
+    protected String language;
+
     @FXML
     void switchToDashBoardView(MouseEvent event) {
         try {
@@ -58,9 +60,16 @@ abstract class AbstractMenuController {
     @FXML
     void switchToLoginView(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
+            root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
+            LogInController logInController = loader.getController();
+            if (language.equals("en")) {
+                logInController.setLanguageToEn();
+            } else {
+                logInController.setLanguageToVi();
+            }
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

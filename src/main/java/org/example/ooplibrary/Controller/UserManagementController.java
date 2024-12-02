@@ -56,7 +56,7 @@ public class UserManagementController extends AbstractMenuController implements 
         tableView.getColumns().clear();
 
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("fulLName"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
         dobCol.setCellValueFactory(new PropertyValueFactory<>("dob"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));

@@ -22,6 +22,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import org.controlsfx.control.Rating;
 import org.example.ooplibrary.Object.Book;
+import org.example.ooplibrary.Object.BookLoan;
 import org.example.ooplibrary.Object.User;
 
 import java.io.ByteArrayInputStream;
@@ -30,15 +31,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class UserMainMenuController extends AbstractMenuController implements Initializable {
+public class UserMainMenuController extends AbstractMenuController implements Initializable, AbstractLanguageConfig {
     @FXML
     private Label bookListBtn;
 
     @FXML
-    private Label borrowBtn;
+    private Label settingBtn;
 
     @FXML
-    private Label dashboardBtn;
+    private Label mainMenuBtn;
 
     @FXML
     private Label logOutBtn;
@@ -47,10 +48,33 @@ public class UserMainMenuController extends AbstractMenuController implements In
     private TextField searchKeyword;
 
     @FXML
-    private Label userListBtn;
+    private Label userInfoBtn;
+
+    @FXML
+    private Text lms;
+
+    @FXML
+    private Label languageText;
 
     @FXML
     private FlowPane flowPane;
+
+    @FXML
+    private Text suggestedText;
+
+    @FXML
+    private Text latestBooksText;
+
+    @FXML
+    private Text booksText;
+
+    @FXML
+    private Text userText;
+
+    @FXML
+    private Text transactionsText;
+
+
 
     private String username;
 
@@ -72,7 +96,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
         booksCountBox.setPrefHeight(150); // Chiều dọc cố định
         booksCountBox.setAlignment(Pos.CENTER); // Căn lề giữa
         Text booksCountText = new Text(String.valueOf(getBooksCount()));
-        Text booksText = new Text("Books");
+        booksText = new Text("Books");
         booksCountText.setStyle("-fx-font-size: 50px; -fx-fill: #de401f; -fx-font-weight: bold");  // Phóng to chữ lên 30px
         booksCountText.setTextAlignment(TextAlignment.CENTER);
         booksText.setStyle("-fx-font-weight: bold; -fx-font-size: 18px");
@@ -84,7 +108,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
         usersCountBox.setPrefHeight(150); // Chiều dọc cố định
         usersCountBox.setAlignment(Pos.CENTER); // Căn lề giữa
         Text usersCountText = new Text(String.valueOf(getUsersCount()));
-        Text userText = new Text("Users");
+        userText = new Text("Users");
         usersCountText.setStyle("-fx-font-size: 50px; -fx-fill: #de401f; -fx-font-weight: bold");  // Phóng to chữ lên 30px
         usersCountText.setTextAlignment(TextAlignment.CENTER);
         userText.setStyle("-fx-font-weight: bold; -fx-font-size: 18px");
@@ -96,7 +120,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
         borrowCountBox.setPrefWidth(358);  // Chiều ngang bằng nhau
         borrowCountBox.setPrefHeight(150); // Chiều dọc cố định
         borrowCountBox.setAlignment(Pos.CENTER); // Căn lề giữa
-        Text transactionsText = new Text("Transactions");
+        transactionsText = new Text("Transactions");
         Text transactionsCountText = new Text(String.valueOf(getBorrowReturnCount()));
         transactionsCountText.setStyle("-fx-font-size: 50px; -fx-fill: #de401f; -fx-font-weight: bold");  // Phóng to chữ lên 30px
         transactionsCountText.setTextAlignment(TextAlignment.CENTER);
@@ -109,7 +133,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
         // 3. Phần thứ hai: Suggested for you
         VBox suggestedForYouBox = new VBox();
-        Text suggestedText = new Text("Suggested for you");
+        suggestedText = new Text("Suggested for you");
         suggestedText.setLayoutX(20);
         suggestedText.setStyle("-fx-font-weight: bold; -fx-font-size: 30px;");
 
@@ -144,7 +168,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
         // 4. Phần thứ ba: Latest released books
         VBox latestBooksBox = new VBox();
-        Text latestBooksText = new Text("Latest released books");
+        latestBooksText = new Text("Latest released books");
         latestBooksText.setStyle("-fx-font-weight: bold; -fx-font-size: 30px;");
 
         FlowPane subFlowPaneLatest = new FlowPane(Orientation.VERTICAL);
@@ -183,15 +207,23 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
     // Các phương thức giả định để lấy thông tin
     private int getBooksCount() {
-        return 1000;  // Ví dụ, bạn có thể thay thế bằng dữ liệu thực từ cơ sở dữ liệu
+        return SQLController.getBookCount();
     }
 
     private int getUsersCount() {
-        return 250;  // Ví dụ, bạn có thể thay thế bằng dữ liệu thực từ cơ sở dữ liệu
+        return SQLController.getUserCount();
     }
 
     private int getBorrowReturnCount() {
-        return 1500;  // Ví dụ, bạn có thể thay thế bằng dữ liệu thực từ cơ sở dữ liệu
+        ArrayList<BookLoan> bookLoans =  SQLController.getBookLoansData();
+        int count = 0;
+        for (BookLoan bookLoan : bookLoans) {
+            if (bookLoan.getReturnDate() != null) {
+                count++;
+            }
+            ++count;
+        }
+        return count;
     }
 
 
@@ -394,10 +426,45 @@ public class UserMainMenuController extends AbstractMenuController implements In
         bookBox.setStyle("-fx-background-color: transparent;"); // Thêm viền cho bookBox
 
 
+
         return bookBox;
     }
 
     public void setUsername(String text) {
         this.username = text;
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+        bookListBtn.setText("Book List");
+        settingBtn.setText("Settings");
+        mainMenuBtn.setText("Main Menu");
+        logOutBtn.setText("Log Out");
+        userInfoBtn.setText("User Info");
+        languageText.setText("Language:");
+        lms.setText("LIBRARY MANAGEMENT SYSTEM");
+        suggestedText.setText("Suggested for you");
+        latestBooksText.setText("Latest released books");
+        booksText.setText("Books");
+        userText.setText("Users");
+        transactionsText.setText("Transactions");
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
+        bookListBtn.setText("DS Sách");
+        settingBtn.setText("Cài đặt");
+        mainMenuBtn.setText("Trang chính");
+        logOutBtn.setText("Đăng xuất");
+        userInfoBtn.setText("Tt người dùng");
+        languageText.setText("Ngôn ngữ:");
+        lms.setText("HỆ THỐNG QUẢN LÝ THƯ VIỆN");
+        suggestedText.setText("Gợi ý cho bạn");
+        latestBooksText.setText("Sách mới nhất");
+        booksText.setText("Sách");
+        userText.setText("Người dùng");
+        transactionsText.setText("Giao dịch");
     }
 }
