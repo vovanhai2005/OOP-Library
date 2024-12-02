@@ -9,6 +9,7 @@ import javafx.scene.PerspectiveCamera;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -25,6 +26,46 @@ public class DashBoardController extends AbstractMenuController implements Initi
 
     @FXML
     private BarChart<String, Number> barChart;
+
+    @FXML
+    private NumberAxis amountText;
+
+    @FXML
+    private Label bookListBtn;
+
+    @FXML
+    private Label borrowBtn;
+
+    @FXML
+    private NumberAxis countText;
+
+    @FXML
+    private Label dashboardBtn;
+
+    @FXML
+    private Text dashboardTitle;
+
+    @FXML
+    private CategoryAxis genreText;
+
+    @FXML
+    private Label languageText;
+
+    @FXML
+    private Label logOutBtn;
+
+    @FXML
+    private CategoryAxis periodText;
+
+
+    @FXML
+    private AnchorPane pieChart_pane;
+
+    @FXML
+    private Label returnBtn;
+
+    @FXML
+    private Label userListBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -91,10 +132,37 @@ public class DashBoardController extends AbstractMenuController implements Initi
     @FXML
     public void setLanguageToEn() {
         language = "en";
+        languageText.setText("Language:");
+        dashboardTitle.setText("Dashboard");
+        dashboardBtn.setText("Dashboard");
+        bookListBtn.setText("Books List");
+        userListBtn.setText("User List");
+        borrowBtn.setText("Borrow");
+        returnBtn.setText("Return");
+        logOutBtn.setText("Log Out");
+        amountText.setLabel("Amount");
+        periodText.setLabel("Periods");
+        genreText.setLabel("Genres");
+        countText.setLabel("Count");
+
     }
 
     @FXML
     public void setLanguageToVi() {
         language = "vi";
+        languageText.setText("Ngôn ngữ:");
+        dashboardTitle.setText("Bảng thông tin");
+        dashboardBtn.setText("Bảng thông tin");
+        bookListBtn.setText("DS sách");
+        userListBtn.setText("DS người dùng");
+        borrowBtn.setText("Mượn sách");
+        returnBtn.setText("Trả sách");
+        logOutBtn.setText("Đăng xuất");
+        amountText.setLabel("Số lượng");
+        periodText.setLabel("Giai đoạn");
+        genreText.setLabel("Thể loại");
+        countText.setLabel("Số lượng");
+
+
     }
 }

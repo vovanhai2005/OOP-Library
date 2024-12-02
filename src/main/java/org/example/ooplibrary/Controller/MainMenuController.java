@@ -45,7 +45,7 @@ public class MainMenuController extends AbstractMenuController implements Abstra
     @FXML
     public void setLanguageToEn() {
         language = "en";
-        bookListBtn.setText("Book List");
+        bookListBtn.setText("Books List");
         borrowBtn.setText("Borrow");
         dashboardBtn.setText("Dashboard");
         logOutBtn.setText("Log Out");
@@ -58,12 +58,12 @@ public class MainMenuController extends AbstractMenuController implements Abstra
     @FXML
     public void setLanguageToVi() {
         language = "vi";
-        bookListBtn.setText("DS Sách");
+        bookListBtn.setText("DS sách");
         borrowBtn.setText("Mượn sách");
         dashboardBtn.setText("Bảng thông tin");
         logOutBtn.setText("Đăng xuất");
         returnBtn.setText("Trả sách");
-        userListBtn.setText("Dsach người dùng");
+        userListBtn.setText("DS người dùng");
         languageBtn.setText("Ngôn ngữ:");
         lms.setText("HỆ THỐNG QUẢN LÝ THƯ VIỆN");
     }
