@@ -55,7 +55,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="gender" alignment="CENTER" prefHeight="47.0" prefWidth="102.0" text="Male">
+                  <Label fx:id="gender" prefHeight="47.0" prefWidth="102.0" text="Male">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -69,7 +69,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="dateofBirth" alignment="CENTER" prefHeight="47.0" prefWidth="141.0" text="10/11/2005">
+                  <Label fx:id="dateofBirth" prefHeight="47.0" prefWidth="141.0" text="10/11/2005">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -83,7 +83,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="email" alignment="CENTER" prefHeight="47.0" prefWidth="212.0" text="23020059@gmail.com">
+                  <Label fx:id="email" prefHeight="47.0" prefWidth="212.0" text="23020059@gmail.com">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -97,7 +97,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="phoneNumber" alignment="CENTER" prefHeight="47.0" prefWidth="141.0" text="23020059">
+                  <Label fx:id="phoneNumber" prefHeight="47.0" prefWidth="141.0" text="23020059">
                      <font>
                         <Font size="18.0" />
                      </font>

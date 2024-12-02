@@ -102,6 +102,9 @@ public class DisplayUserController implements Initializable  {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UserUpdateInfo_View.fxml"));
             Parent root = loader.load();
 
+            UserUpdateInfoController controller = loader.getController();
+            controller.setUsername(username.getText()); // Truyền username vào UserUpdateInfoController
+
             // Lấy Stage hiện tại
             Stage stage = new Stage();
 

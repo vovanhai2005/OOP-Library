@@ -26,7 +26,7 @@ public class SQLController {
 
     // Change "user" and "password" variables to your MySQL username and password
     final static private String USER = "root";
-    final static    private String PASSWORD = "";
+    final static private String PASSWORD = "";
 
     /**
      * Thêm ký tự '\' trước dấu " trong chuỗi
@@ -619,6 +619,30 @@ public class SQLController {
             System.out.println(e);
         }
         return book;
+    }
+
+    public static void updateUserInfo(User user) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+
+            PreparedStatement statement = connection.prepareStatement("UPDATE user_info SET fullName = ?, dateOfBirth = ?, gender = ?, email = ?, phoneNumber = ?, userImage = ? WHERE username = ?");
+            statement.setString(1, user.getFullName());
+            statement.setString(2, user.getDob());
+            statement.setString(3, user.getGender());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPhoneNumber());
+            statement.setString(6, convertByteArrayToString(user.getImage()));
+            statement.setString(7, user.getUsername());
+            statement.executeUpdate();
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     //Book Loan
