@@ -1,9 +1,12 @@
 package org.example.ooplibrary.Controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -16,11 +19,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 import org.controlsfx.control.Rating;
 import org.example.ooplibrary.Object.Book;
 import org.example.ooplibrary.Object.User;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Flow;
 
@@ -62,9 +67,31 @@ public class UserDisplayDocumentController implements Initializable {
     @FXML
     private ImageView sendBtn;
 
+    @FXML
+    private Text authorText;
+
+
+    @FXML
+    private Button borrowBtn;
+
+
+    @FXML
+    private Text datePublishedText;
+
+
+    @FXML
+    private Text genreText;
+
+    @FXML
+    private Text rateThisBookText;
+
+    @FXML
+    private Text reviewTitle;
+
+
     private String username = "bo";
 
-
+    private String language;
 
     @Override
     public void initialize(java.net.URL location, java.util.ResourceBundle resources) {
@@ -136,6 +163,29 @@ public class UserDisplayDocumentController implements Initializable {
     @FXML
     void handleAddBook(MouseEvent event) {
         System.out.println("Add book to cart (in progress)");
+        try {
+            // Tạo FXMLLoader và nạp file FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/AddBorrowBook_View.fxml"));
+            Parent secondRoot = loader.load();
+
+            // Lấy controller từ loader và thiết lập documentArchiveController
+            AddBorrowBookController addBorrowBookController = loader.getController();
+            addBorrowBookController.setUsername(username);
+            addBorrowBookController.autofillByUsername(null);
+            addBorrowBookController.setISBN(ISBN.getText());
+            addBorrowBookController.autofillByISBN(null);
+
+
+            // Thiết lập cửa sổ và hiển thị
+            Stage secondStage = new Stage();
+            Scene secondScene = new Scene(secondRoot);
+            secondStage.setScene(secondScene);
+            secondStage.setTitle("Thêm tài liệu");
+            secondStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private HBox createReviewPane(String ISBN, String username) {
@@ -231,5 +281,26 @@ public class UserDisplayDocumentController implements Initializable {
     void handleSendReview(MouseEvent event) {
         SQLController.addUserRatings(ISBN.getText(), username, star_ranking.getRating(), commentBox.getText());
         setReviewsPane();
+    }
+
+    public void setLanguageToEn() {
+        language = "en";
+        datePublishedText.setText("DATE PUBLISHED:");
+        genreText.setText("GENRE:");
+        authorText.setText("AUTHOR:");
+        rateThisBookText.setText("Rate this book");
+        reviewTitle.setText("Most recently reviews");
+        borrowBtn.setText("Borrow book");
+
+    }
+
+    public void setLanguageToVi() {
+        language = "vi";
+        datePublishedText.setText("NGÀY XUẤT BẢN:");
+        genreText.setText("THỂ LOẠI:");
+        authorText.setText("TÁC GIẢ:");
+        rateThisBookText.setText("Đánh giá sách");
+        reviewTitle.setText("Nhận xét gần đây nhất");
+        borrowBtn.setText("Mượn sách");
     }
 }
