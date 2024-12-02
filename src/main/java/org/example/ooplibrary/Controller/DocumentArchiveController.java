@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class DocumentArchiveController extends AbstractMenuController implements Initializable {
+public class DocumentArchiveController extends AbstractMenuController implements Initializable, AbstractLanguageConfig {
 
     @FXML
     private TableView<Book> tableView;
@@ -253,6 +253,18 @@ public class DocumentArchiveController extends AbstractMenuController implements
             // Người dùng chọn Cancel hoặc đóng cửa sổ Alert
             System.out.println("Hủy xóa tài liệu: " + book.getName());
         }
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+        // Do sth
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
+        // Do sth
     }
 
 

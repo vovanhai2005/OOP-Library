@@ -168,5 +168,16 @@ public class ReturnDocumentController extends AbstractMenuController implements 
         // Thực hiện logic xem thông tin phiếu mượn ở đây
     }
 
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
+    }
+
 
 }

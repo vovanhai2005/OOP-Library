@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class UserManagementController extends AbstractMenuController implements Initializable {
+public class UserManagementController extends AbstractMenuController implements Initializable, AbstractLanguageConfig {
 
     @FXML
     private TableView<User> tableView;
@@ -234,6 +234,16 @@ public class UserManagementController extends AbstractMenuController implements 
             // Người dùng chọn Cancel hoặc đóng cửa sổ Alert
             System.out.println("Hủy xóa người dùng: " + user.getUsername());
         }
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
     }
 
 
