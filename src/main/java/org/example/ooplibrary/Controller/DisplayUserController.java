@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
 import org.example.ooplibrary.Object.BookLoan;
@@ -25,7 +26,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class DisplayUserController implements Initializable  {
+public class DisplayUserController implements Initializable {
     @FXML
     private TableColumn<BookLoan, String> IDCol;
 
@@ -65,9 +66,36 @@ public class DisplayUserController implements Initializable  {
     @FXML
     private ImageView imageView;
 
+    @FXML
+    private Text borrowHistoryTitle;
+
+    @FXML
+    private Label dobText;
+
+    @FXML
+    private Label emailText;
+
+    @FXML
+    private Label fullNameTxt;
+
+    @FXML
+    private Label genderText;
+
+    @FXML
+    private Label phoneText;
+
+    @FXML
+    private Label updateInfoText;
+
+
+    @FXML
+    private Label usernameText;
+
     private ObservableList<BookLoan> data;
 
     private UserManagementController userManagementController;
+
+    private String language;
 
 
     @Override
@@ -104,7 +132,11 @@ public class DisplayUserController implements Initializable  {
 
             UserUpdateInfoController controller = loader.getController();
             controller.setUsername(username.getText()); // Truyền username vào UserUpdateInfoController
-
+            if (this.language.equals("en")) {
+                controller.setLanguageToEn();
+            } else {
+                controller.setLanguageToVi();
+            }
             // Lấy Stage hiện tại
             Stage stage = new Stage();
 
@@ -165,4 +197,40 @@ public class DisplayUserController implements Initializable  {
         }
     }
 
+    public void setLanguageToEn() {
+        language = "en";
+        fullNameTxt.setText("Full Name:");
+        usernameText.setText("Username:");
+        phoneText.setText("Phone Number:");
+        dobText.setText("DOB:");
+        genderText.setText("Gender:");
+        emailText.setText("Email:");
+        updateInfoText.setText("Update Info");
+        borrowHistoryTitle.setText("Borrow History");
+        IDCol.setText("ID");
+        bookNameCol.setText("Book Name");
+        dueDateCol.setText("Due Date");
+        returnDateCol.setText("Return Date");
+        informationCol.setText("Note");
+        tableView.setPlaceholder(new Label("No content in table"));
+
+    }
+
+    public void setLanguageToVi() {
+        language = "vi";
+        fullNameTxt.setText("Họ và tên:");
+        usernameText.setText("Tên đăng nhập:");
+        phoneText.setText("SDT:");
+        dobText.setText("Ngày sinh:");
+        genderText.setText("Giới tính:");
+        emailText.setText("Email:");
+        updateInfoText.setText("Cập nhật thông tin");
+        borrowHistoryTitle.setText("Lịch sử mượn sách");
+        IDCol.setText("ID");
+        bookNameCol.setText("Tên sách");
+        dueDateCol.setText("Ngày hết hạn");
+        returnDateCol.setText("Ngày trả");
+        informationCol.setText("Ghi chú");
+        tableView.setPlaceholder(new Label("Không có dữ liệu trong bảng"));
+    }
 }

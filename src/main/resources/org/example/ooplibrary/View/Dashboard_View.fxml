@@ -136,7 +136,7 @@
                   <Image url="@../Image/Lib_Image.png" />
                </image>
             </ImageView>
-            <Text fill="#f0e9dd" layoutX="32.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" textAlignment="CENTER">
+            <Text fx:id="dashboardTitle" fill="#f0e9dd" layoutX="32.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -154,10 +154,10 @@
                <children>
                   <LineChart fx:id="lineChart" layoutX="-11.0" layoutY="15.0" prefHeight="260.0" prefWidth="430.0">
                     <xAxis>
-                      <CategoryAxis label="Periods" prefHeight="34.0" prefWidth="398.0" side="BOTTOM" />
+                      <CategoryAxis fx:id="periodText" label="Periods" prefHeight="34.0" prefWidth="398.0" side="BOTTOM" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis label="Amount" prefHeight="233.0" prefWidth="41.0" side="LEFT" />
+                      <NumberAxis fx:id="amountText" label="Amount" prefHeight="233.0" prefWidth="41.0" side="LEFT" />
                     </yAxis>
                   </LineChart>
                </children></AnchorPane>
@@ -165,26 +165,26 @@
                <children>
                   <BarChart fx:id="barChart" layoutY="3.0" prefHeight="575.0" prefWidth="543.0" title="">
                     <xAxis>
-                      <CategoryAxis label="Genres" />
+                      <CategoryAxis fx:id="genreText" label="Genres" />
                     </xAxis>
                     <yAxis>
-                      <NumberAxis label="Count" />
+                      <NumberAxis fx:id="countText" label="Count" />
                     </yAxis>
                   </BarChart>
                </children></AnchorPane>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="101.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" styleClass="vietnam_btn">
+      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="101.0" layoutY="6.0" onMouseClicked="#setLanguageToVi" pickOnBounds="true" preserveRatio="true" styleClass="vietnam_btn">
          <image>
             <Image url="@../Image/vietnam.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="146.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
+      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="146.0" layoutY="6.0" onMouseClicked="#setLanguageToEn" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
          <image>
             <Image url="@../Image/united-states-of-america.png" />
          </image>
       </ImageView>
-      <Label layoutX="12.0" layoutY="9.0" text="Language:" textFill="#f0e9dd">
+      <Label fx:id="languageText" layoutX="12.0" layoutY="9.0" text="Language:" textFill="#f0e9dd">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

@@ -418,7 +418,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
         Rating rating = new Rating();
         rating.setMax(5);
         rating.setPartialRating(true);
-        rating.setRating(4.0);
+        rating.setRating(SQLController.getUserRatings(book.getISBN()));
         rating.setScaleX(0.5);
         rating.setScaleY(0.5);
         rating.setDisable(true);  // Chặn người dùng thay đổi rating
@@ -440,9 +440,43 @@ public class UserMainMenuController extends AbstractMenuController implements In
         bookBox.setSpacing(5);
         bookBox.setStyle("-fx-background-color: transparent;"); // Thêm viền cho bookBox
 
-
+        bookBox.setOnMouseClicked(event -> openBookDetailView(book));
 
         return bookBox;
+    }
+
+    @FXML
+    private void openBookDetailView(Book book) {
+        System.out.println("Opening book detail view: " + book.getName() + "(in progress)");
+        try {
+            // Tải FXML của giao diện hiển thị tài liệu
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UserDisplayDocument_View.fxml"));
+            Parent root = loader.load();
+
+            // Lấy controller của cửa sổ hiển thị tài liệu
+            UserDisplayDocumentController userDisplayDocumentController = loader.getController();
+
+            // Gán dữ liệu tài liệu vào controller
+            userDisplayDocumentController.setDetails(book,username);
+            userDisplayDocumentController.setReviewsPane();
+            if (this.language.equals("en")) {
+                userDisplayDocumentController.setLanguageToEn();
+            } else {
+                userDisplayDocumentController.setLanguageToVi();
+            }
+
+            // Tạo cửa sổ mới để hiển thị thông tin chi tiết
+            Stage stage = new Stage();
+            if (this.language.equals("en")) {
+                stage.setTitle("Document details");
+            } else {
+                stage.setTitle("Thông tin chi tiết tài liệu");
+            }
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setUsername(String text) {
@@ -452,7 +486,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
     @FXML
     public void setLanguageToEn() {
         language = "en";
-        bookListBtn.setText("Book List");
+        bookListBtn.setText("Books List");
         settingBtn.setText("Settings");
         mainMenuBtn.setText("Main Menu");
         logOutBtn.setText("Log Out");
@@ -469,11 +503,11 @@ public class UserMainMenuController extends AbstractMenuController implements In
     @FXML
     public void setLanguageToVi() {
         language = "vi";
-        bookListBtn.setText("DS Sách");
+        bookListBtn.setText("DS sách");
         settingBtn.setText("Cài đặt");
-        mainMenuBtn.setText("Trang chính");
+        mainMenuBtn.setText("Trang chủ");
         logOutBtn.setText("Đăng xuất");
-        userInfoBtn.setText("Tt người dùng");
+        userInfoBtn.setText("TT người dùng");
         languageText.setText("Ngôn ngữ:");
         lms.setText("HỆ THỐNG QUẢN LÝ THƯ VIỆN");
         suggestedText.setText("Gợi ý cho bạn");

@@ -14,15 +14,15 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../Style/BorrowManagement.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.BorrowManagementController">
     <children>
-        <TableView fx:id="tableView" layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0" styleClass="quote_field">
-            <columns>
-                <TableColumn fx:id="IDCol" prefWidth="104.00001525878906" text="ISBN" />
-                <TableColumn fx:id="bookNameCol" prefWidth="188.80001831054688" text="Book Title" />
-                <TableColumn fx:id="borrowerNameCol" minWidth="2.39996337890625" prefWidth="148.0" text="Username" />
-                <TableColumn fx:id="dueDateCol" minWidth="0.800048828125" prefWidth="362.0" text="Due Date" />
-                <TableColumn fx:id="informationCol" minWidth="0.0" prefWidth="267.0" text="Note" />
-            </columns>
-        </TableView>
+      <TableView fx:id="tableView" layoutX="208.0" layoutY="154.0" prefHeight="566.0" prefWidth="1072.0" styleClass="quote_field">
+        <columns>
+          <TableColumn fx:id="IDCol" prefWidth="104.00001525878906" text="ISBN" />
+          <TableColumn fx:id="bookNameCol" prefWidth="188.80001831054688" text="Book Title" />
+            <TableColumn fx:id="borrowerNameCol" minWidth="2.39996337890625" prefWidth="148.0" text="Username" />
+            <TableColumn fx:id="dueDateCol" minWidth="0.800048828125" prefWidth="362.0" text="Due Date" />
+            <TableColumn fx:id="informationCol" minWidth="0.0" prefWidth="267.0" text="Note" />
+        </columns>
+      </TableView>
         <AnchorPane layoutX="208.0" prefHeight="154.0" prefWidth="1072.0" styleClass="header_pane">
             <children>
                 <ImageView fitHeight="154.0" fitWidth="1072.0" pickOnBounds="true">
@@ -41,147 +41,147 @@
                         <Image url="@../Image/search_icon.png" />
                     </image>
                 </ImageView>
-                <Label fx:id="addBorrowText" alignment="CENTER" layoutX="811.0" layoutY="84.0" onMouseClicked="#openRequestBorrowWindow" prefHeight="47.0" prefWidth="245.0" styleClass="addRequest_btn" text="Add borrow request" textAlignment="CENTER">
-                    <font>
-                        <Font name="System Bold" size="20.0" />
-                    </font>
-                    <graphic>
-                        <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Image/add.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Label>
+            <Label fx:id="addBorrowText" alignment="CENTER" layoutX="811.0" layoutY="84.0" onMouseClicked="#openRequestBorrowWindow" prefHeight="47.0" prefWidth="245.0" styleClass="addRequest_btn" text="Add borrow request" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="38.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/add.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
             </children></AnchorPane>
-        <AnchorPane blendMode="MULTIPLY" prefHeight="720.0" prefWidth="208.0" styleClass="menu_pane">
-            <children>
-                <Label id="logOutBtn" fx:id="logOutBtn" alignment="CENTER" layoutY="660.0" onMouseClicked="#switchToLoginView" prefHeight="53.0" prefWidth="208.0" styleClass="log_out_button" text="Log out">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
-                </Label>
-                <HBox layoutY="192.0" onMouseClicked="#switchToDashBoardView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
-                    <children>
-                        <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Image/dashboard_icon.png" />
-                            </image>
-                            <HBox.margin>
-                                <Insets left="28.0" top="13.0" />
-                            </HBox.margin>
-                        </ImageView>
-                        <Label id="dashboardBtn" fx:id="dashboardBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Dashboard">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="15.0" />
-                            </HBox.margin>
-                        </Label>
-                    </children>
-                </HBox>
-                <HBox layoutY="266.0" onMouseClicked="#switchToDocumentArchiveView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
-                    <children>
-                        <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Image/open-book.png" />
-                            </image>
-                            <HBox.margin>
-                                <Insets left="28.0" top="13.0" />
-                            </HBox.margin>
-                        </ImageView>
-                        <Label id="bookListBtn" fx:id="booksListBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Books List">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="15.0" />
-                            </HBox.margin>
-                        </Label>
-                    </children>
-                </HBox>
-                <HBox layoutY="340.0" onMouseClicked="#switchToUserManagementView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
-                    <children>
-                        <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Image/group_icon.png" />
-                            </image>
-                            <HBox.margin>
-                                <Insets left="28.0" top="13.0" />
-                            </HBox.margin>
-                        </ImageView>
-                        <Label id="userListBtn" fx:id="userListBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="User List">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="15.0" />
-                            </HBox.margin>
-                        </Label>
-                    </children>
-                </HBox>
-                <HBox layoutY="414.0" onMouseClicked="#switchToBorrowDocumentView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
-                    <children>
-                        <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Image/Borrow_icon.png" />
-                            </image>
-                            <HBox.margin>
-                                <Insets left="28.0" top="13.0" />
-                            </HBox.margin>
-                        </ImageView>
-                        <Label id="borrowBtn" fx:id="borrowBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Borrow ">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="15.0" />
-                            </HBox.margin>
-                        </Label>
-                    </children>
-                </HBox>
-                <HBox layoutY="488.0" onMouseClicked="#switchToReturnDocumentView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
-                    <children>
-                        <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../Image/return.png" />
-                            </image>
-                            <HBox.margin>
-                                <Insets left="28.0" top="13.0" />
-                            </HBox.margin>
-                        </ImageView>
-                        <Label id="returnBtn" fx:id="returnBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Return ">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets left="15.0" />
-                            </HBox.margin>
-                        </Label>
-                    </children>
-                </HBox>
-                <ImageView fitHeight="139.0" fitWidth="141.0" layoutX="35.0" layoutY="37.0" onMouseClicked="#switchToMainMenuView" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
-                    <image>
-                        <Image url="@../Image/Logo_Image.png" />
-                    </image>
-                </ImageView>
-            </children>
-        </AnchorPane>
-        <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="101.0" layoutY="6.0" onMouseClicked="#setLanguageToVi" pickOnBounds="true" preserveRatio="true" styleClass="vietnam_btn">
-            <image>
-                <Image url="@../Image/vietnam.png" />
-            </image>
-        </ImageView>
-        <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="146.0" layoutY="6.0" onMouseClicked="#setLanguageToEn" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
-            <image>
-                <Image url="@../Image/united-states-of-america.png" />
-            </image>
-        </ImageView>
-        <Label fx:id="languageText" layoutX="12.0" layoutY="9.0" text="Language:" textFill="#f0e9dd">
-            <font>
-                <Font name="System Bold" size="17.0" />
-            </font>
-        </Label>
+      <AnchorPane blendMode="MULTIPLY" prefHeight="720.0" prefWidth="208.0" styleClass="menu_pane">
+         <children>
+            <Label id="logOutBtn" fx:id="logOutBtn" alignment="CENTER" layoutY="660.0" onMouseClicked="#switchToLoginView" prefHeight="53.0" prefWidth="208.0" styleClass="log_out_button" text="Log out">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <HBox layoutY="192.0" onMouseClicked="#switchToDashBoardView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+               <children>
+                  <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/dashboard_icon.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="28.0" top="13.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label id="dashboardBtn" fx:id="dashboardBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Dashboard">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutY="266.0" onMouseClicked="#switchToDocumentArchiveView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+               <children>
+                  <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/open-book.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="28.0" top="13.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label id="bookListBtn" fx:id="booksListBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Books List">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutY="340.0" onMouseClicked="#switchToUserManagementView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+               <children>
+                  <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/group_icon.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="28.0" top="13.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label id="userListBtn" fx:id="userListBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="User List">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutY="414.0" onMouseClicked="#switchToBorrowDocumentView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+               <children>
+                  <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/Borrow_icon.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="28.0" top="13.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label id="borrowBtn" fx:id="borrowBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Borrow ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutY="488.0" onMouseClicked="#switchToReturnDocumentView" prefHeight="53.0" prefWidth="208.0" styleClass="menu_button">
+               <children>
+                  <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Image/return.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="28.0" top="13.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label id="returnBtn" fx:id="returnBtn" prefHeight="53.0" prefWidth="144.0" styleClass="menu_button" text="Return ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <ImageView fitHeight="139.0" fitWidth="141.0" layoutX="35.0" layoutY="37.0" onMouseClicked="#switchToMainMenuView" pickOnBounds="true" preserveRatio="true" styleClass="app_logo">
+               <image>
+                  <Image url="@../Image/Logo_Image.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="101.0" layoutY="6.0" onMouseClicked="#setLanguageToVi" pickOnBounds="true" preserveRatio="true" styleClass="vietnam_btn">
+         <image>
+            <Image url="@../Image/vietnam.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="146.0" layoutY="6.0" onMouseClicked="#setLanguageToEn" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
+         <image>
+            <Image url="@../Image/united-states-of-america.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="languageText" layoutX="12.0" layoutY="9.0" text="Language:" textFill="#f0e9dd">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

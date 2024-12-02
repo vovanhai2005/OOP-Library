@@ -77,6 +77,12 @@ public class AddBorrowBookController {
 
     private BorrowManagementController borrowManagementController;
 
+    private UserDisplayDocumentController userDisplayDocumentController;
+
+    public void setUserDisplayDocumentController(UserDisplayDocumentController userDisplayDocumentController) {
+        this.userDisplayDocumentController = userDisplayDocumentController;
+    }
+
     @FXML
     public void chooseImage(MouseEvent event) {
         Stage stage = (Stage) anchorPane.getScene().getWindow();
@@ -107,8 +113,20 @@ public class AddBorrowBookController {
         byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
         String bookLoanId = SQLController.addBookLoan(ISBN.getText(),username.getText(),note.getText(), SQLController.getDateOfBirthAsString(dueDate));
         //hide the window
+        if (borrowManagementController != null)
         borrowManagementController.addBookLoan(SQLController.getBookLoansDataWithBookLoanID(bookLoanId));
+
+        if (userDisplayDocumentController != null) {
+            userDisplayDocumentController.setBorrowed(true);
+        }
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
 
+    public void setUsername(String username) {
+        this.username.setText(username);
+    }
+
+    public void setISBN(String text) {
+        ISBN.setText(text);
+    }
 }
