@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class BorrowManagementController extends AbstractMenuController implements Initializable {
+public class BorrowManagementController extends AbstractMenuController implements Initializable,AbstractLanguageConfig {
 
     @FXML
     private TableColumn<BookLoan, String> IDCol;
@@ -175,5 +175,15 @@ public class BorrowManagementController extends AbstractMenuController implement
         data.add(bookLoan);
         tableView.setItems(data);
         tableView.refresh();
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
     }
 }

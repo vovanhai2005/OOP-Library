@@ -34,7 +34,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class UserDocumentArchiveController extends AbstractMenuController implements Initializable {
+public class UserDocumentArchiveController extends AbstractMenuController implements Initializable, AbstractLanguageConfig {
 
     @FXML
     private Label bookListBtn;
@@ -169,6 +169,11 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             UserDocumentArchiveController userDocumentArchiveController = loader.getController();
             userDocumentArchiveController.setUsername(username);
+            if (this.language.equals("en")) {
+                userDocumentArchiveController.setLanguageToEn();
+            } else {
+                userDocumentArchiveController.setLanguageToVi();
+            }
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -185,6 +190,11 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             UserMainMenuController userMainMenuController = loader.getController();
             userMainMenuController.setUsername(username);
+            if (this.language.equals("en")) {
+                userMainMenuController.setLanguageToEn();
+            } else {
+                userMainMenuController.setLanguageToVi();
+            }
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -323,5 +333,15 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
 
     public void setSearchKeyword(String text) {
         searchKeyword.setText(text);
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
     }
 }

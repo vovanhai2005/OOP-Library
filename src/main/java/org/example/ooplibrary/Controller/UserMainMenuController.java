@@ -288,6 +288,11 @@ public class UserMainMenuController extends AbstractMenuController implements In
             UserDocumentArchiveController userDocumentArchiveController = loader.getController();
             userDocumentArchiveController.setUsername(username);
             userDocumentArchiveController.setSearchKeyword(searchKeyword.getText());
+            if (this.language.equals("en")) {
+                userDocumentArchiveController.setLanguageToEn();
+            } else {
+                userDocumentArchiveController.setLanguageToVi();
+            }
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -306,6 +311,11 @@ public class UserMainMenuController extends AbstractMenuController implements In
                 UserDocumentArchiveController userDocumentArchiveController = loader.getController();
                 userDocumentArchiveController.setUsername(username);
                 userDocumentArchiveController.setSearchKeyword(searchKeyword.getText());
+                if (this.language.equals("en")) {
+                    userDocumentArchiveController.setLanguageToEn();
+                } else {
+                    userDocumentArchiveController.setLanguageToVi();
+                }
                 scene = new Scene(root);
                 userDocumentArchiveController.performSearch2(event);
                 stage.setScene(scene);
@@ -325,6 +335,11 @@ public class UserMainMenuController extends AbstractMenuController implements In
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             UserDocumentArchiveController userDocumentArchiveController = loader.getController();
             userDocumentArchiveController.setUsername(username);
+            if (this.language.equals("en")) {
+                userDocumentArchiveController.setLanguageToEn();
+            } else {
+                userDocumentArchiveController.setLanguageToVi();
+            }
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

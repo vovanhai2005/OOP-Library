@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class DashBoardController extends AbstractMenuController implements Initializable {
+public class DashBoardController extends AbstractMenuController implements Initializable, AbstractLanguageConfig {
 
     @FXML
     private PieChart pieChart;
@@ -86,5 +86,15 @@ public class DashBoardController extends AbstractMenuController implements Initi
         }
 
         barChart.getData().addAll(borrowSeries, returnSeries);
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
     }
 }
