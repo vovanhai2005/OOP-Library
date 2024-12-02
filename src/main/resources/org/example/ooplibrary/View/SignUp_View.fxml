@@ -21,7 +21,7 @@
         </ImageView>
         <AnchorPane layoutX="829.0" layoutY="91.0" prefHeight="579.0" prefWidth="362.0" styleClass="inner_layer">
             <children>
-                <Text fill="WHITE" layoutX="82.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up" textAlignment="CENTER" wrappingWidth="198.3671875">
+                <Text fx:id="signUpText" fill="WHITE" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up" textAlignment="CENTER" wrappingWidth="371.0">
                     <font>
                         <Font size="40.0" />
                     </font>
@@ -69,7 +69,7 @@
             </children></AnchorPane>
       <AnchorPane layoutX="239.0" layoutY="91.0" prefHeight="579.0" prefWidth="576.0" styleClass="inner_layer">
          <children>
-            <Text fill="WHITE" layoutX="160.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Info " textAlignment="CENTER" wrappingWidth="256.3671875">
+            <Text fx:id="personalInfoText" fill="WHITE" layoutX="-1.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Info " textAlignment="CENTER" wrappingWidth="576.0">
                <font>
                   <Font size="40.0" />
                </font>
@@ -108,17 +108,17 @@
             </Text>
             <AnchorPane layoutX="24.0" layoutY="95.0" onMouseClicked="#chooseImage" prefHeight="230.0" prefWidth="195.0" styleClass="ava_image" />
             <ImageView fx:id="avatarImage" fitHeight="230.0" fitWidth="195.0" layoutX="24.0" layoutY="95.0" pickOnBounds="true" />
-            <Text layoutX="24.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions:" wrappingWidth="125.13671875">
+            <Text fx:id="instructionTitleText" layoutX="24.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Instructions:" wrappingWidth="125.13671875">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Text>
-            <Text layoutX="24.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Every user's features must be filled and must not be left blanked" wrappingWidth="195.0">
+            <Text fx:id="instruction1" layoutX="24.0" layoutY="385.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Every user's features must be filled and must not be left blanked" wrappingWidth="195.0">
                <font>
                   <Font size="15.0" />
                </font>
             </Text>
-            <Text layoutX="24.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Username should not contain full name or other personal information" wrappingWidth="195.0">
+            <Text fx:id="instruction2" layoutX="24.0" layoutY="457.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- Username should not contain full name or other personal information" wrappingWidth="195.0">
                <font>
                   <Font size="15.0" />
                </font>
@@ -130,17 +130,17 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="362.0" layoutY="612.0" pickOnBounds="true" preserveRatio="true" styleClass="vietnam_btn">
+      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="362.0" layoutY="612.0" onMouseClicked="#setLanguageToVi" pickOnBounds="true" preserveRatio="true" styleClass="vietnam_btn">
          <image>
             <Image url="@../Image/vietnam.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="407.0" layoutY="612.0" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
+      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="407.0" layoutY="612.0" onMouseClicked="#setLanguageToEn" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
          <image>
             <Image url="@../Image/united-states-of-america.png" />
          </image>
       </ImageView>
-      <Label layoutX="263.0" layoutY="615.0" text="Language:" textFill="#f0e9dd">
+      <Label fx:id="languageText" layoutX="263.0" layoutY="615.0" text="Language:" textFill="#f0e9dd">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

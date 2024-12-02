@@ -24,40 +24,67 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SignUpController implements Initializable {
-
-    @FXML
-    private Button loginButton;
-
-    @FXML
-    private PasswordField password;
-
-    @FXML
-    private ComboBox<String> gender;
-
-    @FXML
-    private DatePicker dateOfBirth;
-
-    @FXML
-    private TextField userName;
-
-    @FXML
-    private TextField fullName;
-
-    @FXML
-    private TextField email;
-
-    @FXML
-    private TextField phoneNumber;
+public class SignUpController implements Initializable, AbstractLanguageConfig {
 
     @FXML
     private ImageView addImageButton;
 
     @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
     private ImageView avatarImage;
 
     @FXML
-    private AnchorPane anchorPane;
+    private DatePicker dateOfBirth;
+
+    @FXML
+    private Text dobAlert;
+
+    @FXML
+    private TextField email;
+
+    @FXML
+    private Text emailAlert;
+
+    @FXML
+    private TextField fullName;
+
+    @FXML
+    private Text fullNameAlert;
+
+    @FXML
+    private ComboBox<String> gender;
+
+    @FXML
+    private Text genderAlert;
+
+    @FXML
+    private Text instruction1;
+
+    @FXML
+    private Text instruction2;
+
+    @FXML
+    private Text instructionTitleText;
+
+    @FXML
+    private Label languageText;
+
+    @FXML
+    private PasswordField password;
+
+    @FXML
+    private Text passwordAlert;
+
+    @FXML
+    private Text personalInfoText;
+
+    @FXML
+    private Text phoneNoAlert;
+
+    @FXML
+    private TextField phoneNumber;
 
     @FXML
     private Label signInButton;
@@ -66,25 +93,16 @@ public class SignUpController implements Initializable {
     private Button signUpButton;
 
     @FXML
-    private Text dobAlert;
+    private Text signUpText;
 
     @FXML
-    private Text emailAlert;
-
-    @FXML
-    private Text fullNameAlert;
-
-    @FXML
-    private Text genderAlert;
-
-    @FXML
-    private Text phoneNoAlert;
+    private TextField userName;
 
     @FXML
     private Text usernameAlert;
 
-    @FXML
-    private Text passwordAlert;
+
+    private String language;
 
 
     private Stage stage;
@@ -112,34 +130,67 @@ public class SignUpController implements Initializable {
             phoneNoAlert.setText("");
             boolean invalidInput = false;
             if (username.isEmpty()) {
-                usernameAlert.setText("Username cannot be empty!");
+                if (language.equals("en")) {
+                    usernameAlert.setText("Username cannot be empty!");
+                } else {
+                    usernameAlert.setText("Tên đăng nhập không thể để trống!");
+                }
                 invalidInput = true;
             } else if (!SQLController.checkSignUp(username)) {
-                usernameAlert.setText("Username already exists!");
+                if (language.equals("en")) {
+                    usernameAlert.setText("Username already exists!");
+                } else {
+                    usernameAlert.setText("Tên đăng nhập đã tồn tại!");
+                }
                 invalidInput = true;
             }
             if (pass.isEmpty()) {
-                passwordAlert.setText("Password cannot be empty!");
+                if (language.equals("en")) {
+                    passwordAlert.setText("Password cannot be empty!");
+                } else {
+                    passwordAlert.setText("Mật khẩu không thể để trống!");
+                }
                 invalidInput = true;
             }
             if (dateOfBirth.getValue() == null) {
-                dobAlert.setText("Date of Birth cannot be empty!");
+                if (language.equals("en")) {
+                    dobAlert.setText("Date of Birth cannot be empty!");
+                } else {
+                    dobAlert.setText("Ngày sinh không thể để trống!");
+                }
                 invalidInput = true;
             }
             if (email.getText().isEmpty()) {
-                emailAlert.setText("Email cannot be empty!");
+                if (language.equals("en")) {
+                    emailAlert.setText("Email cannot be empty!");
+                } else {
+                    emailAlert.setText("Email không thể để trống!");
+                }
                 invalidInput = true;
             }
             if (fullName.getText().isEmpty()) {
-                fullNameAlert.setText("Full Name cannot be empty!");
+                if (language.equals("en")) {
+                    fullNameAlert.setText("Full Name cannot be empty!");
+                } else {
+                    fullNameAlert.setText("Họ và Tên không thể để trống!");
+                }
                 invalidInput = true;
             }
             if (phoneNumber.getText().isEmpty()) {
-                phoneNoAlert.setText("Phone Number cannot be empty!");
+                if (language.equals("en")) {
+                    phoneNoAlert.setText("Phone Number cannot be empty!");
+                } else {
+                    phoneNoAlert.setText("Số điện thoại không thể để trống!");
+                }
                 invalidInput = true;
             }
             if (gender.getValue() == null) {
-                genderAlert.setText("Gender cannot be empty!");
+                if (language.equals("en")) {
+                    genderAlert.setText("Gender cannot be empty!");
+                }
+                else {
+                    genderAlert.setText("Giới tính không thể để trống!");
+                }
                 invalidInput = true;
             }
 
@@ -147,6 +198,14 @@ public class SignUpController implements Initializable {
                 return;
             }
 
+            if (SQLController.getUserInfoDataByUsername(username) != null) {
+                if (language.equals("en")) {
+                    usernameAlert.setText("Username already exists!");
+                } else {
+                    usernameAlert.setText("Tên đăng nhập đã tồn tại!");
+                }
+                return;
+            }
 
             System.out.println("Success");
             SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText(), phoneNumber.getText(), SQLController.convertImageViewToBlob(avatarImage), gender.getValue());
@@ -161,9 +220,16 @@ public class SignUpController implements Initializable {
     @FXML
     void switchToSignInView(MouseEvent event) {
         try {
-            root = FXMLLoader.load(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
+            root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
+            LogInController logInController = loader.getController();
+            if (language.equals("en")) {
+                logInController.setLanguageToEn();
+            } else {
+                logInController.setLanguageToVi();
+            }
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -176,7 +242,12 @@ public class SignUpController implements Initializable {
         Stage stage = (Stage) anchorPane.getScene().getWindow();
 
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
+        if (language.equals("en")) {
+            fileChooser.setTitle("Open Resource File");
+        } else {
+            fileChooser.setTitle("Mở File Ảnh");
+        }
+
         FileChooser.ExtensionFilter imageFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
         fileChooser.getExtensionFilters().add(imageFilter);
         File file = fileChooser.showOpenDialog(stage);
@@ -194,6 +265,11 @@ public class SignUpController implements Initializable {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             UserMainMenuController userMainMenuController = loader.getController();
             userMainMenuController.setUsername(userName.getText());
+            if (language.equals("en")) {
+                userMainMenuController.setLanguageToEn();
+            } else {
+                userMainMenuController.setLanguageToVi();
+            }
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -202,5 +278,44 @@ public class SignUpController implements Initializable {
         }
     }
 
+    public void setLanguageToEn() {
+        language = "en";
+        languageText.setText("Language:");
+        personalInfoText.setText("Personal Information");
+        instructionTitleText.setText("Instructions:");
+        instruction1.setText("- Every user's information must be filled and must not be left blanked.");
+        instruction2.setText("- Username should not contain full name or other personal information.");
+        dateOfBirth.setPromptText("Date of Birth");
+        email.setPromptText("Email");
+        gender.setPromptText("Gender");
+        phoneNumber.setPromptText("Phone No.");
+        signUpText.setText("Sign Up");
+        signInButton.setText("Sign In");
+        fullName.setPromptText("Full Name");
+        userName.setPromptText("Username");
+        password.setPromptText("Password");
+        signUpButton.setText("Sign Up");
+
+    }
+
+    public void setLanguageToVi() {
+        language = "vi";
+        languageText.setText("Ngôn ngữ:");
+        personalInfoText.setText("Thông Tin Cá Nhân");
+        instructionTitleText.setText("Hướng dẫn:");
+        instruction1.setText("- Mọi thông tin của người dùng phải được điền và không được bỏ trống.");
+        instruction2.setText("- Tên người dùng không nên chứa tên đầy đủ hoặc thông tin cá nhân khác.");
+        dateOfBirth.setPromptText("Ngày Sinh");
+        email.setPromptText("Email");
+        gender.setPromptText("Giới Tính");
+        phoneNumber.setPromptText("Số Điện Thoại");
+        signUpText.setText("Đăng Ký");
+        signInButton.setText("Đăng Nhập");
+        fullName.setPromptText("Họ và Tên Đầy Đủ");
+        userName.setPromptText("Tên Đăng Nhập");
+        password.setPromptText("Mật Khẩu");
+        signUpButton.setText("Đăng Ký");
+
+    }
 
 }
