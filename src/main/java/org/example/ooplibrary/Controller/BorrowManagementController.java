@@ -13,6 +13,7 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
 import org.example.ooplibrary.Object.BookLoan;
@@ -47,6 +48,34 @@ public class BorrowManagementController extends AbstractMenuController implement
 
     @FXML
     private TextField searchKeyword;
+
+    @FXML
+    private Label addBorrowText;
+
+    @FXML
+    private Label booksListBtn;
+
+    @FXML
+    private Label borrowBtn;
+
+    @FXML
+    private Text borrowTitle;
+
+    @FXML
+    private Label dashboardBtn;
+
+    @FXML
+    private Label languageText;
+
+    @FXML
+    private Label logOutBtn;
+
+    @FXML
+    private Label returnBtn;
+
+    @FXML
+    private Label userListBtn;
+
 
     private ObservableList<BookLoan> data;
 
@@ -179,11 +208,44 @@ public class BorrowManagementController extends AbstractMenuController implement
 
     @FXML
     public void setLanguageToEn() {
+
         language = "en";
+        languageText.setText("Language:");
+        dashboardBtn.setText("Dashboard");
+        booksListBtn.setText("Books List");
+        userListBtn.setText("User List");
+        borrowBtn.setText("Borrow");
+        returnBtn.setText("Return");
+        logOutBtn.setText("Log out");
+        borrowTitle.setText("Borrow History");
+        addBorrowText.setText("Add borrow request");
+        IDCol.setText("ID");
+        bookNameCol.setText("Book Name");
+        borrowerNameCol.setText("Borrower Username");
+        dueDateCol.setText("Due Date");
+        informationCol.setText("Note");
+        featureCol.setText("Feature");
+        tableView.setPlaceholder(new Label("No content in table"));
     }
 
     @FXML
     public void setLanguageToVi() {
         language = "vi";
+        languageText.setText("Ngôn ngữ:");
+        dashboardBtn.setText("Bảng thông tin");
+        booksListBtn.setText("DS sách");
+        userListBtn.setText("DS người dùng");
+        borrowBtn.setText("Mượn sách");
+        returnBtn.setText("Trả sách");
+        logOutBtn.setText("Đăng xuất");
+        borrowTitle.setText("Lịch sử mượn sách");
+        addBorrowText.setText("Thêm YC mượn sách");
+        IDCol.setText("ID");
+        bookNameCol.setText("Tên sách");
+        borrowerNameCol.setText("Tên người mượn");
+        dueDateCol.setText("Ngày hết hạn");
+        informationCol.setText("Ghi chú");
+        featureCol.setText("Chức năng");
+        tableView.setPlaceholder(new Label("Không có dữ liệu trong bảng"));
     }
 }
