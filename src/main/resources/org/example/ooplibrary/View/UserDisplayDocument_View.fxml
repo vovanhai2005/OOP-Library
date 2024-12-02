@@ -38,7 +38,7 @@
                   <Font size="15.0" />
                </font>
             </TextField>
-            <Text layoutX="21.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Most-recently reviews" wrappingWidth="458.13671875">
+            <Text fx:id="reviewTitle" layoutX="21.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Most-recently reviews" wrappingWidth="458.13671875">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -49,7 +49,7 @@
                   <Image url="@../Image/send.png" />
                </image>
             </ImageView>
-            <Text layoutX="21.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rate this books" wrappingWidth="284.1328125">
+            <Text fx:id="rateThisBookText" layoutX="21.0" layoutY="309.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rate this books" wrappingWidth="284.1328125">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -91,7 +91,7 @@
             </HBox>
             <HBox layoutX="21.0" layoutY="416.0" prefHeight="30.0" prefWidth="243.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DATE PUBLISHED:">
+                  <Text fx:id="datePublishedText" strokeType="OUTSIDE" strokeWidth="0.0" text="DATE PUBLISHED:">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -111,7 +111,7 @@
             </HBox>
             <HBox layoutX="21.0" layoutY="461.0" prefHeight="40.0" prefWidth="243.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="AUTHOR: ">
+                  <Text fx:id="authorText" strokeType="OUTSIDE" strokeWidth="0.0" text="AUTHOR: ">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -131,7 +131,7 @@
             </HBox>
             <VBox layoutX="21.0" layoutY="509.0" prefHeight="100.0" prefWidth="243.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GENRE: ">
+                  <Text fx:id="genreText" strokeType="OUTSIDE" strokeWidth="0.0" text="GENRE: ">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -151,7 +151,7 @@
                   <Image url="@../Image/sample.jpg" />
                </image>
             </ImageView>
-            <Button layoutX="71.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#handleAddBook" prefHeight="40.0" prefWidth="135.0" styleClass="addBook_btn" text="Borrow book">
+            <Button fx:id="borrowBtn" layoutX="71.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#handleAddBook" prefHeight="40.0" prefWidth="135.0" styleClass="addBook_btn" text="Borrow book">
                <font>
                   <Font size="12.5" />
                </font>
