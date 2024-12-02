@@ -8,11 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainMenuController extends AbstractMenuController {
+public class MainMenuController extends AbstractMenuController implements AbstractLanguageConfig {
 
     @FXML
     private Label bookListBtn;
@@ -34,6 +35,38 @@ public class MainMenuController extends AbstractMenuController {
 
     @FXML
     private ImageView logo;
+
+    @FXML
+    private Label languageBtn;
+
+    @FXML
+    private Text lms;
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+        bookListBtn.setText("Books List");
+        borrowBtn.setText("Borrow");
+        dashboardBtn.setText("Dashboard");
+        logOutBtn.setText("Log Out");
+        returnBtn.setText("Return");
+        userListBtn.setText("User List");
+        languageBtn.setText("Language:");
+        lms.setText("LIBRARY MANAGEMENT SYSTEM");
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
+        bookListBtn.setText("DS sách");
+        borrowBtn.setText("Mượn sách");
+        dashboardBtn.setText("Bảng thông tin");
+        logOutBtn.setText("Đăng xuất");
+        returnBtn.setText("Trả sách");
+        userListBtn.setText("DS người dùng");
+        languageBtn.setText("Ngôn ngữ:");
+        lms.setText("HỆ THỐNG QUẢN LÝ THƯ VIỆN");
+    }
 
 
 }

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.ooplibrary.Controller.LogInController;
 import org.example.ooplibrary.Controller.SQLController;
 import org.example.ooplibrary.Controller.SignUpController;
 
@@ -16,10 +17,12 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
+            Parent root = fxmlLoader.load();
             SQLController.initialize();
 
-
-            Scene scene = new Scene(fxmlLoader.load());
+            LogInController logInController = fxmlLoader.getController();
+            logInController.setLanguageToEn();
+            Scene scene = new Scene(root);
             stage.setTitle("LibroSync");
             stage.setScene(scene);
             stage.show();

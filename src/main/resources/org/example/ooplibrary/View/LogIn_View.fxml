@@ -19,7 +19,7 @@
       </ImageView>
       <AnchorPane layoutX="829.0" layoutY="91.0" prefHeight="579.0" prefWidth="362.0" styleClass="inner_layer">
          <children>
-            <Text fill="WHITE" layoutX="82.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In" textAlignment="CENTER" wrappingWidth="198.3671875">
+            <Text fx:id="signInText" fill="WHITE" layoutX="-1.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In" textAlignment="CENTER" wrappingWidth="362.0">
                <font>
                   <Font size="40.0" />
                </font>
@@ -50,17 +50,17 @@
                </font>
             </Text>
          </children></AnchorPane>
-      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="959.0" layoutY="616.0" pickOnBounds="true" preserveRatio="true" styleClass="vietnam_btn">
+      <ImageView fx:id="viBtn" fitHeight="31.0" fitWidth="38.0" layoutX="959.0" layoutY="616.0" onMouseClicked="#setLanguageToVi" pickOnBounds="true" preserveRatio="true" styleClass="vietnam_btn">
          <image>
             <Image url="@../Image/vietnam.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="1004.0" layoutY="616.0" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
+      <ImageView fx:id="enBtn" fitHeight="31.0" fitWidth="38.0" layoutX="1004.0" layoutY="616.0" onMouseClicked="#setLanguageToEn" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
          <image>
             <Image url="@../Image/united-states-of-america.png" />
          </image>
       </ImageView>
-      <Label layoutX="858.0" layoutY="619.0" text="Language:" textFill="#f0e9dd">
+      <Label fx:id="languageText" layoutX="858.0" layoutY="619.0" text="Language:" textFill="#f0e9dd">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

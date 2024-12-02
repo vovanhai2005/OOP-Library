@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.BookLoan;
 
@@ -31,7 +32,7 @@ public class ReturnDocumentController extends AbstractMenuController implements 
     private TableColumn<BookLoan, String> borrowerNameCol;
 
     @FXML
-    private TableColumn<BookLoan, String> dueDateCol;
+    private TableColumn<BookLoan, String> noteCol;
 
     @FXML
     private TableColumn<BookLoan, Void> featureCol;
@@ -45,6 +46,38 @@ public class ReturnDocumentController extends AbstractMenuController implements 
     @FXML
     private TextField searchKeyword;
 
+    @FXML
+    private Label addReturnText;
+
+
+    @FXML
+    private Label booksListBtn;
+
+    @FXML
+    private Label borrowBtn;
+
+    @FXML
+    private Label dashboardBtn;
+
+
+    @FXML
+    private Label languageText;
+
+    @FXML
+    private Label logOutBtn;
+
+    @FXML
+    private Label returnBtn;
+
+
+    @FXML
+    private Text returnTitle;
+
+
+    @FXML
+    private Label userListBtn;
+
+
     private ObservableList<BookLoan> data;
 
     @Override
@@ -54,16 +87,15 @@ public class ReturnDocumentController extends AbstractMenuController implements 
         IDCol.setCellValueFactory(new PropertyValueFactory<>("bookLoanID"));
         bookNameCol.setCellValueFactory(new PropertyValueFactory<>("bookName"));
         borrowerNameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
-        dueDateCol.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        noteCol.setCellValueFactory(new PropertyValueFactory<>("note"));
         returnDateCol.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
-
 
 
         // Cấu hình cột featureCol với các nút tuỳ chỉnh
         addFeatureButtonsToTable();
 
 
-        tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, dueDateCol, returnDateCol, featureCol);
+        tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, noteCol, returnDateCol, featureCol);
 
         data = FXCollections.observableArrayList(
 
@@ -166,6 +198,51 @@ public class ReturnDocumentController extends AbstractMenuController implements 
 
         System.out.println("Xem thông tin của phiếu mượn: " + bookLoan.getBookLoanID());
         // Thực hiện logic xem thông tin phiếu mượn ở đây
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+        languageText.setText("Language:");
+        dashboardBtn.setText("Dashboard");
+        booksListBtn.setText("Books List");
+        userListBtn.setText("User List");
+        borrowBtn.setText("Borrow");
+        returnBtn.setText("Return");
+        logOutBtn.setText("Log out");
+        returnTitle.setText("Return history");
+        addReturnText.setText("Add return request");
+        IDCol.setText("ID");
+        bookNameCol.setText("Book Name");
+        borrowerNameCol.setText("Borrower Name");
+        returnDateCol.setText("Return Date");
+        noteCol.setText("Note");
+        featureCol.setText("Feature");
+        tableView.setPlaceholder(new Label("No content in table"));
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
+        languageText.setText("Ngôn ngữ:");
+        dashboardBtn.setText("Bảng thông tin");
+        booksListBtn.setText("DS sách");
+        userListBtn.setText("DS người dùng");
+        borrowBtn.setText("Mượn sách");
+        returnBtn.setText("Trả sách");
+        logOutBtn.setText("Đăng xuất");
+        returnTitle.setText("Lich sử trả sách");
+        addReturnText.setText("Thêm YC trả sách");
+        IDCol.setText("ID");
+        bookNameCol.setText("Tên sách");
+        borrowerNameCol.setText("Tên người mượn");
+        returnDateCol.setText("Ngày trả");
+        noteCol.setText("Ghi chú");
+        featureCol.setText("Chức năng");
+        tableView.setPlaceholder(new Label("Không có dữ liệu trong bảng"));
+
+
+
     }
 
 

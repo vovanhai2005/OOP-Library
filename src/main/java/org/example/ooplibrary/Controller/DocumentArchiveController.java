@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class DocumentArchiveController extends AbstractMenuController implements Initializable {
+public class DocumentArchiveController extends AbstractMenuController implements Initializable, AbstractLanguageConfig {
 
     @FXML
     private TableView<Book> tableView;
@@ -50,6 +51,43 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
     @FXML
     private TextField searchKeyword;
+
+    @FXML
+    private Label languageText;
+
+    @FXML
+    private Label addBookText;
+
+
+
+    @FXML
+    private Text bookListTitle;
+
+    @FXML
+    private Label booksListBtn;
+
+    @FXML
+    private Label borrowBtn;
+
+    @FXML
+    private Label dashboardBtn;
+
+
+
+    @FXML
+    private Label logoutBtn;
+
+
+
+    @FXML
+    private Label returnBtn;
+
+
+
+    @FXML
+    private Label userListBtn;
+
+
 
 
     private ObservableList<Book> data;
@@ -268,6 +306,50 @@ public class DocumentArchiveController extends AbstractMenuController implements
             // Người dùng chọn Cancel hoặc đóng cửa sổ Alert
             System.out.println("Hủy xóa tài liệu: " + book.getName());
         }
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+        languageText.setText("Language:");
+        dashboardBtn.setText("Dashboard");
+        booksListBtn.setText("Books List");
+        userListBtn.setText("User List");
+        borrowBtn.setText("Borrow");
+        returnBtn.setText("Return");
+        logoutBtn.setText("Log out");
+        bookListTitle.setText("Books List");
+        addBookText.setText("Add new book");
+        ISBNCol.setText("ISBN");
+        nameCol.setText("Name");
+        yearOfPublicationCol.setText("Year of Publication");
+        authorCol.setText("Author");
+        genreCol.setText("Genre");
+        featureCol.setText("Feature");
+        tableView.setPlaceholder(new Label("No content in table"));
+
+
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
+        languageText.setText("Ngôn ngữ:");
+        dashboardBtn.setText("Bảng thông tin");
+        booksListBtn.setText("DS sách");
+        userListBtn.setText("DS người dùng");
+        borrowBtn.setText("Mượn sách");
+        returnBtn.setText("Trả sách");
+        logoutBtn.setText("Đăng xuất");
+        bookListTitle.setText("Danh sách sách");
+        addBookText.setText("Thêm sách mới");
+        ISBNCol.setText("Mã ISBN");
+        nameCol.setText("Tên");
+        yearOfPublicationCol.setText("Năm xuất bản");
+        authorCol.setText("Tác giả");
+        genreCol.setText("Thể loại");
+        featureCol.setText("Chức năng");
+        tableView.setPlaceholder(new Label("Không có dữ liệu trong bảng"));
     }
 
 

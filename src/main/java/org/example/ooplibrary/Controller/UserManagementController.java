@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import org.example.ooplibrary.Object.Book;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class UserManagementController extends AbstractMenuController implements Initializable {
+public class UserManagementController extends AbstractMenuController implements Initializable, AbstractLanguageConfig {
 
     @FXML
     private TableView<User> tableView;
@@ -49,6 +51,30 @@ public class UserManagementController extends AbstractMenuController implements 
     @FXML
     private TextField searchKeyword;
 
+    @FXML
+    private Label booksListBtn;
+
+    @FXML
+    private Label borrowBtn;
+
+    @FXML
+    private Label dashboardBtn;
+
+    @FXML
+    private Label languageText;
+
+    @FXML
+    private Label logOutBtn;
+
+    @FXML
+    private Label returnBtn;
+
+    @FXML
+    private Label userListBtn;
+
+    @FXML
+    private Text userListTitle;
+
     private ObservableList<User> data;
 
     @Override
@@ -56,7 +82,7 @@ public class UserManagementController extends AbstractMenuController implements 
         tableView.getColumns().clear();
 
         usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("fulLName"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         genderCol.setCellValueFactory(new PropertyValueFactory<>("gender"));
         dobCol.setCellValueFactory(new PropertyValueFactory<>("dob"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -234,6 +260,47 @@ public class UserManagementController extends AbstractMenuController implements 
             // Người dùng chọn Cancel hoặc đóng cửa sổ Alert
             System.out.println("Hủy xóa người dùng: " + user.getUsername());
         }
+    }
+
+    @FXML
+    public void setLanguageToEn() {
+        language = "en";
+        languageText.setText("Language:");
+        dashboardBtn.setText("Dashboard");
+        booksListBtn.setText("Books List");
+        userListBtn.setText("User List");
+        borrowBtn.setText("Borrow");
+        returnBtn.setText("Return");
+        logOutBtn.setText("Log out");
+        userListTitle.setText("User List");
+        usernameCol.setText("Username");
+        nameCol.setText("Name");
+        genderCol.setText("Gender");
+        dobCol.setText("Date of Birth");
+        emailCol.setText("Email");
+        featureCol.setText("Feature");
+        tableView.setPlaceholder(new Label("No content in table"));
+    }
+
+    @FXML
+    public void setLanguageToVi() {
+        language = "vi";
+        languageText.setText("Ngôn ngữ:");
+        dashboardBtn.setText("Bảng thông tin");
+        booksListBtn.setText("DS sách");
+        userListBtn.setText("DS người dùng");
+        borrowBtn.setText("Mượn sách");
+        returnBtn.setText("Trả sách");
+        logOutBtn.setText("Đăng xuất");
+        userListTitle.setText("Danh sách người dùng");
+        usernameCol.setText("Tên đăng nhập");
+        nameCol.setText("Họ và tên");
+        genderCol.setText("Giới tính");
+        dobCol.setText("Ngày sinh");
+        emailCol.setText("Email");
+        featureCol.setText("Chức năng");
+        tableView.setPlaceholder(new Label("Không có dữ liệu trong bảng"));
+
     }
 
 
