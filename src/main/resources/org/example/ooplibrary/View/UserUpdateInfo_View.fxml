@@ -27,7 +27,7 @@
       </ImageView>
       <VBox layoutX="24.0" layoutY="385.0" prefHeight="57.0" prefWidth="134.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" wrappingWidth="194.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fullname:" wrappingWidth="194.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -53,7 +53,7 @@
             </TextField>
          </children>
       </VBox>
-      <VBox layoutX="24.0" layoutY="469.0" prefHeight="57.0" prefWidth="195.0">
+      <VBox layoutX="24.0" layoutY="451.0" prefHeight="57.0" prefWidth="195.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:" wrappingWidth="194.13671875">
                <font>
@@ -62,7 +62,7 @@
             </Text>
          </children>
       </VBox>
-      <VBox layoutX="263.0" layoutY="469.0" prefHeight="57.0" prefWidth="134.0">
+      <VBox layoutX="263.0" layoutY="451.0" prefHeight="57.0" prefWidth="134.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="194.13671875">
                <font>
@@ -76,7 +76,22 @@
             </TextField>
          </children>
       </VBox>
-      <ComboBox fx:id="gender" layoutX="25.0" layoutY="501.0" prefHeight="24.0" prefWidth="195.0" />
-      <Button layoutX="202.0" layoutY="542.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Update" />
+      <ComboBox fx:id="gender" layoutX="25.0" layoutY="482.0" prefHeight="24.0" prefWidth="195.0" />
+      <Button layoutX="263.0" layoutY="539.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="85.0" styleClass="addBook_btn" text="Apply" />
+      <VBox layoutX="25.0" layoutY="524.0" prefHeight="57.0" prefWidth="134.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fullname:" wrappingWidth="194.13671875">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <TextField fx:id="Phone1" alignment="TOP_LEFT" prefHeight="27.0" prefWidth="235.0" styleClass="info_field">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </TextField>
+         </children>
+      </VBox>
+      <Button layoutX="372.0" layoutY="539.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="85.0" styleClass="addBook_btn" text="Close" />
    </children>
 </AnchorPane>
