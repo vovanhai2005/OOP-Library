@@ -1258,4 +1258,25 @@ public class SQLController {
         }
         return 5;
     }
+
+    public static boolean isUserBorrowedBook(String username, String text) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM book_loans WHERE username = \"" + normalizeString(username) + "\" AND ISBN = \"" + normalizeString(text) + "\" AND returnDate IS NULL;");
+
+            if (resultSet.next()) {
+                if (resultSet.getInt(1) > 0) {
+                    return true;
+                }
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 }
