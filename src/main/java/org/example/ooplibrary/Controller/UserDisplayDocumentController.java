@@ -88,6 +88,8 @@ public class UserDisplayDocumentController implements Initializable {
     @FXML
     private Text reviewTitle;
 
+    private boolean isBorrowed = false;
+
 
     private String username = "bo";
 
@@ -158,6 +160,19 @@ public class UserDisplayDocumentController implements Initializable {
         if (SQLController.userReviewed(ISBN.getText(), username)) {
             disableReview();
         }
+        isBorrowed = SQLController.isUserBorrowedBook(username, ISBN.getText());
+
+        setReviewsPane();
+    }
+
+    @FXML
+    void handleBorrowReturn(MouseEvent event) {
+        if (!isBorrowed) {
+
+            handleAddBook(event);
+        } else {
+            handleReturnBook(event);
+        }
     }
 
     @FXML
@@ -186,6 +201,12 @@ public class UserDisplayDocumentController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void handleReturnBook(MouseEvent event) {
+        System.out.println("Return book (in progress)");
+
     }
 
     private HBox createReviewPane(String ISBN, String username) {
@@ -290,7 +311,11 @@ public class UserDisplayDocumentController implements Initializable {
         authorText.setText("AUTHOR:");
         rateThisBookText.setText("Rate this book");
         reviewTitle.setText("Most recently reviews");
-        borrowBtn.setText("Borrow book");
+        if (isBorrowed) {
+            borrowBtn.setText("Return book");
+        } else {
+            borrowBtn.setText("Borrow book");
+        }
 
     }
 
@@ -301,6 +326,28 @@ public class UserDisplayDocumentController implements Initializable {
         authorText.setText("TÁC GIẢ:");
         rateThisBookText.setText("Đánh giá sách");
         reviewTitle.setText("Nhận xét gần đây nhất");
-        borrowBtn.setText("Mượn sách");
+        if (isBorrowed) {
+            borrowBtn.setText("Trả sách");
+        } else {
+            borrowBtn.setText("Mượn sách");
+        }
+    }
+
+    public void setBorrowed(boolean b) {
+        isBorrowed = b;
+        if (isBorrowed) {
+            if (language.equals("vi")) {
+                borrowBtn.setText("Trả sách");
+            } else {
+                borrowBtn.setText("Return book");
+            }
+
+        } else {
+            if (language.equals("vi")) {
+                borrowBtn.setText("Mượn sách");
+            } else {
+                borrowBtn.setText("Borrow book");
+            }
+        }
     }
 }

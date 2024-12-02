@@ -77,6 +77,12 @@ public class AddBorrowBookController {
 
     private BorrowManagementController borrowManagementController;
 
+    private UserDisplayDocumentController userDisplayDocumentController;
+
+    public void setUserDisplayDocumentController(UserDisplayDocumentController userDisplayDocumentController) {
+        this.userDisplayDocumentController = userDisplayDocumentController;
+    }
+
     @FXML
     public void chooseImage(MouseEvent event) {
         Stage stage = (Stage) anchorPane.getScene().getWindow();
@@ -109,6 +115,10 @@ public class AddBorrowBookController {
         //hide the window
         if (borrowManagementController != null)
         borrowManagementController.addBookLoan(SQLController.getBookLoansDataWithBookLoanID(bookLoanId));
+
+        if (userDisplayDocumentController != null) {
+            userDisplayDocumentController.setBorrowed(true);
+        }
         ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
     }
 
