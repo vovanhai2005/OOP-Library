@@ -38,9 +38,6 @@ public class BorrowManagementController extends AbstractMenuController implement
     private TableColumn<BookLoan, String> dueDateCol;
 
     @FXML
-    private TableColumn<BookLoan, Void> featureCol;
-
-    @FXML
     private TableColumn<BookLoan, String> informationCol;
 
     @FXML
@@ -91,11 +88,10 @@ public class BorrowManagementController extends AbstractMenuController implement
 
 
 
-        // Cấu hình cột featureCol với các nút tuỳ chỉnh
-        addFeatureButtonsToTable();
 
 
-        tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, dueDateCol, informationCol, featureCol);
+
+        tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, dueDateCol, informationCol);
 
         data = FXCollections.observableArrayList(
 
@@ -165,33 +161,6 @@ public class BorrowManagementController extends AbstractMenuController implement
         }
     }
 
-    private void addFeatureButtonsToTable() {
-        featureCol.setCellFactory(param -> new TableCell<BookLoan, Void>() {
-            private final Button viewButton = new Button("Xem");
-
-            {
-                // Xử lý sự kiện khi nhấn vào nút "Xem"
-                viewButton.setOnAction(event -> {
-                    BookLoan bookLoan = getTableView().getItems().get(getIndex());
-                    viewBookLoanDetails(bookLoan);
-                });
-
-
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    HBox buttonsBox = new HBox(5, viewButton);
-                    setGraphic(buttonsBox);
-                }
-            }
-        });
-    }
 
     private void viewBookLoanDetails(BookLoan bookLoan) {
 
@@ -224,7 +193,6 @@ public class BorrowManagementController extends AbstractMenuController implement
         borrowerNameCol.setText("Borrower Username");
         dueDateCol.setText("Due Date");
         informationCol.setText("Note");
-        featureCol.setText("Feature");
         tableView.setPlaceholder(new Label("No content in table"));
     }
 
@@ -245,7 +213,6 @@ public class BorrowManagementController extends AbstractMenuController implement
         borrowerNameCol.setText("Tên người mượn");
         dueDateCol.setText("Ngày hết hạn");
         informationCol.setText("Ghi chú");
-        featureCol.setText("Chức năng");
         tableView.setPlaceholder(new Label("Không có dữ liệu trong bảng"));
     }
 }

@@ -165,9 +165,8 @@
                         <TableColumn fx:id="IDCol" prefWidth="102.5" styleClass="table_column" text="ISBN" />
                         <TableColumn fx:id="bookNameCol" prefWidth="207.5" styleClass="table_column" text="Book Name" />
                         <TableColumn fx:id="borrowerNameCol" minWidth="0.0" prefWidth="201.0" styleClass="table_column" text="Borrower Name" />
-                        <TableColumn fx:id="returnDateCol" minWidth="0.0" prefWidth="169.60003662109375" styleClass="table_column" text="Return date" />
-                        <TableColumn fx:id="noteCol" minWidth="0.0" prefWidth="203.2000732421875" styleClass="table_column" text="Note" />
-                        <TableColumn fx:id="featureCol" minWidth="0.0" prefWidth="191.199951171875" sortable="false" styleClass="table_column" text="Feature" />
+                        <TableColumn fx:id="returnDateCol" minWidth="0.0" prefWidth="242.0" styleClass="table_column" text="Return date" />
+                        <TableColumn fx:id="noteCol" minWidth="0.0" prefWidth="317.0" styleClass="table_column" text="Note" />
                     </columns></TableView>
             </children>
         </AnchorPane>
