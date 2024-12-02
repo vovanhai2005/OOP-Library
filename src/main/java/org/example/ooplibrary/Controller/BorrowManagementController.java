@@ -86,11 +86,6 @@ public class BorrowManagementController extends AbstractMenuController implement
         dueDateCol.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         informationCol.setCellValueFactory(new PropertyValueFactory<>("note"));
 
-
-
-
-
-
         tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, dueDateCol, informationCol);
 
         data = FXCollections.observableArrayList(

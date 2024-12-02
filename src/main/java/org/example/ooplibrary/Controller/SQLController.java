@@ -626,6 +626,30 @@ public class SQLController {
         };
     }
 
+    public static void updateUserInfo(User user) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+
+            PreparedStatement statement = connection.prepareStatement("UPDATE user_info SET fullName = ?, dateOfBirth = ?, gender = ?, email = ?, phoneNumber = ?, userImage = ? WHERE username = ?");
+            statement.setString(1, user.getFullName());
+            statement.setString(2, user.getDob());
+            statement.setString(3, user.getGender());
+            statement.setString(4, user.getEmail());
+            statement.setString(5, user.getPhoneNumber());
+            statement.setString(6, convertByteArrayToString(user.getImage()));
+            statement.setString(7, user.getUsername());
+            statement.executeUpdate();
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
 
     //Book Loan
 
@@ -827,6 +851,41 @@ public class SQLController {
         return data;
     }
 
+    public static ArrayList<BookLoan> getBookLoansDataWithNoNullReturnDate() {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+
+            // Thêm điều kiện WHERE returnDate IS NOT NULL vào câu lệnh SQL
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.username, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username\n" +
+                    "WHERE bl.returnDate IS NOT NULL;");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getString(5),
+                                resultSet.getString(6)
+                        )
+                );
+            }
+            connection.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
     /**
      * Lấy thông tin lượt mượn sách từ database với từ khóa
      *
@@ -864,6 +923,39 @@ public class SQLController {
             System.out.println(e);
         }
         return data;
+    }
+
+    public static void updateBookLoan(String bookLoanID, DatePicker returnDate){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+
+            // Câu lệnh SQL để cập nhật trường returnDate trong bảng book_loans
+            String updateQuery = "UPDATE book_loans SET returnDate = ? WHERE bookLoanID = ?";
+
+            // Chuẩn bị câu lệnh SQL
+            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+
+            // Set giá trị cho các tham số trong câu lệnh SQL
+            preparedStatement.setDate(1, java.sql.Date.valueOf(returnDate.getValue()));
+            preparedStatement.setString(2, bookLoanID); // Thay thế bookLoanID bằng ID của book loan cần cập nhật
+
+            // Thực thi câu lệnh SQL
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Cập nhật returnDate thành công!");
+            } else {
+                System.out.println("Không thể cập nhật returnDate.");
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Lỗi khi cập nhật returnDate: " + e.getMessage());
+        }
     }
 
     /**

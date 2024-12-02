@@ -23,8 +23,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class AddBorrowBookController {
-    @FXML
-    private ImageView addImageButton;
 
     @FXML
     private AnchorPane anchorPane;

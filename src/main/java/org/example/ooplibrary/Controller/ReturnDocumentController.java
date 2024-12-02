@@ -88,10 +88,6 @@ public class ReturnDocumentController extends AbstractMenuController implements 
         noteCol.setCellValueFactory(new PropertyValueFactory<>("note"));
         returnDateCol.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
 
-
-
-
-
         tableView.getColumns().addAll(IDCol, bookNameCol, borrowerNameCol, noteCol, returnDateCol);
 
         data = FXCollections.observableArrayList(
@@ -102,7 +98,7 @@ public class ReturnDocumentController extends AbstractMenuController implements 
 
         if (temp != null)
             for (BookLoan bookLoan : temp) {
-                data.add(bookLoan);
+                if (bookLoan.getReturnDate() != null) data.add(bookLoan);
             }
 
 
@@ -162,7 +158,11 @@ public class ReturnDocumentController extends AbstractMenuController implements 
         }
     }
 
-
+    public void addReturnRequest(BookLoan bookLoan) {
+        data.add(bookLoan);
+        tableView.setItems(data);
+        tableView.refresh();
+    }
 
     private void viewBookLoanDetails(BookLoan bookLoan) {
 

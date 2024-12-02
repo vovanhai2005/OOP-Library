@@ -1,6 +1,9 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -9,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.example.ooplibrary.Object.Book;
 import org.example.ooplibrary.Object.BookLoan;
 import org.example.ooplibrary.Object.User;
@@ -41,6 +45,9 @@ public class AddReturnRequestController {
     @FXML
     private ImageView bookImage;
 
+    @FXML
+    private DatePicker returnDate;
+
     public void setReturnDocumentController(ReturnDocumentController returnDocumentController) {
         this.returnDocumentController = returnDocumentController;
     }
@@ -60,6 +67,20 @@ public class AddReturnRequestController {
                 bookTitle.setText(bookLoan.getBookName());
                 ISBN.setText(SQLController.getISBNWithBookLoanID(bookLoan.getBookLoanID()));
                 bookName.setText(bookLoan.getBookName());
+                Task<Book> bookTask = SQLController.getBookInfoDataWithISBN(String.format(ISBN.getText()));
+
+                bookTask.setOnSucceeded(taskEvent -> {
+                    Book book = bookTask.getValue();
+                    if (book != null) {
+                        ByteArrayInputStream inputStream = new ByteArrayInputStream(book.getImage());
+                        Image image = new Image(inputStream);
+                        bookImage.setImage(image);
+                    } else {
+                        System.out.println("Book information is null.");
+                    }
+                });
+
+                new Thread(bookTask).start(); // Bắt đầu thực thi Task
             });
         }
     }
@@ -75,5 +96,27 @@ public class AddReturnRequestController {
         bookBox.getChildren().add(bookNamed);
 
         return bookBox;
+    }
+
+    @FXML
+    public void handleReturnRequest(MouseEvent mouseEvent) {
+        if (userName.getText().isEmpty() || returnDate.getValue() == null) {
+            System.out.println("Please fill in all the fields");
+            return;
+        }
+        ArrayList<BookLoan> bookLoanArrayList = SQLController.getBookLoansDataWithUser(userName.getText());
+
+        for (BookLoan bookLoan : bookLoanArrayList) {
+            if (bookLoan.getBookName().equals(bookName.getText())) {
+                bookLoan.setUsername(userName.getText());
+                bookLoan.setReturnDate(returnDate.getValue().toString());
+                SQLController.updateBookLoan(bookLoan.getBookLoanID() , returnDate);
+                returnDocumentController.addReturnRequest(bookLoan);
+                break;
+            }
+        }
+        System.out.println("add complete");
+
+        ((Stage) ((Node) mouseEvent.getSource()).getScene().getWindow()).close();
     }
 }
