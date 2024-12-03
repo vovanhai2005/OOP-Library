@@ -1507,7 +1507,7 @@ public class SQLController {
             ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
                     "FROM book_loans bl\n" +
                     "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
-                    "WHERE bl.username = \"" + username + "\" AND bl.returnDate IS NOT NULL;");
+                    "WHERE bl.username = \"" + username + "\" AND bl.returnDate IS NULL;");
 
             while (resultSet.next()) {
                 data.add(new BookLoan(resultSet.getString(1),

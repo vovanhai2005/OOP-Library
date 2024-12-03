@@ -57,7 +57,7 @@
       </VBox>
       <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="272.0" layoutY="388.0" onMouseClicked="#autofillByISBN" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
          <image>
-            <Image url="@../Image/Autofill.png" />
+            <Image url="@../Image/autofill.png" />
          </image>
       </ImageView>
       <Text layoutX="356.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrower's info" textAlignment="CENTER" wrappingWidth="206.802734375">
@@ -107,9 +107,9 @@
             </TextField>
          </children>
       </VBox>
-      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="576.0" layoutY="97.0" onMouseClicked="#autofillByUsername" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
+      <ImageView fitHeight="24.0" fitWidth="22.0" layoutX="576.0" layoutY="96.0" onMouseClicked="#autofillByUsername" pickOnBounds="true" preserveRatio="true" styleClass="autofill_icon">
          <image>
-            <Image url="@../Image/Autofill.png" />
+            <Image url="@../Image/autofill.png" />
          </image>
       </ImageView>
       <VBox layoutX="329.0" layoutY="130.0" prefHeight="56.0" prefWidth="235.0">
