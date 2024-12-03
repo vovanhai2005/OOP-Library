@@ -50,6 +50,9 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
 
     private String language;
 
+    @FXML
+    private TextField note;
+
     public void setReturnDocumentController(ReturnDocumentController returnDocumentController) {
         this.returnDocumentController = returnDocumentController;
     }
@@ -60,30 +63,32 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
         ArrayList<BookLoan> bookLoanArrayList = SQLController.getBookLoansDataWithUser(userName.getText());
 
         for (BookLoan bookLoan : bookLoanArrayList) {
-            HBox bookLoanBox = createBookLoanBox(bookLoan.getBookName());
-            bookLoanBox.setSpacing(10);
-            bookLoanBox.setPrefWidth(flowPane.getWidth());
-            flowPane.getChildren().add(bookLoanBox);
+            if (bookLoan.getReturnDate() == null) {
+                HBox bookLoanBox = createBookLoanBox(bookLoan.getBookName());
+                bookLoanBox.setSpacing(10);
+                bookLoanBox.setPrefWidth(flowPane.getWidth());
+                flowPane.getChildren().add(bookLoanBox);
 
-            bookLoanBox.setOnMouseClicked(event -> {
-                bookTitle.setText(bookLoan.getBookName());
-                ISBN.setText(SQLController.getISBNWithBookLoanID(bookLoan.getBookLoanID()));
-                bookName.setText(bookLoan.getBookName());
-                Task<Book> bookTask = SQLController.getBookInfoDataWithISBN(String.format(ISBN.getText()));
+                bookLoanBox.setOnMouseClicked(event -> {
+                    bookTitle.setText(bookLoan.getBookName());
+                    ISBN.setText(SQLController.getISBNWithBookLoanID(bookLoan.getBookLoanID()));
+                    bookName.setText(bookLoan.getBookName());
+                    Task<Book> bookTask = SQLController.getBookInfoDataWithISBN(String.format(ISBN.getText()));
 
-                bookTask.setOnSucceeded(taskEvent -> {
-                    Book book = bookTask.getValue();
-                    if (book != null) {
-                        ByteArrayInputStream inputStream = new ByteArrayInputStream(book.getImage());
-                        Image image = new Image(inputStream);
-                        bookImage.setImage(image);
-                    } else {
-                        System.out.println("Book information is null.");
-                    }
+                    bookTask.setOnSucceeded(taskEvent -> {
+                        Book book = bookTask.getValue();
+                        if (book != null) {
+                            ByteArrayInputStream inputStream = new ByteArrayInputStream(book.getImage());
+                            Image image = new Image(inputStream);
+                            bookImage.setImage(image);
+                        } else {
+                            System.out.println("Book information is null.");
+                        }
+                    });
+                    note.setText("Return request");
+                    new Thread(bookTask).start(); // Bắt đầu thực thi Task
                 });
-
-                new Thread(bookTask).start(); // Bắt đầu thực thi Task
-            });
+            }
         }
     }
 
