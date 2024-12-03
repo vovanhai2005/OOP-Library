@@ -56,7 +56,7 @@ public class AddBorrowBookController {
     @FXML
     void autofillByISBN(MouseEvent event) {
         String isbn = ISBN.getText(); // Lấy mã ISBN từ TextField
-
+      
         // Lấy thông tin sách theo ISBN trực tiếp
         Book book = SQLController.getBookInfoDataWithISBN(isbn); // Gọi phương thức đồng bộ
 
@@ -64,6 +64,7 @@ public class AddBorrowBookController {
             bookName.setText(book.getName()); // Điền tên sách vào TextField
             Image image = new Image(new ByteArrayInputStream(book.getImage())); // Tạo hình ảnh từ byte array
             bookImage.setImage(image); // Cập nhật hình ảnh sách
+          note.setText("Borrow request");
         } else {
             System.out.println("No book found with the given ISBN.");
         }

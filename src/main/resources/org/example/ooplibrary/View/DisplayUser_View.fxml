@@ -113,7 +113,7 @@
       </AnchorPane>
       <AnchorPane layoutX="24.0" layoutY="312.0" prefHeight="392.0" prefWidth="1233.0" styleClass="user_overview">
          <children>
-            <Text fx:id="borrowHistoryTitle" layoutX="24.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrow History" wrappingWidth="278.0">
+            <Text fx:id="borrowHistoryTitle" layoutX="24.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transactions History" wrappingWidth="278.0">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>

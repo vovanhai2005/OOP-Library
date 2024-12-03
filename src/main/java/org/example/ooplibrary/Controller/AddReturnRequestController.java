@@ -49,6 +49,9 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
 
     private String language;
 
+    @FXML
+    private TextField note;
+
     public void setReturnDocumentController(ReturnDocumentController returnDocumentController) {
         this.returnDocumentController = returnDocumentController;
     }
@@ -78,6 +81,7 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
                     ByteArrayInputStream inputStream = new ByteArrayInputStream(book.getImage());
                     Image image = new Image(inputStream);
                     bookImage.setImage(image);
+                    note.setText("Return request");
                 } else {
                     System.out.println("Book information is null.");
                 }
