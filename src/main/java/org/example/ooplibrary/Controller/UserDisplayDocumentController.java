@@ -214,7 +214,10 @@ public class UserDisplayDocumentController implements Initializable {
             // Lấy controller từ loader và thiết lập documentArchiveController
             AddReturnRequestController addReturnRequestController = loader.getController();
             addReturnRequestController.setUsername(username);
+            addReturnRequestController.setBookTitle(bookName.getText());
             addReturnRequestController.autofill(null);
+            addReturnRequestController.autofillBook(SQLController.getBookLoansDataWithUserAndBookName(username , bookName.getText()));
+
             addReturnRequestController.setUserDisplayDocumentController(this);
             if (language.equals("vi")) {
                 addReturnRequestController.setLanguageToVi();
