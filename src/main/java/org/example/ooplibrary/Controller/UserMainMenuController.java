@@ -373,6 +373,11 @@ public class UserMainMenuController extends AbstractMenuController implements In
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             UserMainMenuController userMainMenuController = loader.getController();
             userMainMenuController.setUsername(username);
+            if (this.language.equals("en")) {
+                userMainMenuController.setLanguageToEn();
+            } else {
+                userMainMenuController.setLanguageToVi();
+            }
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

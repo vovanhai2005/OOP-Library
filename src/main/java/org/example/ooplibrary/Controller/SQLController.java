@@ -31,6 +31,7 @@ public class SQLController {
 
     /**
      * Thêm ký tự '\' trước dấu " trong chuỗi
+     *
      * @param input Chuỗi cần chuẩn hóa
      * @return Chuỗi đã được chuẩn hóa
      */
@@ -583,9 +584,6 @@ public class SQLController {
     }
 
 
-
-
-
     /**
      * Lấy thông tin sách từ database với từ khóa
      *
@@ -641,8 +639,6 @@ public class SQLController {
 
         return data; // Trả về danh sách sách
     }
-
-
 
 
     /**
@@ -1025,7 +1021,7 @@ public class SQLController {
         }
     }
 
-    public static void updateBookLoan(String bookLoanID, DatePicker returnDate){
+    public static void updateBookLoan(String bookLoanID, DatePicker returnDate) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -1181,7 +1177,6 @@ public class SQLController {
         }
         return transactions; // Trả về mảng 2 chiều
     }
-
 
 
     /**
@@ -1468,5 +1463,101 @@ public class SQLController {
             System.out.println(e);
         }
         return false;
+    }
+
+    public static ArrayList<BookLoan> getBookLoansDataWithISBN(String isbn) {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "JOIN user_info u ON u.username = bl.username\n" +
+                    "WHERE bl.ISBN = \"" + isbn + "\";");
+
+//            System.out.println("SELECT bl.bookLoanID, b.bookName, u.fullName, bl.dueDate, bl.returnDate, bl.note\n" +
+//                    "FROM book_loans bl\n" +
+//                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+//                    "JOIN user_info u ON u.username = bl.username\n" +
+//                    "WHERE bl.ISBN = \"%" + isbn + "%\";");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getString(5),
+                                resultSet.getString(6)
+                        )
+                );
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public static ArrayList<BookLoan> getBookLoansDataWithUserAndNullReturnDate(String username) {
+        ArrayList<BookLoan> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "WHERE bl.username = \"" + username + "\" AND bl.returnDate IS NULL;");
+
+            while (resultSet.next()) {
+                data.add(new BookLoan(resultSet.getString(1),
+                                resultSet.getString(2),
+                                null,
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getString(5)
+                        )
+                );
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return data;
+    }
+
+    public static BookLoan getBookLoansDataWithUserAndBookName(String username , String bookName) {
+        BookLoan bookLoan = new BookLoan();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT bl.bookLoanID, b.bookName, bl.dueDate, bl.returnDate, bl.note\n" +
+                    "FROM book_loans bl\n" +
+                    "JOIN book_info b ON b.ISBN = bl.ISBN\n" +
+                    "WHERE bl.username = \"" + username + "\" AND b.bookName = \"" + bookName + "\";");
+
+            while (resultSet.next()) {
+                bookLoan = new BookLoan(resultSet.getString(1),
+                                resultSet.getString(2),
+                                null,
+                                resultSet.getString(3),
+                                resultSet.getString(4),
+                                resultSet.getString(5)
+                        );
+            }
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return bookLoan;
     }
 }

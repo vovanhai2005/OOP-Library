@@ -21,9 +21,9 @@
                   <Font name="System Bold" size="30.0" />
                </font>
             </Text>
-            <ScrollPane hbarPolicy="NEVER" layoutX="25.0" layoutY="58.0" prefHeight="179.0" prefWidth="871.0" styleClass="book_description" vbarPolicy="ALWAYS">
+            <ScrollPane hbarPolicy="NEVER" layoutX="25.0" layoutY="58.0" prefHeight="179.0" prefWidth="871.0" style="-fx-background: transparent;" styleClass="book_description" vbarPolicy="ALWAYS">
                <content>
-                  <Text fx:id="description" strokeType="OUTSIDE" strokeWidth="0.0" text="Harry Potter is a series of novels by British author J. K. Rowling. The novels follow Harry Potter, an 11-year-old boy who discovers he is the son of famous wizards and will attend Hogwarts School of Witchcraft and Wizardry. Harry learns of an entire society of wizards and witches.Harry Potter and the Philosopher's Stone is a fantasy novel written by the British author J. K. Rowling. It is the first novel in the Harry Potter series and was Rowling's debut novel. It follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. " wrappingWidth="871.13671875">
+                  <Text fx:id="description" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: transparent;" text="Harry Potter is a series of novels by British author J. K. Rowling. The novels follow Harry Potter, an 11-year-old boy who discovers he is the son of famous wizards and will attend Hogwarts School of Witchcraft and Wizardry. Harry learns of an entire society of wizards and witches.Harry Potter and the Philosopher's Stone is a fantasy novel written by the British author J. K. Rowling. It is the first novel in the Harry Potter series and was Rowling's debut novel. It follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry. " wrappingWidth="871.13671875">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -61,7 +61,7 @@
             </HBox>
             <HBox layoutX="21.0" layoutY="447.0" prefHeight="30.0" prefWidth="243.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DATE PUBLISHED:">
+                  <Text fx:id="datePublishedText" strokeType="OUTSIDE" strokeWidth="0.0" text="DATE PUBLISHED:">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -81,7 +81,7 @@
             </HBox>
             <HBox layoutX="21.0" layoutY="507.0" prefHeight="30.0" prefWidth="243.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="AUTHOR: ">
+                  <Text fx:id="authorText" strokeType="OUTSIDE" strokeWidth="0.0" text="AUTHOR: ">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -101,7 +101,7 @@
             </HBox>
             <VBox layoutX="21.0" layoutY="567.0" prefHeight="100.0" prefWidth="243.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GENRE: ">
+                  <Text fx:id="genreText" strokeType="OUTSIDE" strokeWidth="0.0" text="GENRE: ">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -123,18 +123,18 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <Text layoutX="49.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrow History" wrappingWidth="278.0">
+      <Text fx:id="borrowHistoryTitle" layoutX="49.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrow History" wrappingWidth="278.0">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
       </Text>
-      <TableView layoutX="49.0" layoutY="346.0" prefHeight="330.0" prefWidth="871.0">
+      <TableView fx:id="tableView" layoutX="49.0" layoutY="346.0" prefHeight="330.0" prefWidth="871.0">
          <columns>
-            <TableColumn prefWidth="167.0" text="Name" />
-            <TableColumn prefWidth="173.0" text="Username" />
-            <TableColumn minWidth="0.0" prefWidth="128.0" text="Issued Date" />
-            <TableColumn minWidth="0.0" prefWidth="131.0" text="Return Date" />
-            <TableColumn minWidth="2.0" prefWidth="271.0" text="Feature" />
+            <TableColumn fx:id="fullNameCol" prefWidth="167.0" text="Name" />
+            <TableColumn fx:id="bookNameCol" prefWidth="173.0" text="Username" />
+            <TableColumn fx:id="dueDateCol" minWidth="0.0" prefWidth="128.0" text="Issued Date" />
+            <TableColumn fx:id="returnDateCol" minWidth="0.0" prefWidth="131.0" text="Return Date" />
+            <TableColumn fx:id="noteCol" minWidth="2.0" prefWidth="271.0" text="Feature" />
          </columns>
       </TableView>
    </children>

@@ -94,7 +94,7 @@ public class ReturnDocumentController extends AbstractMenuController implements 
 
         );
 
-        ArrayList<BookLoan> temp = SQLController.getBookLoansData();
+        ArrayList<BookLoan> temp = SQLController.getBookLoansDataWithNoNullReturnDate();
 
         if (temp != null)
             for (BookLoan bookLoan : temp) {

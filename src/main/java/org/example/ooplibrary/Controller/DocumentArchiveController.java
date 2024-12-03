@@ -105,7 +105,7 @@ public class DocumentArchiveController extends AbstractMenuController implements
         genreCol.setCellValueFactory(new PropertyValueFactory<>("genresString"));
 
         // Cấu hình cột featureCol với các nút tuỳ chỉnh
-        addFeatureButtonsToTable();
+        addFeatureButtonsToTable("en");
         tableView.getColumns().addAll(ISBNCol, nameCol, yearOfPublicationCol, authorCol, genreCol, featureCol);
 
         try {
@@ -194,11 +194,14 @@ public class DocumentArchiveController extends AbstractMenuController implements
     }
 
 
-    private void addFeatureButtonsToTable() {
+    private void addFeatureButtonsToTable(String language) {
+        final String viewText = (language.equals("en")) ? "View" : "Xem";
+        final String editText = (language.equals("en")) ? "Edit" : "Chỉnh sửa";
+        final String deleteText = (language.equals("en")) ? "Delete" : "Xóa";
         featureCol.setCellFactory(param -> new TableCell<Book, Void>() {
-            private final Button viewButton = new Button("Xem");
-            private final Button editButton = new Button("Chỉnh sửa");
-            private final Button deleteButton = new Button("Xóa");
+            private final Button viewButton = new Button(viewText);
+            private final Button editButton = new Button(editText);
+            private final Button deleteButton = new Button(deleteText);
 
             {
                 // Xử lý sự kiện khi nhấn vào nút "Xem"
@@ -248,10 +251,22 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
             // Gán dữ liệu tài liệu vào controller
             displayDocumentController.setDocumentDetails(book);
+            if (language.equals("en")) {
+                displayDocumentController.setLanguageToEn();
+            } else {
+                displayDocumentController.setLanguageToVi();
+            }
+            System.out.println(book.getISBN());
+            displayDocumentController.setUpTableWithISBN(book.getISBN());
 
             // Tạo cửa sổ mới để hiển thị thông tin chi tiết
             Stage stage = new Stage();
-            stage.setTitle("Thông tin chi tiết tài liệu");
+            if (language.equals("en")) {
+                stage.setTitle("Document details");
+            } else {
+                stage.setTitle("Thông tin chi tiết tài liệu");
+            }
+
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
@@ -271,7 +286,13 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
             // Tạo cửa sổ mới để hiển thị thông tin chi tiết
             Stage stage = new Stage();
-            stage.setTitle("Thông tin chi tiết tài liệu");
+            if (language.equals("en")) {
+                stage.setTitle("Update document");
+                updateDocumentController.setLanguageToEn();
+            } else {
+                stage.setTitle("Cập nhật tài liệu");
+                updateDocumentController.setLanguageToVi();
+            }
             // Gán dữ liệu tài liệu vào controller
             updateDocumentController.setDocumentDetails(book.getISBN());
 
@@ -297,11 +318,20 @@ public class DocumentArchiveController extends AbstractMenuController implements
     private void deleteBook(Book book) {
         // Tạo Alert kiểu xác nhận
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Xác nhận xóa");
-        alert.setHeaderText("Bạn có chắc chắn muốn xóa tài liệu này?");
-        alert.setContentText("Tên tài liệu: " + book.getName() + "\n"
-                + "Tác giả: " + book.getAuthor() + "\n\n"
-                + "Lưu ý: Tài liệu sẽ bị xóa khỏi cơ sở dữ liệu và không thể khôi phục!");
+        if (language.equals("vi")) {
+            alert.setTitle("Xác nhận xóa");
+            alert.setHeaderText("Bạn có chắc chắn muốn xóa tài liệu này?");
+            alert.setContentText("Tên tài liệu: " + book.getName() + "\n"
+                    + "Tác giả: " + book.getAuthor() + "\n\n"
+                    + "Lưu ý: Tài liệu sẽ bị xóa khỏi cơ sở dữ liệu và không thể khôi phục!");
+        }
+        else {
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Are you sure you want to delete this document?");
+            alert.setContentText("Document name: " + book.getName() + "\n"
+                    + "Author: " + book.getAuthor() + "\n\n"
+                    + "Note: The document will be deleted from the database and cannot be recovered!");
+        }
 
         // Hiển thị cửa sổ Alert và chờ phản hồi từ người dùng
         Optional<ButtonType> result = alert.showAndWait();
@@ -318,16 +348,31 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
                 // Hiển thị thông báo thành công
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Xóa thành công");
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("Tài liệu \"" + book.getName() + "\" đã được xóa thành công!");
+                if (language.equals("vi")) {
+                    successAlert.setTitle("Xóa thành công");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("Tài liệu \"" + book.getName() + "\" đã được xóa thành công!");
+                }
+                else {
+                    successAlert.setTitle("Delete successful");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("Document \"" + book.getName() + "\" has been deleted successfully!");
+                }
+
                 successAlert.show();
             } else {
                 // Hiển thị thông báo lỗi nếu không xóa được trong cơ sở dữ liệu
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setTitle("Lỗi xóa");
-                errorAlert.setHeaderText("Không thể xóa tài liệu");
-                errorAlert.setContentText("Đã xảy ra lỗi trong quá trình xóa tài liệu. Vui lòng thử lại sau.");
+                if (language.equals("vi")) {
+                    errorAlert.setTitle("Lỗi xóa");
+                    errorAlert.setHeaderText("Không thể xóa tài liệu");
+                    errorAlert.setContentText("Đã xảy ra lỗi trong quá trình xóa tài liệu. Vui lòng thử lại sau.");
+                }
+                else {
+                    errorAlert.setTitle("Delete error");
+                    errorAlert.setHeaderText("Cannot delete document");
+                    errorAlert.setContentText("An error occurred while deleting the document. Please try again later.");
+                }
                 errorAlert.show();
             }
         } else {
@@ -338,6 +383,7 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
     @FXML
     public void setLanguageToEn() {
+        addFeatureButtonsToTable("en");
         language = "en";
         languageText.setText("Language:");
         dashboardBtn.setText("Dashboard");
@@ -361,6 +407,7 @@ public class DocumentArchiveController extends AbstractMenuController implements
 
     @FXML
     public void setLanguageToVi() {
+        addFeatureButtonsToTable("vi");
         language = "vi";
         languageText.setText("Ngôn ngữ:");
         dashboardBtn.setText("Bảng thông tin");
