@@ -256,6 +256,7 @@ public class DocumentArchiveController extends AbstractMenuController implements
             } else {
                 displayDocumentController.setLanguageToVi();
             }
+            System.out.println(book.getISBN());
             displayDocumentController.setUpTableWithISBN(book.getISBN());
 
             // Tạo cửa sổ mới để hiển thị thông tin chi tiết

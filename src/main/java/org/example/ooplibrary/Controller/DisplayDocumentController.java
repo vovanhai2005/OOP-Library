@@ -73,6 +73,8 @@ public class DisplayDocumentController implements AbstractLanguageConfig, Initia
 
     private String language;
 
+
+
     @Override
     public void initialize(URL url, java.util.ResourceBundle resourceBundle) {
         tableView.getColumns().clear();

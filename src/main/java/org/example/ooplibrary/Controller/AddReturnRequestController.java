@@ -61,7 +61,7 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
         flowPane.getChildren().clear();
 
         // Lấy danh sách các BookLoan theo tên người dùng
-        ArrayList<BookLoan> bookLoanArrayList = SQLController.getBookLoansDataWithUserAndNoNullReturnDate(userName.getText());
+        ArrayList<BookLoan> bookLoanArrayList = SQLController.getBookLoansDataWithUserAndNullReturnDate(userName.getText());
 
         for (BookLoan bookLoan : bookLoanArrayList) {
             HBox bookLoanBox = createBookLoanBox(bookLoan.getBookName());
@@ -86,6 +86,24 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
                     System.out.println("Book information is null.");
                 }
             });
+        }
+    }
+
+    @FXML
+    public void autofillBook(BookLoan bookLoan) {
+        ISBN.setText(SQLController.getISBNWithBookLoanID(bookLoan.getBookLoanID()));
+        bookName.setText(bookLoan.getBookName());
+
+        // Lấy thông tin sách một cách đồng bộ
+        Book book = SQLController.getBookInfoDataWithISBN(ISBN.getText());
+
+        if (book != null) {
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(book.getImage());
+            Image image = new Image(inputStream);
+            bookImage.setImage(image);
+            note.setText("Return request");
+        } else {
+            System.out.println("Book information is null.");
         }
     }
 
@@ -146,5 +164,9 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
     @Override
     public void setLanguageToVi() {
         language = "vi";
+    }
+
+    public void setBookTitle(String text) {
+        this.bookTitle.setText(text);
     }
 }
