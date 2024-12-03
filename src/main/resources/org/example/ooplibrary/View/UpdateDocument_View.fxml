@@ -15,7 +15,7 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="555.0" prefWidth="617.0" style="-fx-background-color: F0E9DD;" stylesheets="@../Style/UpdateDocumentStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ooplibrary.Controller.UpdateDocumentController">
     <children>
-        <Text layoutX="27.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Book" textAlignment="CENTER" wrappingWidth="158.802734375">
+        <Text fx:id="updateBookTitle" layoutX="27.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Book" wrappingWidth="447.802734375">
             <font>
                 <Font name="System Bold" size="25.0" />
             </font>
@@ -39,7 +39,7 @@
       </VBox>
       <VBox layoutX="331.0" layoutY="147.0" prefHeight="56.0" prefWidth="235.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="116.13671875">
+            <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="116.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -51,10 +51,10 @@
             </TextField>
          </children>
       </VBox>
-      <Button layoutX="511.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#handleUpdateBook" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Apply" />
+      <Button fx:id="applyBtn" layoutX="511.0" layoutY="499.0" mnemonicParsing="false" onMouseClicked="#handleUpdateBook" prefHeight="40.0" prefWidth="80.0" styleClass="addBook_btn" text="Apply" />
       <VBox layoutX="331.0" layoutY="214.0" prefHeight="59.0" prefWidth="235.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Year of publication: " wrappingWidth="194.13671875">
+            <Text fx:id="yearOfPublicationText" strokeType="OUTSIDE" strokeWidth="0.0" text="Year of publication: " wrappingWidth="194.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -68,7 +68,7 @@
       </VBox>
       <VBox layoutX="331.0" layoutY="282.0" prefHeight="58.0" prefWidth="235.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Author:" wrappingWidth="116.13671875">
+            <Text fx:id="authorText" strokeType="OUTSIDE" strokeWidth="0.0" text="Author:" wrappingWidth="116.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -82,7 +82,7 @@
       </VBox>
       <VBox layoutX="38.0" layoutY="354.0" prefHeight="126.0" prefWidth="235.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" wrappingWidth="116.13671875">
+            <Text fx:id="descriptionText" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" wrappingWidth="116.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -101,7 +101,7 @@
       </ImageView>
       <VBox layoutX="331.0" layoutY="357.0" prefHeight="126.0" prefWidth="235.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Genre:" wrappingWidth="58.13671875">
+            <Text fx:id="genreText" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre:" wrappingWidth="58.13671875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -116,7 +116,7 @@
             </ScrollPane>
          </children>
       </VBox>
-      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="571.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true" styleClass="addGenre_btn">
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="571.0" layoutY="354.0" onMouseClicked="#addGenre" pickOnBounds="true" preserveRatio="true" styleClass="addGenre_btn">
          <image>
             <Image url="@../Image/add.png" />
          </image>

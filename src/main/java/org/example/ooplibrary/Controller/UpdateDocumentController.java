@@ -22,7 +22,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.ArrayList;
 
-public class UpdateDocumentController {
+public class UpdateDocumentController implements AbstractLanguageConfig {
 
     @FXML
     private TextField ISBN;
@@ -59,12 +59,133 @@ public class UpdateDocumentController {
     @FXML
     private TextField genreField;
 
+    @FXML
+    private Button applyBtn;
+
+    @FXML
+    private Text authorText;
+
+    @FXML
+    private Text descriptionText;
+
+
+    @FXML
+    private Text genreText;
+
+    @FXML
+    private Text nameText;
+
+    @FXML
+    private Text updateBookTitle;
+
+
+    @FXML
+    private Text yearOfPublicationText;
+
     private ArrayList<String> genreLists = new ArrayList<String>();
 
     private String language;
 
     @FXML
     void handleUpdateBook(MouseEvent event) {
+        //Check if any of the fields are empty
+        if (ISBN.getText().isEmpty()) {
+            if (language.equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Empty ISBN");
+                alert.setContentText("Please enter the ISBN of the book you want to update.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText("ISBN trống");
+                alert.setContentText("Vui lòng nhập ISBN của cuốn sách bạn muốn cập nhật.");
+                alert.showAndWait();
+            }
+            return;
+        }
+        if (bookName.getText().isEmpty()) {
+            if (language.equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Empty Name");
+                alert.setContentText("Please enter the name of the book you want to update.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText("Tên trống");
+                alert.setContentText("Vui lòng nhập tên của cuốn sách bạn muốn cập nhật.");
+                alert.showAndWait();
+            }
+            return;
+        }
+        if (author.getText().isEmpty()) {
+            if (language.equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Empty Author");
+                alert.setContentText("Please enter the author of the book you want to update.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText("Tác giả trống");
+                alert.setContentText("Vui lòng nhập tác giả của cuốn sách bạn muốn cập nhật.");
+                alert.showAndWait();
+            }
+            return;
+        }
+        if (yearOfPublication.getText().isEmpty()) {
+            if (language.equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Empty Year of Publication");
+                alert.setContentText("Please enter the year of publication of the book you want to update.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText("Năm xuất bản trống");
+                alert.setContentText("Vui lòng nhập năm xuất bản của cuốn sách bạn muốn cập nhật.");
+                alert.showAndWait();
+            }
+            return;
+        }
+        if (description.getText().isEmpty()) {
+            if (language.equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Empty Description");
+                alert.setContentText("Please enter the description of the book you want to update.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText("Mô tả trống");
+                alert.setContentText("Vui lòng nhập mô tả của cuốn sách bạn muốn cập nhật.");
+                alert.showAndWait();
+            }
+            return;
+        }
+        if (flowPane.getChildren().isEmpty()) {
+            if (language.equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Empty Genre");
+                alert.setContentText("Please enter the genre of the book you want to update.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText("Thể loại trống");
+                alert.setContentText("Vui lòng nhập thể loại của cuốn sách bạn muốn cập nhật.");
+                alert.showAndWait();
+            }
+            return;
+        }
+
         byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
         String bookTitle = bookName.getText().replace("\\s" , "");
         Book book = new Book(ISBN.getText(),bookName.getText(),yearOfPublication.getText(),author.getText(),genreLists,description.getText(),bookImage);
@@ -176,7 +297,22 @@ public class UpdateDocumentController {
 
     @FXML
     void addGenre(MouseEvent event) {
-        if (genreField.getText().isEmpty()) return;
+        if (genreField.getText().isEmpty()) {
+            if (language.equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Empty Genre");
+                alert.setContentText("Please enter the genre you want to add.");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText("Thể loại trống");
+                alert.setContentText("Vui lòng nhập thể loại bạn muốn thêm.");
+                alert.showAndWait();
+            }
+            return;
+        }
 
         HBox genreBox = createGenreBox(genreField.getText());
         genreBox.setSpacing(10);
@@ -199,5 +335,30 @@ public class UpdateDocumentController {
     public void setDocumentDetails(String isbn) {
         ISBN.setText(isbn);
         autofill(null);
+    }
+
+    public void setLanguageToEn() {
+        language = "en";
+        updateBookTitle.setText("Update Book");
+        nameText.setText("Name:");
+        authorText.setText("Author:");
+        yearOfPublicationText.setText("Year of Publication:");
+        genreText.setText("Genre:");
+        descriptionText.setText("Description:");
+        applyBtn.setText("Apply");
+
+
+    }
+
+    public void setLanguageToVi() {
+        language = "vi";
+        updateBookTitle.setText("Cập nhật sách");
+        nameText.setText("Tên sách:");
+        authorText.setText("Tác giả:");
+        yearOfPublicationText.setText("Năm xuất bản:");
+        genreText.setText("TLoại:");
+        descriptionText.setText("Mô tả:");
+        applyBtn.setText("Áp dụng");
+
     }
 }

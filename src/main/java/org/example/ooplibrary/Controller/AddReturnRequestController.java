@@ -58,7 +58,7 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
         flowPane.getChildren().clear();
 
         // Lấy danh sách các BookLoan theo tên người dùng
-        ArrayList<BookLoan> bookLoanArrayList = SQLController.getBookLoansDataWithUser(userName.getText());
+        ArrayList<BookLoan> bookLoanArrayList = SQLController.getBookLoansDataWithUserAndNoNullReturnDate(userName.getText());
 
         for (BookLoan bookLoan : bookLoanArrayList) {
             HBox bookLoanBox = createBookLoanBox(bookLoan.getBookName());
