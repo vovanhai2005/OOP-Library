@@ -2,7 +2,7 @@ package org.example.ooplibrary.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
+
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -522,61 +522,67 @@ public class SQLController {
      *
      * @return ArrayList<Book>
      */
-    public static Task<ArrayList<Book>> getBookInfoData() {
-        return new Task<>() {
-            @Override
-            protected ArrayList<Book> call() throws Exception {
-                ArrayList<Book> data = new ArrayList<>();
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    Connection connection = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-                    );
-                    Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info");
+    public static ArrayList<Book> getBookInfoData() {
+        ArrayList<Book> data = new ArrayList<>();
+        try {
+            // Nạp driver MySQL
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-                    while (resultSet.next()) {
-                        data.add(new Book(resultSet.getString(1), resultSet.getString(2),
-                                resultSet.getString(3), resultSet.getString(4),
-                                normalizeToList(resultSet.getString(5)), resultSet.getString(6),
-                                convertStringToByteArray(resultSet.getString(7))));
-                    }
-                    connection.close();
-                } catch (Exception e) {
-                    System.out.println("Error fetching book info: " + e.getMessage());
-                }
-                return data;
+            // Kết nối đến cơ sở dữ liệu
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+
+            // Tạo câu truy vấn và thực thi
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info");
+
+            // Duyệt qua kết quả và thêm vào danh sách
+            while (resultSet.next()) {
+                data.add(new Book(
+                        resultSet.getString(1), // ISBN
+                        resultSet.getString(2), // Name
+                        resultSet.getString(3), // Year of Publication
+                        resultSet.getString(4), // Author
+                        normalizeToList(resultSet.getString(5)), // Genres (chuyển đổi sang danh sách)
+                        resultSet.getString(6), // Description
+                        convertStringToByteArray(resultSet.getString(7)) // Hình ảnh (byte array)
+                ));
             }
-        };
+
+            // Đóng kết nối
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error fetching book info: " + e.getMessage());
+        }
+
+        return data; // Trả về dữ liệu
     }
 
-    public static Task<ArrayList<Book>> getLatestBookInfoData() {
-        return new Task<>() {
-            @Override
-            protected ArrayList<Book> call() throws Exception {
-                ArrayList<Book> data = new ArrayList<>();
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    Connection connection = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-                    );
-                    Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info ORDER BY yearOfPublication DESC;");
+    public static ArrayList<Book> getLatestBookInfoData() {
+        ArrayList<Book> data = new ArrayList<>();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info ORDER BY yearOfPublication DESC;");
 
-                    while (resultSet.next()) {
-                        data.add(new Book(resultSet.getString(1), resultSet.getString(2),
-                                resultSet.getString(3), resultSet.getString(4),
-                                normalizeToList(resultSet.getString(5)), resultSet.getString(6),
-                                convertStringToByteArray(resultSet.getString(7))));
-                    }
-                    connection.close();
-                } catch (Exception e) {
-                    System.out.println("Error fetching book info: " + e.getMessage());
-                }
-                return data;
+            while (resultSet.next()) {
+                data.add(new Book(resultSet.getString(1), resultSet.getString(2),
+                        resultSet.getString(3), resultSet.getString(4),
+                        normalizeToList(resultSet.getString(5)), resultSet.getString(6),
+                        convertStringToByteArray(resultSet.getString(7))));
             }
-        };
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error fetching book info: " + e.getMessage());
+        }
+        return data;
     }
+
+
 
 
 
@@ -586,42 +592,56 @@ public class SQLController {
      * @param keyword Từ khóa tìm kiếm
      * @return ArrayList<Book>
      */
-    public static Task<ArrayList<Book>> getBookInfoDataWithKeyword(String keyword) {
-        return new Task<>() {
-            @Override
-            protected ArrayList<Book> call() throws Exception {
-                ArrayList<Book> data = new ArrayList<>();
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
+    public static ArrayList<Book> getBookInfoDataWithKeyword(String keyword) {
+        ArrayList<Book> data = new ArrayList<>();
+        try {
+            // Nạp driver MySQL
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-                    Connection connection = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-                    );
-                    Statement statement = connection.createStatement();
+            // Kết nối đến cơ sở dữ liệu
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
 
-                    // Truy vấn với từ khóa
-                    String query = "SELECT * FROM book_info WHERE (ISBN LIKE \"%" + normalizeString(keyword) + "%\" " +
-                            "OR bookName LIKE \"%" + normalizeString(keyword) + "%\" " +
-                            "OR author LIKE \"%" + normalizeString(keyword) + "%\" " +
-                            "OR genre LIKE \"%" + normalizeString(keyword) + "%\");";
+            // Tạo câu truy vấn với từ khóa
+            String query = "SELECT * FROM book_info WHERE (ISBN LIKE ? " +
+                    "OR bookName LIKE ? " +
+                    "OR author LIKE ? " +
+                    "OR genre LIKE ?);";
 
-                    ResultSet resultSet = statement.executeQuery(query);
+            // Sử dụng PreparedStatement để tránh SQL Injection
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            String likeKeyword = "%" + normalizeString(keyword) + "%";
+            preparedStatement.setString(1, likeKeyword);
+            preparedStatement.setString(2, likeKeyword);
+            preparedStatement.setString(3, likeKeyword);
+            preparedStatement.setString(4, likeKeyword);
 
-                    while (resultSet.next()) {
-                        data.add(new Book(resultSet.getString(1), resultSet.getString(2),
-                                resultSet.getString(3), resultSet.getString(4),
-                                normalizeToList(resultSet.getString(5)),
-                                resultSet.getString(6),
-                                convertStringToByteArray(resultSet.getString(7))));
-                    }
-                    connection.close();
-                } catch (Exception e) {
-                    System.out.println("Error fetching book info with keyword: " + e.getMessage());
-                }
-                return data;
+            // Thực thi truy vấn
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Xử lý kết quả truy vấn
+            while (resultSet.next()) {
+                data.add(new Book(
+                        resultSet.getString(1), // ISBN
+                        resultSet.getString(2), // Book Name
+                        resultSet.getString(3), // Year of Publication
+                        resultSet.getString(4), // Author
+                        normalizeToList(resultSet.getString(5)), // Genres
+                        resultSet.getString(6), // Description
+                        convertStringToByteArray(resultSet.getString(7)) // Hình ảnh
+                ));
             }
-        };
+
+            // Đóng kết nối
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error fetching book info with keyword: " + e.getMessage());
+        }
+
+        return data; // Trả về danh sách sách
     }
+
 
 
 
@@ -631,32 +651,47 @@ public class SQLController {
      * @param ISBN Mã ISBN của sách
      * @return Book
      */
-    public static Task<Book> getBookInfoDataWithISBN(String ISBN) {
-        return new Task<>() {
-            @Override
-            protected Book call() throws Exception {
-                Book book = null;
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
+    public static Book getBookInfoDataWithISBN(String ISBN) {
+        Book book = null;
+        try {
+            // Nạp driver MySQL
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
-                    Connection connection = DriverManager.getConnection(
-                            "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
-                    );
-                    Statement statement = connection.createStatement();
-                    ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info WHERE ISBN = \"" + normalizeString(ISBN) + "\";");
+            // Kết nối đến cơ sở dữ liệu
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
 
-                    if (resultSet.next()) {
-                        book = new Book(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4),
-                                normalizeToList(resultSet.getString(5)), resultSet.getString(6), convertStringToByteArray(resultSet.getString(7)));
-                    }
-                    connection.close();
-                } catch (Exception e) {
-                    System.out.println("Error fetching book info with ISBN: " + e.getMessage());
-                }
-                return book;
+            // Sử dụng PreparedStatement để truy vấn
+            String query = "SELECT * FROM book_info WHERE ISBN = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, normalizeString(ISBN));
+
+            // Thực thi truy vấn
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Kiểm tra và tạo đối tượng Book nếu có kết quả
+            if (resultSet.next()) {
+                book = new Book(
+                        resultSet.getString(1), // ISBN
+                        resultSet.getString(2), // Book Name
+                        resultSet.getString(3), // Year of Publication
+                        resultSet.getString(4), // Author
+                        normalizeToList(resultSet.getString(5)), // Genres
+                        resultSet.getString(6), // Description
+                        convertStringToByteArray(resultSet.getString(7)) // Hình ảnh
+                );
             }
-        };
+
+            // Đóng kết nối
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Error fetching book info with ISBN: " + e.getMessage());
+        }
+
+        return book; // Trả về đối tượng Book (có thể là null nếu không tìm thấy)
     }
+
 
     public static void updateUserInfo(User user) {
         try {
@@ -1096,61 +1131,57 @@ public class SQLController {
     /**
      * @return int[][]
      */
-    public static Task<int[][]> estimateTransactions() {
-        return new Task<>() {
-            @Override
-            protected int[][] call() throws Exception {
-                int[][] transactions = null;
-                try (Connection connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD);
-                     Statement statement = connection.createStatement()) {
+    public static int[][] estimateTransactions() {
+        int[][] transactions = null;
+        try (Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD);
+             Statement statement = connection.createStatement()) {
 
-                    // Xác định ngày bắt đầu và ngày kết thúc (ngày 1 đến ngày cuối cùng của tháng trước)
-                    LocalDate now = LocalDate.now();
-                    LocalDate startDate = now.minusMonths(1).withDayOfMonth(1);
-                    LocalDate endDate = now.minusMonths(1).withDayOfMonth(now.minusMonths(1).lengthOfMonth());
+            // Xác định ngày bắt đầu và ngày kết thúc (ngày 1 đến ngày cuối cùng của tháng trước)
+            LocalDate now = LocalDate.now();
+            LocalDate startDate = now.minusMonths(1).withDayOfMonth(1);
+            LocalDate endDate = now.minusMonths(1).withDayOfMonth(now.minusMonths(1).lengthOfMonth());
 
-                    // Chia khoảng thời gian thành các đoạn 5 ngày
-                    int timeRanges = (int) (java.time.Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays() / 5) + 1;
-                    transactions = new int[timeRanges][2];
+            // Chia khoảng thời gian thành các đoạn 5 ngày
+            int timeRanges = (int) (java.time.Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays() / 5) + 1;
+            transactions = new int[timeRanges][2];
 
-                    // Truy vấn số lượng sách mượn và trả trong từng khoảng thời gian 5 ngày
-                    for (int i = 0; i < timeRanges; i++) {
-                        LocalDate rangeStart = startDate.plusDays(i * 5);
-                        LocalDate rangeEnd = rangeStart.plusDays(4);
-                        if (rangeEnd.isAfter(endDate)) {
-                            rangeEnd = endDate;
-                        }
-
-                        // Số lượng sách mượn
-                        ResultSet borrowResultSet = statement.executeQuery(
-                                "SELECT COUNT(*) as borrowCount " +
-                                        "FROM book_loans " +
-                                        "WHERE dueDate >= '" + rangeStart + "' AND dueDate <= '" + rangeEnd + "';"
-                        );
-
-                        if (borrowResultSet.next()) {
-                            transactions[i][0] = borrowResultSet.getInt("borrowCount");
-                        }
-
-                        // Số lượng sách trả
-                        ResultSet returnResultSet = statement.executeQuery(
-                                "SELECT COUNT(*) as returnCount " +
-                                        "FROM book_loans " +
-                                        "WHERE returnDate >= '" + rangeStart + "' AND returnDate <= '" + rangeEnd + "';"
-                        );
-
-                        if (returnResultSet.next()) {
-                            transactions[i][1] = returnResultSet.getInt("returnCount");
-                        }
-                    }
-                } catch (Exception e) {
-                    System.out.println("Error estimating borrow and return transactions: " + e.getMessage());
+            // Truy vấn số lượng sách mượn và trả trong từng khoảng thời gian 5 ngày
+            for (int i = 0; i < timeRanges; i++) {
+                LocalDate rangeStart = startDate.plusDays(i * 5);
+                LocalDate rangeEnd = rangeStart.plusDays(4);
+                if (rangeEnd.isAfter(endDate)) {
+                    rangeEnd = endDate;
                 }
-                return transactions;
+
+                // Số lượng sách mượn
+                ResultSet borrowResultSet = statement.executeQuery(
+                        "SELECT COUNT(*) as borrowCount " +
+                                "FROM book_loans " +
+                                "WHERE dueDate >= '" + rangeStart + "' AND dueDate <= '" + rangeEnd + "';"
+                );
+
+                if (borrowResultSet.next()) {
+                    transactions[i][0] = borrowResultSet.getInt("borrowCount");
+                }
+
+                // Số lượng sách trả
+                ResultSet returnResultSet = statement.executeQuery(
+                        "SELECT COUNT(*) as returnCount " +
+                                "FROM book_loans " +
+                                "WHERE returnDate >= '" + rangeStart + "' AND returnDate <= '" + rangeEnd + "';"
+                );
+
+                if (returnResultSet.next()) {
+                    transactions[i][1] = returnResultSet.getInt("returnCount");
+                }
             }
-        };
+        } catch (Exception e) {
+            System.out.println("Error estimating borrow and return transactions: " + e.getMessage());
+        }
+        return transactions; // Trả về mảng 2 chiều
     }
+
 
 
     /**

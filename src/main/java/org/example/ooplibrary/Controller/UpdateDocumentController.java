@@ -2,7 +2,7 @@ package org.example.ooplibrary.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
+
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -97,28 +97,31 @@ public class UpdateDocumentController {
 
     @FXML
     public void autofill(MouseEvent event) {
-        Task<Book> bookTask = SQLController.getBookInfoDataWithISBN(ISBN.getText());
-        Book book = bookTask.getValue();
+        // Gọi phương thức đồng bộ để lấy thông tin sách theo ISBN
+        Book book = SQLController.getBookInfoDataWithISBN(ISBN.getText());
+
         if (book == null) {
-            //Alert user that the book was not found
+            // Thông báo cho người dùng rằng sách không được tìm thấy
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Book not found!");
             alert.setHeaderText("Book not found");
             alert.setContentText("The book with the ISBN " + ISBN.getText() + " was not found. Please enter the details manually or check the ISBN again.");
             alert.showAndWait();
-
             return;
         }
+
+        // Điền thông tin sách vào các trường tương ứng
         bookName.setText(book.getName());
         author.setText(book.getAuthor());
-
         yearOfPublication.setText(book.getYearOfPublication());
         description.setText(book.getDescription());
+
         if (book.getImage() != null) {
             Image image = new Image(new ByteArrayInputStream(book.getImage()));
             bookImage.setImage(image);
         }
 
+        // Làm sạch và điền thông tin thể loại
         flowPane.getChildren().clear();
         for (String genre1 : book.getGenres()) {
             HBox genreBox = createGenreBox(genre1);
@@ -127,8 +130,8 @@ public class UpdateDocumentController {
             flowPane.getChildren().add(genreBox);
             genreLists.add(genre1);
         }
-
     }
+
 
 
     private ObservableList<String> normalizeToList(String genres) {
