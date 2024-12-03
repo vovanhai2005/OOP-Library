@@ -261,9 +261,42 @@ public class DocumentArchiveController extends AbstractMenuController implements
     }
 
     private void editBookInfo(Book book) {
-        // Mã để mở cửa sổ chỉnh sửa thông tin của tài liệu
-        System.out.println("Chỉnh sửa thông tin của tài liệu: " + book.getName());
-        // Thực hiện logic chỉnh sửa tài liệu ở đây
+        try {
+            // Tải FXML của giao diện hiển thị tài liệu
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UpdateDocument_View.fxml"));
+            Parent root = loader.load();
+
+            // Lấy controller của cửa sổ hiển thị tài liệu
+            UpdateDocumentController updateDocumentController = loader.getController();
+            updateDocumentController.setDocumentArchiveController(this);
+
+            // Tạo cửa sổ mới để hiển thị thông tin chi tiết
+            Stage stage = new Stage();
+            stage.setTitle("Thông tin chi tiết tài liệu");
+            // Gán dữ liệu tài liệu vào controller
+            updateDocumentController.setDocumentDetails(book.getISBN());
+
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void refresh() {
+        Task<ArrayList<Book>> searchTask = SQLController.getBookInfoData();
+
+        searchTask.setOnSucceeded(e -> {
+            ArrayList<Book> temp = searchTask.getValue();
+            if (temp != null) {
+                data.clear();
+                data.addAll(temp);
+                tableView.setItems(data);
+            }
+        });
+
+        new Thread(searchTask).start();
+
     }
 
     private void deleteBook(Book book) {

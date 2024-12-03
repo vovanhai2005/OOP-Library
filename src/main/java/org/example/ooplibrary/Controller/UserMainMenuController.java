@@ -185,7 +185,7 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
-        Task<ArrayList<Book>> loadLatestBooksTask = SQLController.getBookInfoData(); // Tạo một Task để lấy sách mới nhất
+        Task<ArrayList<Book>> loadLatestBooksTask = SQLController.getLatestBookInfoData(); // Tạo một Task để lấy sách mới nhất
 
         loadLatestBooksTask.setOnSucceeded(event -> {
             ArrayList<Book> latestBooks = loadLatestBooksTask.getValue(); // Lấy danh sách sách từ Task
@@ -284,6 +284,12 @@ public class UserMainMenuController extends AbstractMenuController implements In
             UserSettingController userSettingController = loader.getController();
             userSettingController.setPassword(SQLController.getUserPassword(username));
             userSettingController.setUsername(username);
+            if (language.equals("en")) {
+                userSettingController.setLanguageToEn();
+            } else {
+                userSettingController.setLanguageToVi();
+            }
+            userSettingController.setParentStage((Stage) ((Node) event.getSource()).getScene().getWindow());
 
             // Tạo cửa sổ mới để hiển thị thông tin chi tiết
             Stage stage = new Stage();
