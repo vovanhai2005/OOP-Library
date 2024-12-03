@@ -176,7 +176,7 @@
             <Image url="@../Image/vietnam.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="146.0" layoutY="6.0" onMouseClicked="#setLanguageToVi" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
+      <ImageView fitHeight="31.0" fitWidth="38.0" layoutX="146.0" layoutY="6.0" onMouseClicked="#setLanguageToEn" pickOnBounds="true" preserveRatio="true" styleClass="usa_btn">
          <image>
             <Image url="@../Image/united-states-of-america.png" />
          </image>
