@@ -189,6 +189,7 @@ public class UserDisplayDocumentController implements Initializable {
             addBorrowBookController.autofillByUsername(null);
             addBorrowBookController.setISBN(ISBN.getText());
             addBorrowBookController.autofillByISBN(null);
+            addBorrowBookController.setUserDisplayDocumentController(this);
 
 
             // Thiết lập cửa sổ và hiển thị
@@ -211,13 +212,15 @@ public class UserDisplayDocumentController implements Initializable {
             Parent secondRoot = loader.load();
 
             // Lấy controller từ loader và thiết lập documentArchiveController
-            AddBorrowBookController addBorrowBookController = loader.getController(
-
-            );
-            addBorrowBookController.setUsername(username);
-            addBorrowBookController.autofillByUsername(null);
-            addBorrowBookController.setISBN(ISBN.getText());
-            addBorrowBookController.autofillByISBN(null);
+            AddReturnRequestController addReturnRequestController = loader.getController();
+            addReturnRequestController.setUsername(username);
+            addReturnRequestController.autofill(null);
+            addReturnRequestController.setUserDisplayDocumentController(this);
+            if (language.equals("vi")) {
+                addReturnRequestController.setLanguageToVi();
+            } else {
+                addReturnRequestController.setLanguageToEn();
+            }
 
 
             // Thiết lập cửa sổ và hiển thị

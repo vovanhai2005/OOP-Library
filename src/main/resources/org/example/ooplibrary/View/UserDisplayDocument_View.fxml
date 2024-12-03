@@ -151,7 +151,7 @@
                   <Image url="@../Image/sample.jpg" />
                </image>
             </ImageView>
-            <Button fx:id="borrowBtn" layoutX="71.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#handleAddBook" prefHeight="40.0" prefWidth="135.0" styleClass="addBook_btn" text="Borrow book">
+            <Button fx:id="borrowBtn" layoutX="71.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#handleBorrowReturn" prefHeight="40.0" prefWidth="135.0" styleClass="addBook_btn" text="Borrow book">
                <font>
                   <Font size="12.5" />
                </font>

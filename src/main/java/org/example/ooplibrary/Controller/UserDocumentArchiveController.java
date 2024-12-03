@@ -106,6 +106,11 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
             displayUserController.setUsername(user.getUsername());
             displayUserController.setImage(user.getImage());
             displayUserController.setTableView();
+            if (language.equals("en")) {
+                displayUserController.setLanguageToEn();
+            } else {
+                displayUserController.setLanguageToVi();
+            }
 
 
             // Tạo cửa sổ mới để hiển thị thông tin chi tiết

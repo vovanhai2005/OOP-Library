@@ -20,7 +20,7 @@ import org.example.ooplibrary.Object.User;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 
-public class AddReturnRequestController {
+public class AddReturnRequestController implements AbstractLanguageConfig {
 
     @FXML
     private TextField userName;
@@ -47,6 +47,8 @@ public class AddReturnRequestController {
 
     @FXML
     private DatePicker returnDate;
+
+    private String language;
 
     public void setReturnDocumentController(ReturnDocumentController returnDocumentController) {
         this.returnDocumentController = returnDocumentController;
@@ -98,6 +100,11 @@ public class AddReturnRequestController {
         return bookBox;
     }
 
+    UserDisplayDocumentController userDisplayDocumentController;
+    public void setUserDisplayDocumentController(UserDisplayDocumentController userDisplayDocumentController) {
+        this.userDisplayDocumentController = userDisplayDocumentController;
+    }
+
     @FXML
     public void handleReturnRequest(MouseEvent mouseEvent) {
         if (userName.getText().isEmpty() || returnDate.getValue() == null) {
@@ -111,12 +118,31 @@ public class AddReturnRequestController {
                 bookLoan.setUsername(userName.getText());
                 bookLoan.setReturnDate(returnDate.getValue().toString());
                 SQLController.updateBookLoan(bookLoan.getBookLoanID() , returnDate);
-                returnDocumentController.addReturnRequest(bookLoan);
+                if (returnDocumentController!=null) {
+                    returnDocumentController.addReturnRequest(bookLoan);
+                }
+                if (userDisplayDocumentController!=null) {
+                    userDisplayDocumentController.setBorrowed(false);
+                }
                 break;
             }
         }
         System.out.println("add complete");
 
         ((Stage) ((Node) mouseEvent.getSource()).getScene().getWindow()).close();
+    }
+
+    public void setUsername(String username) {
+        this.userName.setText(username);
+    }
+
+    @Override
+    public void setLanguageToEn() {
+        language = "en";
+    }
+
+    @Override
+    public void setLanguageToVi() {
+        language = "vi";
     }
 }

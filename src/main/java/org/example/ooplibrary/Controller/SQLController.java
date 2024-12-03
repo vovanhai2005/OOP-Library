@@ -447,6 +447,10 @@ public class SQLController {
             Statement statement = connection.createStatement();
 
             statement.executeUpdate("DELETE FROM user_info WHERE username = \"" + username + "\";");
+            //delete all book loans of the user
+            statement.executeUpdate("DELETE FROM book_loans WHERE username = \"" + username + "\";");
+            //del all user ratings
+            statement.executeUpdate("DELETE FROM user_ratings WHERE username = \"" + username + "\";");
 
             connection.close();
 
@@ -1034,6 +1038,10 @@ public class SQLController {
             );
             Statement statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM book_info WHERE ISBN = \"" + ISBN + "\";");
+            //Delete book loans associated with the book
+            statement.executeUpdate("DELETE FROM book_loans WHERE ISBN = \"" + ISBN + "\";");
+            //Delete user ratings associated with the book
+            statement.executeUpdate("DELETE FROM user_ratings WHERE ISBN = \"" + ISBN + "\";");
             connection.close();
 
         } catch (Exception e) {
