@@ -1,6 +1,5 @@
 package org.example.ooplibrary.Controller;
 
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
@@ -60,35 +59,33 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
     @FXML
     public void autofill(MouseEvent mouseEvent) {
         flowPane.getChildren().clear();
+
+        // Lấy danh sách các BookLoan theo tên người dùng
         ArrayList<BookLoan> bookLoanArrayList = SQLController.getBookLoansDataWithUser(userName.getText());
 
         for (BookLoan bookLoan : bookLoanArrayList) {
-            if (bookLoan.getReturnDate() == null) {
-                HBox bookLoanBox = createBookLoanBox(bookLoan.getBookName());
-                bookLoanBox.setSpacing(10);
-                bookLoanBox.setPrefWidth(flowPane.getWidth());
-                flowPane.getChildren().add(bookLoanBox);
+            HBox bookLoanBox = createBookLoanBox(bookLoan.getBookName());
+            bookLoanBox.setSpacing(10);
+            bookLoanBox.setPrefWidth(flowPane.getWidth());
+            flowPane.getChildren().add(bookLoanBox);
 
-                bookLoanBox.setOnMouseClicked(event -> {
-                    bookTitle.setText(bookLoan.getBookName());
-                    ISBN.setText(SQLController.getISBNWithBookLoanID(bookLoan.getBookLoanID()));
-                    bookName.setText(bookLoan.getBookName());
-                    Task<Book> bookTask = SQLController.getBookInfoDataWithISBN(String.format(ISBN.getText()));
+            bookLoanBox.setOnMouseClicked(event -> {
+                bookTitle.setText(bookLoan.getBookName());
+                ISBN.setText(SQLController.getISBNWithBookLoanID(bookLoan.getBookLoanID()));
+                bookName.setText(bookLoan.getBookName());
 
-                    bookTask.setOnSucceeded(taskEvent -> {
-                        Book book = bookTask.getValue();
-                        if (book != null) {
-                            ByteArrayInputStream inputStream = new ByteArrayInputStream(book.getImage());
-                            Image image = new Image(inputStream);
-                            bookImage.setImage(image);
-                        } else {
-                            System.out.println("Book information is null.");
-                        }
-                    });
+                // Lấy thông tin sách một cách đồng bộ
+                Book book = SQLController.getBookInfoDataWithISBN(ISBN.getText());
+
+                if (book != null) {
+                    ByteArrayInputStream inputStream = new ByteArrayInputStream(book.getImage());
+                    Image image = new Image(inputStream);
+                    bookImage.setImage(image);
                     note.setText("Return request");
-                    new Thread(bookTask).start(); // Bắt đầu thực thi Task
-                });
-            }
+                } else {
+                    System.out.println("Book information is null.");
+                }
+            });
         }
     }
 
