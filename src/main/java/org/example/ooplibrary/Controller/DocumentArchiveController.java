@@ -2,7 +2,7 @@ package org.example.ooplibrary.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -108,22 +108,17 @@ public class DocumentArchiveController extends AbstractMenuController implements
         addFeatureButtonsToTable();
         tableView.getColumns().addAll(ISBNCol, nameCol, yearOfPublicationCol, authorCol, genreCol, featureCol);
 
-        // Tạo một Task để lấy dữ liệu từ cơ sở dữ liệu
-        Task<ArrayList<Book>> loadBooksTask = SQLController.getBookInfoData();
-
-        loadBooksTask.setOnSucceeded(event -> {
-            ArrayList<Book> temp = loadBooksTask.getValue();
+        try {
+            // Lấy dữ liệu từ cơ sở dữ liệu đồng bộ
+            ArrayList<Book> temp = SQLController.getBookInfoData(); // Phương thức đồng bộ
             data = FXCollections.observableArrayList(temp);
             tableView.setItems(data);
-        });
-
-        loadBooksTask.setOnFailed(event -> {
-            System.err.println("Error loading book info: " + loadBooksTask.getException().getMessage());
-        });
-
-        // Chạy Task trên một luồng nền
-        new Thread(loadBooksTask).start();
+        } catch (Exception e) {
+            // Xử lý lỗi nếu xảy ra
+            System.err.println("Error loading book info: " + e.getMessage());
+        }
     }
+
 
 
 
@@ -154,19 +149,21 @@ public class DocumentArchiveController extends AbstractMenuController implements
     void performSearch1(MouseEvent event) {
         String keyword = searchKeyword.getText();
 
-        Task<ArrayList<Book>> searchTask = SQLController.getBookInfoDataWithKeyword(keyword);
+        try {
+            // Gọi phương thức tìm kiếm đồng bộ
+            ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(keyword);
 
-        searchTask.setOnSucceeded(e -> {
-            ArrayList<Book> temp = searchTask.getValue();
             if (temp != null) {
                 data.clear();
                 data.addAll(temp);
                 tableView.setItems(data);
             }
-        });
-
-        new Thread(searchTask).start();
+        } catch (Exception e) {
+            // Xử lý lỗi nếu việc tìm kiếm thất bại
+            System.err.println("Error performing search: " + e.getMessage());
+        }
     }
+
 
 
     @FXML
@@ -174,20 +171,22 @@ public class DocumentArchiveController extends AbstractMenuController implements
         if (event.getCode().toString().equals("ENTER")) {
             String keyword = searchKeyword.getText();
 
-            Task<ArrayList<Book>> searchTask = SQLController.getBookInfoDataWithKeyword(keyword);
+            try {
+                // Gọi phương thức tìm kiếm đồng bộ
+                ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(keyword);
 
-            searchTask.setOnSucceeded(e -> {
-                ArrayList<Book> temp = searchTask.getValue();
                 if (temp != null) {
                     data.clear();
                     data.addAll(temp);
                     tableView.setItems(data);
                 }
-            });
-
-            new Thread(searchTask).start();
+            } catch (Exception e) {
+                // Xử lý lỗi nếu xảy ra trong quá trình tìm kiếm
+                System.err.println("Error performing search: " + e.getMessage());
+            }
         }
     }
+
 
 
     public void addBook(Book book) {
@@ -284,20 +283,16 @@ public class DocumentArchiveController extends AbstractMenuController implements
     }
 
     public void refresh() {
-        Task<ArrayList<Book>> searchTask = SQLController.getBookInfoData();
+        // Lấy dữ liệu sách một cách đồng bộ
+        ArrayList<Book> temp = SQLController.getBookInfoData(); // Giả sử bạn đã tạo phương thức này để lấy dữ liệu đồng bộ
 
-        searchTask.setOnSucceeded(e -> {
-            ArrayList<Book> temp = searchTask.getValue();
-            if (temp != null) {
-                data.clear();
-                data.addAll(temp);
-                tableView.setItems(data);
-            }
-        });
-
-        new Thread(searchTask).start();
-
+        if (temp != null) {
+            data.clear();
+            data.addAll(temp);
+            tableView.setItems(data);
+        }
     }
+
 
     private void deleteBook(Book book) {
         // Tạo Alert kiểu xác nhận

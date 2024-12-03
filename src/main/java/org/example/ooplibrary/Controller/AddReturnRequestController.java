@@ -1,6 +1,5 @@
 package org.example.ooplibrary.Controller;
 
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
@@ -57,6 +56,8 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
     @FXML
     public void autofill(MouseEvent mouseEvent) {
         flowPane.getChildren().clear();
+
+        // Lấy danh sách các BookLoan theo tên người dùng
         ArrayList<BookLoan> bookLoanArrayList = SQLController.getBookLoansDataWithUser(userName.getText());
 
         for (BookLoan bookLoan : bookLoanArrayList) {
@@ -69,20 +70,17 @@ public class AddReturnRequestController implements AbstractLanguageConfig {
                 bookTitle.setText(bookLoan.getBookName());
                 ISBN.setText(SQLController.getISBNWithBookLoanID(bookLoan.getBookLoanID()));
                 bookName.setText(bookLoan.getBookName());
-                Task<Book> bookTask = SQLController.getBookInfoDataWithISBN(String.format(ISBN.getText()));
 
-                bookTask.setOnSucceeded(taskEvent -> {
-                    Book book = bookTask.getValue();
-                    if (book != null) {
-                        ByteArrayInputStream inputStream = new ByteArrayInputStream(book.getImage());
-                        Image image = new Image(inputStream);
-                        bookImage.setImage(image);
-                    } else {
-                        System.out.println("Book information is null.");
-                    }
-                });
+                // Lấy thông tin sách một cách đồng bộ
+                Book book = SQLController.getBookInfoDataWithISBN(ISBN.getText());
 
-                new Thread(bookTask).start(); // Bắt đầu thực thi Task
+                if (book != null) {
+                    ByteArrayInputStream inputStream = new ByteArrayInputStream(book.getImage());
+                    Image image = new Image(inputStream);
+                    bookImage.setImage(image);
+                } else {
+                    System.out.println("Book information is null.");
+                }
             });
         }
     }
