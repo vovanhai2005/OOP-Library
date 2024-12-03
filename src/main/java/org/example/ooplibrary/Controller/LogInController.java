@@ -171,6 +171,4 @@ public class LogInController implements AbstractLanguageConfig {
         userName.setPromptText("Tên đăng nhập");
         password.setPromptText("Mật khẩu");
     }
-
-
 }

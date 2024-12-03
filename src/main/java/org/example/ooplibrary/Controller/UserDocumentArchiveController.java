@@ -1,5 +1,7 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -242,6 +244,12 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> catergories = FXCollections.observableArrayList("All" , "Genre");
+        categoriesBox.setItems(catergories);
+
+        ObservableList<String> orders = FXCollections.observableArrayList("From A to Z" , "From Z to A");
+        orderBox.setItems(orders);
+
         String keyword = searchKeyword.getText(); // Lấy từ khóa tìm kiếm
         Task<ArrayList<Book>> loadBooksTask;
 

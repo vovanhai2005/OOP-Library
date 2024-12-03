@@ -104,7 +104,7 @@
                   </Label>
                </children>
             </HBox>
-            <Label fx:id="updateInfoText" alignment="CENTER_RIGHT" layoutX="227.0" layoutY="193.0" onMouseClicked="#switchToUpdateInfo" prefHeight="47.0" prefWidth="459.0" styleClass="updateInfo_btn" text="Update info">
+            <Label fx:id="updateInfoText" alignment="CENTER_RIGHT" layoutX="362.0" layoutY="197.0" onMouseClicked="#switchToUpdateInfo" prefHeight="47.0" prefWidth="338.0" styleClass="updateInfo_btn" text="Update info   ">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

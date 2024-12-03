@@ -205,8 +205,31 @@ public class UserDisplayDocumentController implements Initializable {
 
     @FXML
     void handleReturnBook(MouseEvent event) {
-        System.out.println("Return book (in progress)");
+        try {
+            // Tạo FXMLLoader và nạp file FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/AddReturnRequest_View.fxml"));
+            Parent secondRoot = loader.load();
 
+            // Lấy controller từ loader và thiết lập documentArchiveController
+            AddBorrowBookController addBorrowBookController = loader.getController(
+
+            );
+            addBorrowBookController.setUsername(username);
+            addBorrowBookController.autofillByUsername(null);
+            addBorrowBookController.setISBN(ISBN.getText());
+            addBorrowBookController.autofillByISBN(null);
+
+
+            // Thiết lập cửa sổ và hiển thị
+            Stage secondStage = new Stage();
+            Scene secondScene = new Scene(secondRoot);
+            secondStage.setScene(secondScene);
+            secondStage.setTitle("Thêm tài liệu");
+            secondStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private HBox createReviewPane(String ISBN, String username) {

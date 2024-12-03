@@ -546,6 +546,34 @@ public class SQLController {
         };
     }
 
+    public static Task<ArrayList<Book>> getLatestBookInfoData() {
+        return new Task<>() {
+            @Override
+            protected ArrayList<Book> call() throws Exception {
+                ArrayList<Book> data = new ArrayList<>();
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection connection = DriverManager.getConnection(
+                            "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+                    );
+                    Statement statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery("SELECT * FROM book_info ORDER BY yearOfPublication DESC;");
+
+                    while (resultSet.next()) {
+                        data.add(new Book(resultSet.getString(1), resultSet.getString(2),
+                                resultSet.getString(3), resultSet.getString(4),
+                                normalizeToList(resultSet.getString(5)), resultSet.getString(6),
+                                convertStringToByteArray(resultSet.getString(7))));
+                    }
+                    connection.close();
+                } catch (Exception e) {
+                    System.out.println("Error fetching book info: " + e.getMessage());
+                }
+                return data;
+            }
+        };
+    }
+
 
 
     /**
@@ -923,6 +951,39 @@ public class SQLController {
             System.out.println(e);
         }
         return data;
+    }
+
+    public static void updateBookInfo(Book book) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/librosync_db?useUnicode=true&characterEncoding=UTF-8", USER, PASSWORD
+            );
+
+            String query = "UPDATE book_info SET bookName=?, yearOfPublication=?, author=?, description=?, genre=?, bookimage=? WHERE ISBN=?";
+
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, book.getName());
+            preparedStatement.setString(2, book.getYearOfPublication());
+            preparedStatement.setString(3, book.getAuthor());
+            preparedStatement.setString(4, book.getDescription());
+            preparedStatement.setString(5, book.getGenresString());
+            preparedStatement.setString(6, SQLController.convertByteArrayToString(book.getImage()));
+            preparedStatement.setString(7, book.getISBN());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Book information updated successfully.");
+            } else {
+                System.out.println("Failed to update book information.");
+            }
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public static void updateBookLoan(String bookLoanID, DatePicker returnDate){
