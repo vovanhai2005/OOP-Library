@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -151,14 +152,17 @@ public class DisplayUserController implements Initializable {
     }
 
     public void setTableView() {
-        ArrayList<BookLoan> temp = SQLController.getBookLoansDataWithUser(username.getText());
+        new Thread(() -> {
+            ArrayList<BookLoan> temp = SQLController.getBookLoansDataWithUser(username.getText());
 
-        data.clear();
-        if (temp != null)
-            for (BookLoan bookLoan : temp) {
-                data.add(bookLoan);
-            }
-        tableView.setItems(data);
+            Platform.runLater(() -> {
+                data.clear();
+                if (temp != null) {
+                    data.addAll(temp);
+                }
+                tableView.setItems(data);
+            });
+        }).start();
 
     }
 

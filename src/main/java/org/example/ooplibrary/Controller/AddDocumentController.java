@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -106,36 +107,38 @@ public class AddDocumentController {
 
     @FXML
     public void autofill(MouseEvent event) {
-        Book book = GoogleBookAPIUtil.fetchBookDetailsByISBN(ISBN.getText());
-        if (book == null) {
-            //Alert user that the book was not found
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Book not found!");
-            alert.setHeaderText("Book not found");
-            alert.setContentText("The book with the ISBN " + ISBN.getText() + " was not found. Please enter the details manually or check the ISBN again.");
-            alert.showAndWait();
-
-            return;
-        }
-        bookName.setText(book.getName());
-        author.setText(book.getAuthor());
-
-        yearOfPublication.setText(book.getYearOfPublication());
-        description.setText(book.getDescription());
-        if (book.getImage() != null) {
-            Image image = new Image(new ByteArrayInputStream(book.getImage()));
-            bookImage.setImage(image);
-        }
-
-        flowPane.getChildren().clear();
-        for (String genre1 : book.getGenres()) {
-            HBox genreBox = createGenreBox(genre1);
-            genreBox.setSpacing(10);
-            genreBox.setPrefWidth(flowPane.getWidth());
-            flowPane.getChildren().add(genreBox);
-            genreLists.add(genre1);
-        }
-
+        new Thread(() -> {
+            Book book = GoogleBookAPIUtil.fetchBookDetailsByISBN(ISBN.getText());
+            if (book == null) {
+                Platform.runLater(() -> {
+                    // Alert user that the book was not found
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Book not found!");
+                    alert.setHeaderText("Book not found");
+                    alert.setContentText("The book with the ISBN " + ISBN.getText() + " was not found. Please enter the details manually or check the ISBN again.");
+                    alert.showAndWait();
+                });
+                return;
+            }
+            Platform.runLater(() -> {
+                bookName.setText(book.getName());
+                author.setText(book.getAuthor());
+                yearOfPublication.setText(book.getYearOfPublication());
+                description.setText(book.getDescription());
+                if (book.getImage() != null) {
+                    Image image = new Image(new ByteArrayInputStream(book.getImage()));
+                    bookImage.setImage(image);
+                }
+                flowPane.getChildren().clear();
+                for (String genre1 : book.getGenres()) {
+                    HBox genreBox = createGenreBox(genre1);
+                    genreBox.setSpacing(10);
+                    genreBox.setPrefWidth(flowPane.getWidth());
+                    flowPane.getChildren().add(genreBox);
+                    genreLists.add(genre1);
+                }
+            });
+        }).start();
     }
 
 
