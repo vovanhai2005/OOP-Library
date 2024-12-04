@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -108,15 +109,17 @@ public class DocumentArchiveController extends AbstractMenuController implements
         addFeatureButtonsToTable("en");
         tableView.getColumns().addAll(ISBNCol, nameCol, yearOfPublicationCol, authorCol, genreCol, featureCol);
 
-        try {
-            // Lấy dữ liệu từ cơ sở dữ liệu đồng bộ
-            ArrayList<Book> temp = SQLController.getBookInfoData(); // Phương thức đồng bộ
-            data = FXCollections.observableArrayList(temp);
-            tableView.setItems(data);
-        } catch (Exception e) {
-            // Xử lý lỗi nếu xảy ra
-            System.err.println("Error loading book info: " + e.getMessage());
-        }
+        new Thread(() -> {
+            try {
+                ArrayList<Book> temp = SQLController.getBookInfoData();
+                Platform.runLater(() -> {
+                    data = FXCollections.observableArrayList(temp);
+                    tableView.setItems(data);
+                });
+            } catch (Exception e) {
+                System.err.println("Error loading book info: " + e.getMessage());
+            }
+        }).start();
     }
 
 
@@ -149,21 +152,21 @@ public class DocumentArchiveController extends AbstractMenuController implements
     void performSearch1(MouseEvent event) {
         String keyword = searchKeyword.getText();
 
-        try {
-            // Gọi phương thức tìm kiếm đồng bộ
-            ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(keyword);
-
-            if (temp != null) {
-                data.clear();
-                data.addAll(temp);
-                tableView.setItems(data);
+        new Thread(() -> {
+            try {
+                ArrayList<Book> temp = SQLController.getBookInfoDataWithKeyword(keyword);
+                Platform.runLater(() -> {
+                    if (temp != null) {
+                        data.clear();
+                        data.addAll(temp);
+                        tableView.setItems(data);
+                    }
+                });
+            } catch (Exception e) {
+                System.err.println("Error performing search: " + e.getMessage());
             }
-        } catch (Exception e) {
-            // Xử lý lỗi nếu việc tìm kiếm thất bại
-            System.err.println("Error performing search: " + e.getMessage());
-        }
+        }).start();
     }
-
 
 
     @FXML

@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.example.ooplibrary.Core.BackgroundTask;
 
 import java.io.IOException;
 
@@ -34,6 +35,12 @@ abstract class AbstractMenuController {
 
             stage.setScene(scene);
             stage.show();
+
+            // Start multiple background tasks in separate threads
+            for (int i = 1; i <= 3; i++) {
+                new Thread(new BackgroundTask(i)).start();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,7 +49,6 @@ abstract class AbstractMenuController {
     @FXML
     void switchToBorrowDocumentView(MouseEvent event) {
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/BorrowManagement_View.fxml"));
             root = loader.load();
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -55,6 +61,12 @@ abstract class AbstractMenuController {
             }
             stage.setScene(scene);
             stage.show();
+
+            // Start multiple background tasks in separate threads
+            for (int i = 1; i <= 3; i++) {
+                new Thread(new BackgroundTask(i)).start();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,6 +87,12 @@ abstract class AbstractMenuController {
             }
             stage.setScene(scene);
             stage.show();
+
+            // Start multiple background tasks in separate threads
+            for (int i = 1; i <= 3; i++) {
+                new Thread(new BackgroundTask(i)).start();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,6 +113,12 @@ abstract class AbstractMenuController {
             }
             stage.setScene(scene);
             stage.show();
+
+            // Start multiple background tasks in separate threads
+            for (int i = 1; i <= 3; i++) {
+                new Thread(new BackgroundTask(i)).start();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,6 +139,12 @@ abstract class AbstractMenuController {
             }
             stage.setScene(scene);
             stage.show();
+
+            // Start multiple background tasks in separate threads
+            for (int i = 1; i <= 3; i++) {
+                new Thread(new BackgroundTask(i)).start();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -135,6 +165,12 @@ abstract class AbstractMenuController {
             }
             stage.setScene(scene);
             stage.show();
+
+            // Start multiple background tasks in separate threads
+            for (int i = 1; i <= 3; i++) {
+                new Thread(new BackgroundTask(i)).start();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -155,6 +191,12 @@ abstract class AbstractMenuController {
             }
             stage.setScene(scene);
             stage.show();
+
+            // Start multiple background tasks in separate threads
+            for (int i = 1; i <= 3; i++) {
+                new Thread(new BackgroundTask(i)).start();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

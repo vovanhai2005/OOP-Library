@@ -101,16 +101,13 @@ public class SignUpController implements Initializable, AbstractLanguageConfig {
     @FXML
     private Text usernameAlert;
 
-
     private String language;
-
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         ObservableList<String> genderList = FXCollections.observableArrayList("Male", "Female", "Lesbian", "Gay", "Bisexual", "Transgender", "Queer", "Intersex", "Asexual", "Other");
         gender.setItems(genderList);
     }
@@ -187,8 +184,7 @@ public class SignUpController implements Initializable, AbstractLanguageConfig {
             if (gender.getValue() == null) {
                 if (language.equals("en")) {
                     genderAlert.setText("Gender cannot be empty!");
-                }
-                else {
+                } else {
                     genderAlert.setText("Giới tính không thể để trống!");
                 }
                 invalidInput = true;
@@ -210,7 +206,6 @@ public class SignUpController implements Initializable, AbstractLanguageConfig {
             System.out.println("Success");
             SQLController.addUser(username, pass, fullName.getText(), SQLController.getDateOfBirthAsString(dateOfBirth), email.getText(), phoneNumber.getText(), SQLController.convertImageViewToBlob(avatarImage), gender.getValue());
             switchToUserMainMenu(event);
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -238,7 +233,7 @@ public class SignUpController implements Initializable, AbstractLanguageConfig {
     }
 
     @FXML
-    public void chooseImage(MouseEvent event) {
+    void chooseImage(MouseEvent event) {
         Stage stage = (Stage) anchorPane.getScene().getWindow();
 
         FileChooser fileChooser = new FileChooser();
@@ -295,7 +290,6 @@ public class SignUpController implements Initializable, AbstractLanguageConfig {
         userName.setPromptText("Username");
         password.setPromptText("Password");
         signUpButton.setText("Sign Up");
-
     }
 
     public void setLanguageToVi() {
@@ -315,7 +309,5 @@ public class SignUpController implements Initializable, AbstractLanguageConfig {
         userName.setPromptText("Tên Đăng Nhập");
         password.setPromptText("Mật Khẩu");
         signUpButton.setText("Đăng Ký");
-
     }
-
 }

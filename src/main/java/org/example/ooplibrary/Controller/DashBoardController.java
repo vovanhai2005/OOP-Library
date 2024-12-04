@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -71,66 +72,75 @@ public class DashBoardController extends AbstractMenuController implements Initi
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Using Pie Chart for percents of user's ages among under 18, between 18 and 25 and over 25
-        int[] ages = SQLController.estimateUserAge();
+        new Thread(() -> {
+            int[] ages = SQLController.estimateUserAge();
 
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data("Under 18", ages[0]),
-                new PieChart.Data("Between 18 and 25", ages[1]),
-                new PieChart.Data("Over 25", ages[2])
-        );
+            Platform.runLater(() -> {
+                ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                        new PieChart.Data("Under 18", ages[0]),
+                        new PieChart.Data("Between 18 and 25", ages[1]),
+                        new PieChart.Data("Over 25", ages[2])
+                );
 
-        pieChart.setData(pieChartData);
-        pieChart.setTitle("Percent of users' age:");
+                pieChart.setData(pieChartData);
+                pieChart.setTitle("Percent of users' age:");
+            });
+        }).start();
         loadLineChart();
         loadBarChart();
     }
 
     private void loadLineChart() {
-        // Lấy dữ liệu giao dịch trực tiếp từ SQLController
-        int[][] transactions = SQLController.estimateTransactions(); // Gọi phương thức đồng bộ
+        new Thread(() -> {
+            int[][] transactions = SQLController.estimateTransactions();
 
-        lineChart.setTitle("Borrow and Return Transactions in Last Month");
+            Platform.runLater(() -> {
+                lineChart.setTitle("Borrow and Return Transactions in Last Month");
 
-        // Tạo các series cho dữ liệu
-        XYChart.Series<String, Number> borrowSeries = new XYChart.Series<>();
-        borrowSeries.setName("Borrow Transactions");
+                XYChart.Series<String, Number> borrowSeries = new XYChart.Series<>();
+                borrowSeries.setName("Borrow Transactions");
 
-        XYChart.Series<String, Number> returnSeries = new XYChart.Series<>();
-        returnSeries.setName("Return Transactions");
+                XYChart.Series<String, Number> returnSeries = new XYChart.Series<>();
+                returnSeries.setName("Return Transactions");
 
-        // Thêm dữ liệu vào series
-        for (int i = 0; i < transactions.length; i++) {
-            borrowSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][0]));  // Số lượng sách mượn
-            returnSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][1]));  // Số lượng sách trả
-        }
+                for (int i = 0; i < transactions.length; i++) {
+                    borrowSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][0]));
+                    returnSeries.getData().add(new XYChart.Data<>("Period " + (i + 1), transactions[i][1]));
+                }
 
-        // Xóa dữ liệu cũ và thêm dữ liệu mới
-        lineChart.getData().clear(); // Xóa dữ liệu cũ
-        lineChart.getData().addAll(borrowSeries, returnSeries); // Thêm dữ liệu mới
+                lineChart.getData().clear();
+                lineChart.getData().addAll(borrowSeries, returnSeries);
+            });
+        }).start();
     }
 
 
 
     private void loadBarChart() {
-        Map<String, int[]> genreTransactions = SQLController.getTransactionsByGenres();
+        new Thread(() -> {
+            Map<String, int[]> genreTransactions = SQLController.getTransactionsByGenres();
 
-        barChart.setTitle("Transactions by Genre");
+            Platform.runLater(() -> {
+                barChart.setTitle("Transactions by Genre");
 
-        XYChart.Series<String, Number> borrowSeries = new XYChart.Series<>();
-        borrowSeries.setName("Borrow");
+                XYChart.Series<String, Number> borrowSeries = new XYChart.Series<>();
+                borrowSeries.setName("Borrow");
 
-        XYChart.Series<String, Number> returnSeries = new XYChart.Series<>();
-        returnSeries.setName("Return");
+                XYChart.Series<String, Number> returnSeries = new XYChart.Series<>();
+                returnSeries.setName("Return");
 
-        for (Map.Entry<String, int[]> entry : genreTransactions.entrySet()) {
-            String genre = entry.getKey();
-            int[] counts = entry.getValue();
+                for (Map.Entry<String, int[]> entry : genreTransactions.entrySet()) {
+                    String genre = entry.getKey();
+                    int[] counts = entry.getValue();
 
-            borrowSeries.getData().add(new XYChart.Data<>(genre, counts[0]));
-            returnSeries.getData().add(new XYChart.Data<>(genre, counts[1]));
-        }
+                    borrowSeries.getData().add(new XYChart.Data<>(genre, counts[0]));
+                    returnSeries.getData().add(new XYChart.Data<>(genre, counts[1]));
+                }
 
-        barChart.getData().addAll(borrowSeries, returnSeries);
+                barChart.getData().clear();
+                barChart.getData().addAll(borrowSeries, returnSeries);
+            });
+        }).start();
     }
 
     @FXML

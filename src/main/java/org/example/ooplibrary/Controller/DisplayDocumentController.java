@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -141,9 +142,12 @@ public class DisplayDocumentController implements AbstractLanguageConfig, Initia
     }
 
     public void setUpTableWithISBN(String ISBN) {
-        ArrayList<BookLoan> bookLoans = SQLController.getBookLoansDataWithISBN(ISBN);
-        ObservableList<BookLoan> data = FXCollections.observableArrayList(bookLoans);
-        tableView.setItems(data);
+        new Thread(() -> {
+            ArrayList<BookLoan> bookLoans = SQLController.getBookLoansDataWithISBN(ISBN);
+            ObservableList<BookLoan> data = FXCollections.observableArrayList(bookLoans);
+
+            Platform.runLater(() -> tableView.setItems(data));
+        }).start();
     }
 
 }

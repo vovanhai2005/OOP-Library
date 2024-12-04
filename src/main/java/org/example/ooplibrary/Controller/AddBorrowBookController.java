@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -55,30 +56,38 @@ public class AddBorrowBookController {
 
     @FXML
     void autofillByISBN(MouseEvent event) {
-        String isbn = ISBN.getText(); // Lấy mã ISBN từ TextField
-      
-        // Lấy thông tin sách theo ISBN trực tiếp
-        Book book = SQLController.getBookInfoDataWithISBN(isbn); // Gọi phương thức đồng bộ
+        new Thread(() -> {
+            String isbn = ISBN.getText(); // Lấy mã ISBN từ TextField
 
-        if (book != null) {
-            bookName.setText(book.getName()); // Điền tên sách vào TextField
-            Image image = new Image(new ByteArrayInputStream(book.getImage())); // Tạo hình ảnh từ byte array
-            bookImage.setImage(image); // Cập nhật hình ảnh sách
-          note.setText("Borrow request");
-        } else {
-            System.out.println("No book found with the given ISBN.");
-        }
+            // Lấy thông tin sách theo ISBN trực tiếp
+            Book book = SQLController.getBookInfoDataWithISBN(isbn); // Gọi phương thức đồng bộ
+
+            if (book != null) {
+                Platform.runLater(() -> {
+                    bookName.setText(book.getName()); // Điền tên sách vào TextField
+                    Image image = new Image(new ByteArrayInputStream(book.getImage())); // Tạo hình ảnh từ byte array
+                    bookImage.setImage(image); // Cập nhật hình ảnh sách
+                    note.setText("Borrow request");
+                });
+            } else {
+                System.out.println("No book found with the given ISBN.");
+            }
+        }).start();
     }
 
 
     @FXML
     void autofillByUsername(MouseEvent event) {
-        if (SQLController.getUserInfoDataByUsername(username.getText()) != null) {
+        new Thread(() -> {
             User user = SQLController.getUserInfoDataByUsername(username.getText());
-            fullName.setText(user.getFullName());
-            email.setText(user.getEmail());
-            phoneNumber.setText(user.getPhoneNumber());
-        }
+            if (user != null) {
+                Platform.runLater(() -> {
+                    fullName.setText(user.getFullName());
+                    email.setText(user.getEmail());
+                    phoneNumber.setText(user.getPhoneNumber());
+                });
+            }
+        }).start();
     }
 
     private BorrowManagementController borrowManagementController;

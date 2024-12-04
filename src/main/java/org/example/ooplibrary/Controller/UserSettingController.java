@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -105,23 +106,28 @@ public class UserSettingController implements Initializable {
 
 
             SQLController.deleteUser(username);
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
-                root = loader.load();
-                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                LogInController LogInController = loader.getController();
-                parentStage.close();
-                if (this.language.equals("en")) {
-                    LogInController.setLanguageToEn();
-                } else {
-                    LogInController.setLanguageToVi();
-                }
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new Thread(() -> {
+                SQLController.deleteUser(username);
+                Platform.runLater(() -> {
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/LogIn_View.fxml"));
+                        root = loader.load();
+                        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        scene = new Scene(root);
+                        LogInController logInController = loader.getController();
+                        parentStage.close();
+                        if (this.language.equals("en")) {
+                            logInController.setLanguageToEn();
+                        } else {
+                            logInController.setLanguageToVi();
+                        }
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }).start();
         }
     }
 

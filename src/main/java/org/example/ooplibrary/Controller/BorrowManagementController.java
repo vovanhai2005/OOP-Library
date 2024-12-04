@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -92,15 +93,16 @@ public class BorrowManagementController extends AbstractMenuController implement
 
         );
 
-        ArrayList<BookLoan> temp = SQLController.getBookLoansData();
+        new Thread(() -> {
+            ArrayList<BookLoan> temp = SQLController.getBookLoansData();
 
-        if (temp != null)
-            for (BookLoan bookLoan : temp) {
-                data.add(bookLoan);
-            }
-
-
-        tableView.setItems(data);
+            Platform.runLater(() -> {
+                if (temp != null) {
+                    data.addAll(temp);
+                }
+                tableView.setItems(data);
+            });
+        }).start();
 
     }
 
@@ -130,29 +132,32 @@ public class BorrowManagementController extends AbstractMenuController implement
     @FXML
     void performSearch1(MouseEvent event) {
         data.clear();
-        ArrayList<BookLoan> temp = SQLController.getBookLoansDataWithKeyword(searchKeyword.getText());
+        new Thread(() -> {
+            ArrayList<BookLoan> temp = SQLController.getBookLoansDataWithKeyword(searchKeyword.getText());
 
-        if (temp != null)
-            for (BookLoan bookLoan : temp) {
-                data.add(bookLoan);
-            }
-
-        tableView.setItems(data);
+            Platform.runLater(() -> {
+                if (temp != null) {
+                    data.addAll(temp);
+                }
+                tableView.setItems(data);
+            });
+        }).start();
     }
 
     @FXML
     void performSearch2(KeyEvent event) {
-        //Check if KeyEvent is Enter
         if (event.getCode().toString().equals("ENTER")) {
             data.clear();
-            ArrayList<BookLoan> temp = SQLController.getBookLoansDataWithKeyword(searchKeyword.getText());
+            new Thread(() -> {
+                ArrayList<BookLoan> temp = SQLController.getBookLoansDataWithKeyword(searchKeyword.getText());
 
-            if (temp != null)
-                for (BookLoan bookLoan : temp) {
-                    data.add(bookLoan);
-                }
-
-            tableView.setItems(data);
+                Platform.runLater(() -> {
+                    if (temp != null) {
+                        data.addAll(temp);
+                    }
+                    tableView.setItems(data);
+                });
+            }).start();
         }
     }
 

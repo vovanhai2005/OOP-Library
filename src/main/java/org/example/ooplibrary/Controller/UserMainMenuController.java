@@ -1,6 +1,7 @@
 package org.example.ooplibrary.Controller;
 
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,6 +26,7 @@ import org.controlsfx.control.Rating;
 import org.example.ooplibrary.Object.Book;
 import org.example.ooplibrary.Object.BookLoan;
 import org.example.ooplibrary.Object.User;
+import org.example.ooplibrary.Core.BackgroundTask;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -147,13 +149,16 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
-        ArrayList<Book> suggestedBooks = SQLController.getBookInfoData(); // Get suggested books
+        new Thread(() -> {
+            ArrayList<Book> suggestedBooks = SQLController.getBookInfoData(); // Get suggested books
 
-        // Update the UI with the retrieved books
-        for (Book book : suggestedBooks) {
-            VBox bookBox = createBookBox2(book);
-            subFlowPaneSuggested.getChildren().add(bookBox);
-        }
+            Platform.runLater(() -> {
+                for (Book book : suggestedBooks) {
+                    VBox bookBox = createBookBox2(book);
+                    subFlowPaneSuggested.getChildren().add(bookBox);
+                }
+            });
+        }).start();
 
         // Đặt subFlowPaneSuggested vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneSuggested = new ScrollPane(subFlowPaneSuggested);
@@ -183,12 +188,17 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
-        ArrayList<Book> latestBooks = SQLController.getLatestBookInfoData(); // Phương thức đồng bộ
-        subFlowPaneLatest.getChildren().clear();
-        for (Book book : latestBooks) {
-            VBox bookBox = createBookBox2(book);
-            subFlowPaneLatest.getChildren().add(bookBox);
-        }
+        new Thread(() -> {
+            ArrayList<Book> latestBooks = SQLController.getLatestBookInfoData(); // Get latest books
+
+            Platform.runLater(() -> {
+                subFlowPaneLatest.getChildren().clear();
+                for (Book book : latestBooks) {
+                    VBox bookBox = createBookBox2(book);
+                    subFlowPaneLatest.getChildren().add(bookBox);
+                }
+            });
+        }).start();
 
         // Đặt subFlowPaneLatest vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneLatest = new ScrollPane(subFlowPaneLatest);
@@ -360,27 +370,32 @@ public class UserMainMenuController extends AbstractMenuController implements In
             scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
+            // Start the background task in a new thread
+            new Thread(new BackgroundTask(1)).start();
+            new Thread(new BackgroundTask(2)).start();
+            new Thread(new BackgroundTask(3)).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    void switchToUserMainMenuView(MouseEvent event) {
+    private void switchToUserMainMenuView(MouseEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ooplibrary/View/UserMainMenu_View.fxml"));
-            root = loader.load();
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             UserMainMenuController userMainMenuController = loader.getController();
             userMainMenuController.setUsername(username);
-            if (this.language.equals("en")) {
-                userMainMenuController.setLanguageToEn();
-            } else {
-                userMainMenuController.setLanguageToVi();
-            }
-            scene = new Scene(root);
+            Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
+
+            // Start the background task in a new thread
+            new Thread(new BackgroundTask(1)).start();
+            new Thread(new BackgroundTask(2)).start();
+            new Thread(new BackgroundTask(3)).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -507,35 +522,43 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
     @FXML
     public void setLanguageToEn() {
-        language = "en";
-        bookListBtn.setText("Books List");
-        settingBtn.setText("Settings");
-        mainMenuBtn.setText("Main Menu");
-        logOutBtn.setText("Log Out");
-        userInfoBtn.setText("User Info");
-        languageText.setText("Language:");
-        lms.setText("LIBRARY MANAGEMENT SYSTEM");
-        suggestedText.setText("Suggested for you");
-        latestBooksText.setText("Latest released books");
-        booksText.setText("Books");
-        userText.setText("Users");
-        transactionsText.setText("Transactions");
+        new Thread(() -> {
+            Platform.runLater(() -> {
+                language = "en";
+                bookListBtn.setText("Books List");
+                settingBtn.setText("Settings");
+                mainMenuBtn.setText("Main Menu");
+                logOutBtn.setText("Log Out");
+                userInfoBtn.setText("User Info");
+                languageText.setText("Language:");
+                lms.setText("LIBRARY MANAGEMENT SYSTEM");
+                suggestedText.setText("Suggested for you");
+                latestBooksText.setText("Latest released books");
+                booksText.setText("Books");
+                userText.setText("Users");
+                transactionsText.setText("Transactions");
+            });
+        }).start();
     }
 
     @FXML
     public void setLanguageToVi() {
-        language = "vi";
-        bookListBtn.setText("DS sách");
-        settingBtn.setText("Cài đặt");
-        mainMenuBtn.setText("Trang chủ");
-        logOutBtn.setText("Đăng xuất");
-        userInfoBtn.setText("TT người dùng");
-        languageText.setText("Ngôn ngữ:");
-        lms.setText("HỆ THỐNG QUẢN LÝ THƯ VIỆN");
-        suggestedText.setText("Gợi ý cho bạn");
-        latestBooksText.setText("Sách mới nhất");
-        booksText.setText("Sách");
-        userText.setText("Người dùng");
-        transactionsText.setText("Giao dịch");
+        new Thread(() -> {
+            Platform.runLater(() -> {
+                language = "vi";
+                bookListBtn.setText("DS sách");
+                settingBtn.setText("Cài đặt");
+                mainMenuBtn.setText("Trang chủ");
+                logOutBtn.setText("Đăng xuất");
+                userInfoBtn.setText("TT người dùng");
+                languageText.setText("Ngôn ngữ:");
+                lms.setText("HỆ THỐNG QUẢN LÝ THƯ VIỆN");
+                suggestedText.setText("Gợi ý cho bạn");
+                latestBooksText.setText("Sách mới nhất");
+                booksText.setText("Sách");
+                userText.setText("Người dùng");
+                transactionsText.setText("Giao dịch");
+            });
+        }).start();
     }
 }

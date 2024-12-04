@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -198,32 +199,34 @@ public class UserUpdateInfoController implements Initializable {
             user.setPhoneNumber(Phone.getText());
             user.setImage(bookImageBlob);
 
-            SQLController.updateUserInfo(user);
+            new Thread(() -> {
+                SQLController.updateUserInfo(user);
+                Platform.runLater(() -> {
+                    displayUserController.setEmail(user.getEmail());
+                    displayUserController.setFullName(user.getFullName());
+                    displayUserController.setDateofBirth(user.getDob());
+                    displayUserController.setGender(user.getGender());
+                    displayUserController.setPhoneNumber(user.getPhoneNumber());
+                    displayUserController.setUsername(user.getUsername());
+                    displayUserController.setImage(user.getImage());
 
-            displayUserController.setEmail(user.getEmail());
-            displayUserController.setFullName(user.getFullName());
-            displayUserController.setDateofBirth(user.getDob());
-            displayUserController.setGender(user.getGender());
-            displayUserController.setPhoneNumber(user.getPhoneNumber());
-            displayUserController.setUsername(user.getUsername());
-            displayUserController.setImage(user.getImage());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    if (language.equals("en")) {
+                        alert.setTitle("Success");
+                        alert.setHeaderText("Update Information Successfully");
+                        alert.setContentText("Your information has been updated successfully");
+                    } else {
+                        alert.setTitle("Thành công");
+                        alert.setHeaderText("Cập nhật thông tin thành công");
+                        alert.setContentText("Thông tin của bạn đã được cập nhật thành công");
+                    }
+                    alert.showAndWait();
 
-            if (language.equals("en")) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText("Update Information Successfully");
-                alert.setContentText("Your information has been updated successfully");
-                alert.showAndWait();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Thành công");
-                alert.setHeaderText("Cập nhật thông tin thành công");
-                alert.setContentText("Thông tin của bạn đã được cập nhật thành công");
-                alert.showAndWait();
-            }
-            //hide the window
-            Stage stage = (Stage) anchorPane.getScene().getWindow();
-            stage.close();
+                    // hide the window
+                    Stage stage = (Stage) anchorPane.getScene().getWindow();
+                    stage.close();
+                });
+            }).start();
 
         } catch (Exception e) {
             e.printStackTrace();

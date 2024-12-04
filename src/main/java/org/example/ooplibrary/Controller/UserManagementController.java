@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -98,15 +99,17 @@ public class UserManagementController extends AbstractMenuController implements 
 
         );
 
-        ArrayList<User> temp = SQLController.getUserInfoData();
+        new Thread(() -> {
+            ArrayList<User> temp = SQLController.getUserInfoData();
 
-        if (temp != null) {
-            for (User user : temp) {
-                data.add(user);
+            if (temp != null) {
+                for (User user : temp) {
+                    data.add(user);
+                }
             }
-        }
 
-        tableView.setItems(data);
+            Platform.runLater(() -> tableView.setItems(data));
+        }).start();
     }
 
     @FXML

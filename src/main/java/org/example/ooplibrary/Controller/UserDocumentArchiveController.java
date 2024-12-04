@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -249,40 +250,44 @@ public class UserDocumentArchiveController extends AbstractMenuController implem
         ObservableList<String> orders = FXCollections.observableArrayList("From A to Z" , "From Z to A");
         orderBox.setItems(orders);
 
-        String keyword = searchKeyword.getText(); // Get search keyword
-        ArrayList<Book> bookList;
+        new Thread(() -> {
+            String keyword = searchKeyword.getText(); // Get search keyword
+            ArrayList<Book> bookList;
 
-        // Retrieve books based on the keyword
-        if (keyword.isEmpty()) {
-            bookList = SQLController.getBookInfoData(); // Get all books
-        } else {
-            bookList = SQLController.getBookInfoDataWithKeyword(keyword); // Search by keyword
-        }
-
-        // Calculate layout properties
-        int flowPaneWidth = 1072; // Width of the FlowPane
-        int spacing = 10; // Spacing between elements in the FlowPane
-        int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5; // Number of boxes per row is 6
-        int numBoxesPerRow = (flowPaneWidth + spacing) / (boxWidth + spacing);
-
-        // Set horizontal and vertical gaps
-        flowPane.setHgap(0); // Disable FlowPane's horizontal gap
-        flowPane.setVgap(10); // Keep vertical gap
-
-        flowPane.getChildren().clear(); // Clear previous items in the FlowPane
-
-        for (int i = 0; i < bookList.size(); i++) {
-            VBox bookBox = createBookBox(bookList.get(i), boxWidth);
-
-            // Add spacing only for non-last items in a row
-            if ((i + 1) % numBoxesPerRow != 0) {
-                FlowPane.setMargin(bookBox, new Insets(0, spacing, 10, 0)); // Add right margin
+            // Retrieve books based on the keyword
+            if (keyword.isEmpty()) {
+                bookList = SQLController.getBookInfoData(); // Get all books
             } else {
-                FlowPane.setMargin(bookBox, new Insets(0, 0, 10, 0)); // No right margin
+                bookList = SQLController.getBookInfoDataWithKeyword(keyword); // Search by keyword
             }
 
-            flowPane.getChildren().add(bookBox);
-        }
+            // Calculate layout properties
+            int flowPaneWidth = 1072; // Width of the FlowPane
+            int spacing = 10; // Spacing between elements in the FlowPane
+            int boxWidth = (flowPaneWidth - (5 - 1) * spacing) / 5; // Number of boxes per row is 6
+            int numBoxesPerRow = (flowPaneWidth + spacing) / (boxWidth + spacing);
+
+            // Set horizontal and vertical gaps
+            Platform.runLater(() -> {
+                flowPane.setHgap(0); // Disable FlowPane's horizontal gap
+                flowPane.setVgap(10); // Keep vertical gap
+
+                flowPane.getChildren().clear(); // Clear previous items in the FlowPane
+
+                for (int i = 0; i < bookList.size(); i++) {
+                    VBox bookBox = createBookBox(bookList.get(i), boxWidth);
+
+                    // Add spacing only for non-last items in a row
+                    if ((i + 1) % numBoxesPerRow != 0) {
+                        FlowPane.setMargin(bookBox, new Insets(0, spacing, 10, 0)); // Add right margin
+                    } else {
+                        FlowPane.setMargin(bookBox, new Insets(0, 0, 10, 0)); // No right margin
+                    }
+
+                    flowPane.getChildren().add(bookBox);
+                }
+            });
+        }).start();
     }
 
 

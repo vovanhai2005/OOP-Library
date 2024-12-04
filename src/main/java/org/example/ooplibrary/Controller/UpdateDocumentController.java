@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -186,14 +187,17 @@ public class UpdateDocumentController implements AbstractLanguageConfig {
             return;
         }
 
-        byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
-        String bookTitle = bookName.getText().replace("\\s" , "");
-        Book book = new Book(ISBN.getText(),bookName.getText(),yearOfPublication.getText(),author.getText(),genreLists,description.getText(),bookImage);
-        SQLController.updateBookInfo(book);
+        new Thread(() -> {
+            byte[] bookImage = SQLController.convertImageViewToBlob(this.bookImage);
+            String bookTitle = bookName.getText().replace("\\s", "");
+            Book book = new Book(ISBN.getText(), bookName.getText(), yearOfPublication.getText(), author.getText(), genreLists, description.getText(), bookImage);
+            SQLController.updateBookInfo(book);
 
-        documentArchiveController.refresh();
-        System.out.println("DIT CON ME");
-        ((Node) event.getSource()).getScene().getWindow().hide();
+            Platform.runLater(() -> {
+                documentArchiveController.refresh();
+                ((Node) event.getSource()).getScene().getWindow().hide();
+            });
+        }).start();
     }
 
     public void setDocumentArchiveController(DocumentArchiveController documentArchiveController) {
