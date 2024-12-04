@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -57,9 +58,13 @@ public class MainMenuController extends AbstractMenuController implements Abstra
     private Text transactionsCount;
 
     public void initialize(URL url , ResourceBundle rb) {
-        bookCount.setText(String.valueOf(getBooksCount()));
-        userCount.setText(String.valueOf(getUsersCount()));
-        transactionsCount.setText(String.valueOf(getBorrowReturnCount()));
+        new Thread(() -> {
+            Platform.runLater(() -> {
+                bookCount.setText(String.valueOf(getBooksCount()));
+                userCount.setText(String.valueOf(getUsersCount()));
+                transactionsCount.setText(String.valueOf(getBorrowReturnCount()));
+            });
+        }).start();
 
     }
 

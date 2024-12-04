@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -107,38 +108,40 @@ public class UserDisplayDocumentController implements Initializable {
         sendBtn.setOnMouseClicked(null);
     }
 
+    @FXML
     public void setReviewsPane() {
-
-        // Xóa toàn bộ nội dung cũ trong reviewsFlowPane (nếu có)
-        if (reviewsFlowPane.getChildren() == null ) {
-            System.out.println("No reviews found");
-            return;
-        }
-
-        reviewsFlowPane.getChildren().clear();
-
-        if (reviewsFlowPane.getChildren() == null ) {
-            System.out.println("No reviews found");
-            return;
-        }
-
-        // Thiết lập hướng dọc cho FlowPane
-        reviewsFlowPane.setOrientation(Orientation.HORIZONTAL);
-        reviewsFlowPane.setVgap(10); // Khoảng cách dọc giữa các phần tử
-        reviewsFlowPane.setPrefWrapLength(718); // Chiều rộng cố định
-
-        // Lấy danh sách tên người dùng dựa trên ISBN
-        ArrayList<String> usernames = SQLController.getRecentlyUsernameFromUserRatingsByISBN(ISBN.getText());
-
-        // Thêm từng HBox vào FlowPane
-        for (String username : usernames) {
-            HBox reviewPane = createReviewPane(ISBN.getText(), username);
-            if (reviewPane !=null) {
-                reviewsFlowPane.getChildren().add(reviewPane);
+        new Thread(() -> {
+            // Xóa toàn bộ nội dung cũ trong reviewsFlowPane (nếu có)
+            if (reviewsFlowPane.getChildren() == null) {
+                System.out.println("No reviews found");
+                return;
             }
-        }
 
+            reviewsFlowPane.getChildren().clear();
 
+            if (reviewsFlowPane.getChildren() == null) {
+                System.out.println("No reviews found");
+                return;
+            }
+
+            // Thiết lập hướng dọc cho FlowPane
+            reviewsFlowPane.setOrientation(Orientation.HORIZONTAL);
+            reviewsFlowPane.setVgap(10); // Khoảng cách dọc giữa các phần tử
+            reviewsFlowPane.setPrefWrapLength(718); // Chiều rộng cố định
+
+            // Lấy danh sách tên người dùng dựa trên ISBN
+            ArrayList<String> usernames = SQLController.getRecentlyUsernameFromUserRatingsByISBN(ISBN.getText());
+
+            // Thêm từng HBox vào FlowPane
+            Platform.runLater(() -> {
+                for (String username : usernames) {
+                    HBox reviewPane = createReviewPane(ISBN.getText(), username);
+                    if (reviewPane != null) {
+                        reviewsFlowPane.getChildren().add(reviewPane);
+                    }
+                }
+            });
+        }).start();
     }
 
     public void setDetails(Book book,String username) {

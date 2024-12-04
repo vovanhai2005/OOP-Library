@@ -149,13 +149,16 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
-        ArrayList<Book> suggestedBooks = SQLController.getBookInfoData(); // Get suggested books
+        new Thread(() -> {
+            ArrayList<Book> suggestedBooks = SQLController.getBookInfoData(); // Get suggested books
 
-        // Update the UI with the retrieved books
-        for (Book book : suggestedBooks) {
-            VBox bookBox = createBookBox2(book);
-            subFlowPaneSuggested.getChildren().add(bookBox);
-        }
+            Platform.runLater(() -> {
+                for (Book book : suggestedBooks) {
+                    VBox bookBox = createBookBox2(book);
+                    subFlowPaneSuggested.getChildren().add(bookBox);
+                }
+            });
+        }).start();
 
         // Đặt subFlowPaneSuggested vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneSuggested = new ScrollPane(subFlowPaneSuggested);
@@ -185,12 +188,17 @@ public class UserMainMenuController extends AbstractMenuController implements In
 
 
         // Trích xuất sách từ SQLController.getBookInfoData() và tạo VBox cho mỗi sách
-        ArrayList<Book> latestBooks = SQLController.getLatestBookInfoData(); // Phương thức đồng bộ
-        subFlowPaneLatest.getChildren().clear();
-        for (Book book : latestBooks) {
-            VBox bookBox = createBookBox2(book);
-            subFlowPaneLatest.getChildren().add(bookBox);
-        }
+        new Thread(() -> {
+            ArrayList<Book> latestBooks = SQLController.getLatestBookInfoData(); // Get latest books
+
+            Platform.runLater(() -> {
+                subFlowPaneLatest.getChildren().clear();
+                for (Book book : latestBooks) {
+                    VBox bookBox = createBookBox2(book);
+                    subFlowPaneLatest.getChildren().add(bookBox);
+                }
+            });
+        }).start();
 
         // Đặt subFlowPaneLatest vào một ScrollPane để cho phép cuộn ngang
         ScrollPane subScrollPaneLatest = new ScrollPane(subFlowPaneLatest);

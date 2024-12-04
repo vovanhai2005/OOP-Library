@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -94,16 +95,17 @@ public class ReturnDocumentController extends AbstractMenuController implements 
 
         );
 
-        ArrayList<BookLoan> temp = SQLController.getBookLoansDataWithNoNullReturnDate();
-
-        if (temp != null)
-            for (BookLoan bookLoan : temp) {
-                if (bookLoan.getReturnDate() != null) data.add(bookLoan);
-            }
-
-
-        tableView.setItems(data);
-
+        new Thread(() -> {
+            ArrayList<BookLoan> temp = SQLController.getBookLoansDataWithNoNullReturnDate();
+            Platform.runLater(() -> {
+                if (temp != null) {
+                    for (BookLoan bookLoan : temp) {
+                        if (bookLoan.getReturnDate() != null) data.add(bookLoan);
+                    }
+                }
+                tableView.setItems(data);
+            });
+        }).start();
     }
 
     @FXML

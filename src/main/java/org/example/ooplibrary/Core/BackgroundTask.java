@@ -9,13 +9,10 @@ public class BackgroundTask implements Runnable {
 
     @Override
     public void run() {
-        // Simulate a background task
-        for (int i = 0; i < 5; i++) {
-            try {
-                Thread.sleep(1000); // Simulate time-consuming task
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

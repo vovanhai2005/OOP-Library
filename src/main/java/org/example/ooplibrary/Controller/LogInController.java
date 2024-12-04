@@ -1,5 +1,6 @@
 package org.example.ooplibrary.Controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,23 +73,29 @@ public class LogInController implements AbstractLanguageConfig {
             return;
         }
 
-        if (SQLController.checkPassword(username, pass)) {
-            System.out.println("Success");
-            if (SQLController.isAdmin(username)) {
-                switchToMainMenu(event);
-            } else {
-                switchToUserMainMenu(event);
-            }
-            System.out.println("Switched to Main Menu");
-        } else {
-            if (language.equals("en")) {
-                signInAlert.setText("Incorrect password or username");
-            }
-            else {
-                signInAlert.setText("Sai tên đăng nhập hoặc mật khẩu");
-            }
-            System.out.println("Login Failed");
-        }
+        new Thread(() -> {
+            boolean isPasswordCorrect = SQLController.checkPassword(username, pass);
+            boolean isAdmin = SQLController.isAdmin(username);
+
+            Platform.runLater(() -> {
+                if (isPasswordCorrect) {
+                    System.out.println("Success");
+                    if (isAdmin) {
+                        switchToMainMenu(event);
+                    } else {
+                        switchToUserMainMenu(event);
+                    }
+                    System.out.println("Switched to Main Menu");
+                } else {
+                    if (language.equals("en")) {
+                        signInAlert.setText("Incorrect password or username");
+                    } else {
+                        signInAlert.setText("Sai tên đăng nhập hoặc mật khẩu");
+                    }
+                    System.out.println("Login Failed");
+                }
+            });
+        }).start();
     }
 
     @FXML
