@@ -108,41 +108,42 @@ public class UserDisplayDocumentController implements Initializable {
         sendBtn.setOnMouseClicked(null);
     }
 
-    @FXML
     public void setReviewsPane() {
+        // Tạo luồng riêng cho tác vụ nền
         new Thread(() -> {
-            // Xóa toàn bộ nội dung cũ trong reviewsFlowPane (nếu có)
-            if (reviewsFlowPane.getChildren() == null) {
-                System.out.println("No reviews found");
-                return;
-            }
-
-            reviewsFlowPane.getChildren().clear();
-
-            if (reviewsFlowPane.getChildren() == null) {
-                System.out.println("No reviews found");
-                return;
-            }
-
-            // Thiết lập hướng dọc cho FlowPane
-            reviewsFlowPane.setOrientation(Orientation.HORIZONTAL);
-            reviewsFlowPane.setVgap(10); // Khoảng cách dọc giữa các phần tử
-            reviewsFlowPane.setPrefWrapLength(718); // Chiều rộng cố định
-
             // Lấy danh sách tên người dùng dựa trên ISBN
             ArrayList<String> usernames = SQLController.getRecentlyUsernameFromUserRatingsByISBN(ISBN.getText());
 
-            // Thêm từng HBox vào FlowPane
+            if (usernames == null || usernames.isEmpty()) {
+                System.out.println("No reviews found");
+                return;
+            }
+
+            // Cập nhật giao diện trên luồng JavaFX
             Platform.runLater(() -> {
-                for (String username : usernames) {
-                    HBox reviewPane = createReviewPane(ISBN.getText(), username);
-                    if (reviewPane != null) {
-                        reviewsFlowPane.getChildren().add(reviewPane);
+                try {
+                    // Xóa toàn bộ nội dung cũ trong reviewsFlowPane
+                    reviewsFlowPane.getChildren().clear();
+
+                    // Thiết lập hướng dọc cho FlowPane
+                    reviewsFlowPane.setOrientation(Orientation.HORIZONTAL);
+                    reviewsFlowPane.setVgap(10); // Khoảng cách dọc giữa các phần tử
+                    reviewsFlowPane.setPrefWrapLength(718); // Chiều rộng cố định
+
+                    // Thêm từng HBox vào FlowPane
+                    for (String username : usernames) {
+                        HBox reviewPane = createReviewPane(ISBN.getText(), username);
+                        if (reviewPane != null) {
+                            reviewsFlowPane.getChildren().add(reviewPane);
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
         }).start();
     }
+
 
     public void setDetails(Book book,String username) {
         ISBN.setText(book.getISBN());
